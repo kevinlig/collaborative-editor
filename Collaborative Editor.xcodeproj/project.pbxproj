@@ -1,0 +1,490 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 46;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		1EE580AF1A509DE9000F2F49 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 1EE580AE1A509DE9000F2F49 /* AppDelegate.m */; };
+		1EE580B11A509DE9000F2F49 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 1EE580B01A509DE9000F2F49 /* main.m */; };
+		1EE580B31A509DE9000F2F49 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 1EE580B21A509DE9000F2F49 /* Images.xcassets */; };
+		1EE580B61A509DE9000F2F49 /* MainMenu.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1EE580B41A509DE9000F2F49 /* MainMenu.xib */; };
+		1EE580C21A509DE9000F2F49 /* Collaborative_EditorTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 1EE580C11A509DE9000F2F49 /* Collaborative_EditorTests.m */; };
+		1EE580CC1A509DF2000F2F49 /* CoreBluetooth.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1EE580CB1A509DF2000F2F49 /* CoreBluetooth.framework */; };
+		1EE580D11A509E14000F2F49 /* CCEEditorViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1EE580CF1A509E14000F2F49 /* CCEEditorViewController.m */; };
+		1EE580D21A509E14000F2F49 /* CCEEditorViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1EE580D01A509E14000F2F49 /* CCEEditorViewController.xib */; };
+		1EE580D41A509FB5000F2F49 /* WebKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1EE580D31A509FB5000F2F49 /* WebKit.framework */; };
+		1EE580D61A50A106000F2F49 /* web in Resources */ = {isa = PBXBuildFile; fileRef = 1EE580D51A50A106000F2F49 /* web */; };
+		1EE580DA1A50A38F000F2F49 /* CCEWebView.m in Sources */ = {isa = PBXBuildFile; fileRef = 1EE580D91A50A38F000F2F49 /* CCEWebView.m */; };
+		1EE580E41A50A5C5000F2F49 /* CCEMasterServer.m in Sources */ = {isa = PBXBuildFile; fileRef = 1EE580E31A50A5C5000F2F49 /* CCEMasterServer.m */; };
+		1EE580E71A50A77B000F2F49 /* CCETransmissionService.m in Sources */ = {isa = PBXBuildFile; fileRef = 1EE580E61A50A77B000F2F49 /* CCETransmissionService.m */; };
+		1EE580F01A50A930000F2F49 /* CCEFooterBarViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1EE580EE1A50A930000F2F49 /* CCEFooterBarViewController.m */; };
+		1EE580F11A50A930000F2F49 /* CCEFooterBarViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1EE580EF1A50A930000F2F49 /* CCEFooterBarViewController.xib */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		1EE580BC1A509DE9000F2F49 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 1EE580A01A509DE9000F2F49 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 1EE580A71A509DE9000F2F49;
+			remoteInfo = "Collaborative Editor";
+		};
+/* End PBXContainerItemProxy section */
+
+/* Begin PBXFileReference section */
+		1EE580A81A509DE9000F2F49 /* Collaborative Editor.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Collaborative Editor.app"; sourceTree = BUILT_PRODUCTS_DIR; };
+		1EE580AC1A509DE9000F2F49 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		1EE580AD1A509DE9000F2F49 /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
+		1EE580AE1A509DE9000F2F49 /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
+		1EE580B01A509DE9000F2F49 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
+		1EE580B21A509DE9000F2F49 /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
+		1EE580B51A509DE9000F2F49 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/MainMenu.xib; sourceTree = "<group>"; };
+		1EE580BB1A509DE9000F2F49 /* Collaborative EditorTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "Collaborative EditorTests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
+		1EE580C01A509DE9000F2F49 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		1EE580C11A509DE9000F2F49 /* Collaborative_EditorTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = Collaborative_EditorTests.m; sourceTree = "<group>"; };
+		1EE580CB1A509DF2000F2F49 /* CoreBluetooth.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreBluetooth.framework; path = System/Library/Frameworks/CoreBluetooth.framework; sourceTree = SDKROOT; };
+		1EE580CE1A509E14000F2F49 /* CCEEditorViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CCEEditorViewController.h; path = Views/CCEEditorViewController.h; sourceTree = "<group>"; };
+		1EE580CF1A509E14000F2F49 /* CCEEditorViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = CCEEditorViewController.m; path = Views/CCEEditorViewController.m; sourceTree = "<group>"; };
+		1EE580D01A509E14000F2F49 /* CCEEditorViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = CCEEditorViewController.xib; path = Views/CCEEditorViewController.xib; sourceTree = "<group>"; };
+		1EE580D31A509FB5000F2F49 /* WebKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = WebKit.framework; path = System/Library/Frameworks/WebKit.framework; sourceTree = SDKROOT; };
+		1EE580D51A50A106000F2F49 /* web */ = {isa = PBXFileReference; lastKnownFileType = folder; path = web; sourceTree = "<group>"; };
+		1EE580D81A50A38F000F2F49 /* CCEWebView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CCEWebView.h; path = "Views/Custom Controls/CCEWebView.h"; sourceTree = "<group>"; };
+		1EE580D91A50A38F000F2F49 /* CCEWebView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = CCEWebView.m; path = "Views/Custom Controls/CCEWebView.m"; sourceTree = "<group>"; };
+		1EE580DC1A50A531000F2F49 /* CCEBluetoothServiceDefinitions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CCEBluetoothServiceDefinitions.h; path = Bluetooth/CCEBluetoothServiceDefinitions.h; sourceTree = "<group>"; };
+		1EE580E21A50A5C5000F2F49 /* CCEMasterServer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CCEMasterServer.h; path = Bluetooth/CCEMasterServer.h; sourceTree = "<group>"; };
+		1EE580E31A50A5C5000F2F49 /* CCEMasterServer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = CCEMasterServer.m; path = Bluetooth/CCEMasterServer.m; sourceTree = "<group>"; };
+		1EE580E51A50A77B000F2F49 /* CCETransmissionService.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CCETransmissionService.h; path = Bluetooth/CCETransmissionService.h; sourceTree = "<group>"; };
+		1EE580E61A50A77B000F2F49 /* CCETransmissionService.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = CCETransmissionService.m; path = Bluetooth/CCETransmissionService.m; sourceTree = "<group>"; };
+		1EE580ED1A50A930000F2F49 /* CCEFooterBarViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CCEFooterBarViewController.h; path = Views/CCEFooterBarViewController.h; sourceTree = "<group>"; };
+		1EE580EE1A50A930000F2F49 /* CCEFooterBarViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = CCEFooterBarViewController.m; path = Views/CCEFooterBarViewController.m; sourceTree = "<group>"; };
+		1EE580EF1A50A930000F2F49 /* CCEFooterBarViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = CCEFooterBarViewController.xib; path = Views/CCEFooterBarViewController.xib; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		1EE580A51A509DE9000F2F49 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				1EE580D41A509FB5000F2F49 /* WebKit.framework in Frameworks */,
+				1EE580CC1A509DF2000F2F49 /* CoreBluetooth.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		1EE580B81A509DE9000F2F49 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		1EE5809F1A509DE9000F2F49 = {
+			isa = PBXGroup;
+			children = (
+				1EE580AA1A509DE9000F2F49 /* Collaborative Editor */,
+				1EE580BE1A509DE9000F2F49 /* Collaborative EditorTests */,
+				1EE580A91A509DE9000F2F49 /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+		1EE580A91A509DE9000F2F49 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				1EE580A81A509DE9000F2F49 /* Collaborative Editor.app */,
+				1EE580BB1A509DE9000F2F49 /* Collaborative EditorTests.xctest */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		1EE580AA1A509DE9000F2F49 /* Collaborative Editor */ = {
+			isa = PBXGroup;
+			children = (
+				1EE580AD1A509DE9000F2F49 /* AppDelegate.h */,
+				1EE580AE1A509DE9000F2F49 /* AppDelegate.m */,
+				1EE580B41A509DE9000F2F49 /* MainMenu.xib */,
+				1EE580DB1A50A4FE000F2F49 /* Bluetooth */,
+				1EE580CD1A509DFB000F2F49 /* Views */,
+				1EE580D51A50A106000F2F49 /* web */,
+				1EE580B21A509DE9000F2F49 /* Images.xcassets */,
+				1EE580D31A509FB5000F2F49 /* WebKit.framework */,
+				1EE580CB1A509DF2000F2F49 /* CoreBluetooth.framework */,
+				1EE580AB1A509DE9000F2F49 /* Supporting Files */,
+			);
+			path = "Collaborative Editor";
+			sourceTree = "<group>";
+		};
+		1EE580AB1A509DE9000F2F49 /* Supporting Files */ = {
+			isa = PBXGroup;
+			children = (
+				1EE580AC1A509DE9000F2F49 /* Info.plist */,
+				1EE580B01A509DE9000F2F49 /* main.m */,
+			);
+			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		1EE580BE1A509DE9000F2F49 /* Collaborative EditorTests */ = {
+			isa = PBXGroup;
+			children = (
+				1EE580C11A509DE9000F2F49 /* Collaborative_EditorTests.m */,
+				1EE580BF1A509DE9000F2F49 /* Supporting Files */,
+			);
+			path = "Collaborative EditorTests";
+			sourceTree = "<group>";
+		};
+		1EE580BF1A509DE9000F2F49 /* Supporting Files */ = {
+			isa = PBXGroup;
+			children = (
+				1EE580C01A509DE9000F2F49 /* Info.plist */,
+			);
+			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		1EE580CD1A509DFB000F2F49 /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				1EE580D71A50A371000F2F49 /* Custom Controls */,
+				1EE580CE1A509E14000F2F49 /* CCEEditorViewController.h */,
+				1EE580CF1A509E14000F2F49 /* CCEEditorViewController.m */,
+				1EE580D01A509E14000F2F49 /* CCEEditorViewController.xib */,
+				1EE580ED1A50A930000F2F49 /* CCEFooterBarViewController.h */,
+				1EE580EE1A50A930000F2F49 /* CCEFooterBarViewController.m */,
+				1EE580EF1A50A930000F2F49 /* CCEFooterBarViewController.xib */,
+			);
+			name = Views;
+			sourceTree = "<group>";
+		};
+		1EE580D71A50A371000F2F49 /* Custom Controls */ = {
+			isa = PBXGroup;
+			children = (
+				1EE580D81A50A38F000F2F49 /* CCEWebView.h */,
+				1EE580D91A50A38F000F2F49 /* CCEWebView.m */,
+			);
+			name = "Custom Controls";
+			sourceTree = "<group>";
+		};
+		1EE580DB1A50A4FE000F2F49 /* Bluetooth */ = {
+			isa = PBXGroup;
+			children = (
+				1EE580DC1A50A531000F2F49 /* CCEBluetoothServiceDefinitions.h */,
+				1EE580E51A50A77B000F2F49 /* CCETransmissionService.h */,
+				1EE580E61A50A77B000F2F49 /* CCETransmissionService.m */,
+				1EE580E21A50A5C5000F2F49 /* CCEMasterServer.h */,
+				1EE580E31A50A5C5000F2F49 /* CCEMasterServer.m */,
+			);
+			name = Bluetooth;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		1EE580A71A509DE9000F2F49 /* Collaborative Editor */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 1EE580C51A509DE9000F2F49 /* Build configuration list for PBXNativeTarget "Collaborative Editor" */;
+			buildPhases = (
+				1EE580A41A509DE9000F2F49 /* Sources */,
+				1EE580A51A509DE9000F2F49 /* Frameworks */,
+				1EE580A61A509DE9000F2F49 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = "Collaborative Editor";
+			productName = "Collaborative Editor";
+			productReference = 1EE580A81A509DE9000F2F49 /* Collaborative Editor.app */;
+			productType = "com.apple.product-type.application";
+		};
+		1EE580BA1A509DE9000F2F49 /* Collaborative EditorTests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 1EE580C81A509DE9000F2F49 /* Build configuration list for PBXNativeTarget "Collaborative EditorTests" */;
+			buildPhases = (
+				1EE580B71A509DE9000F2F49 /* Sources */,
+				1EE580B81A509DE9000F2F49 /* Frameworks */,
+				1EE580B91A509DE9000F2F49 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				1EE580BD1A509DE9000F2F49 /* PBXTargetDependency */,
+			);
+			name = "Collaborative EditorTests";
+			productName = "Collaborative EditorTests";
+			productReference = 1EE580BB1A509DE9000F2F49 /* Collaborative EditorTests.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		1EE580A01A509DE9000F2F49 /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				CLASSPREFIX = CCE;
+				LastUpgradeCheck = 0610;
+				ORGANIZATIONNAME = "Kevin Li";
+				TargetAttributes = {
+					1EE580A71A509DE9000F2F49 = {
+						CreatedOnToolsVersion = 6.1.1;
+					};
+					1EE580BA1A509DE9000F2F49 = {
+						CreatedOnToolsVersion = 6.1.1;
+						TestTargetID = 1EE580A71A509DE9000F2F49;
+					};
+				};
+			};
+			buildConfigurationList = 1EE580A31A509DE9000F2F49 /* Build configuration list for PBXProject "Collaborative Editor" */;
+			compatibilityVersion = "Xcode 3.2";
+			developmentRegion = English;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+				Base,
+			);
+			mainGroup = 1EE5809F1A509DE9000F2F49;
+			productRefGroup = 1EE580A91A509DE9000F2F49 /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				1EE580A71A509DE9000F2F49 /* Collaborative Editor */,
+				1EE580BA1A509DE9000F2F49 /* Collaborative EditorTests */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		1EE580A61A509DE9000F2F49 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				1EE580D21A509E14000F2F49 /* CCEEditorViewController.xib in Resources */,
+				1EE580D61A50A106000F2F49 /* web in Resources */,
+				1EE580F11A50A930000F2F49 /* CCEFooterBarViewController.xib in Resources */,
+				1EE580B31A509DE9000F2F49 /* Images.xcassets in Resources */,
+				1EE580B61A509DE9000F2F49 /* MainMenu.xib in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		1EE580B91A509DE9000F2F49 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		1EE580A41A509DE9000F2F49 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				1EE580B11A509DE9000F2F49 /* main.m in Sources */,
+				1EE580D11A509E14000F2F49 /* CCEEditorViewController.m in Sources */,
+				1EE580F01A50A930000F2F49 /* CCEFooterBarViewController.m in Sources */,
+				1EE580E41A50A5C5000F2F49 /* CCEMasterServer.m in Sources */,
+				1EE580AF1A509DE9000F2F49 /* AppDelegate.m in Sources */,
+				1EE580DA1A50A38F000F2F49 /* CCEWebView.m in Sources */,
+				1EE580E71A50A77B000F2F49 /* CCETransmissionService.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		1EE580B71A509DE9000F2F49 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				1EE580C21A509DE9000F2F49 /* Collaborative_EditorTests.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		1EE580BD1A509DE9000F2F49 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 1EE580A71A509DE9000F2F49 /* Collaborative Editor */;
+			targetProxy = 1EE580BC1A509DE9000F2F49 /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
+
+/* Begin PBXVariantGroup section */
+		1EE580B41A509DE9000F2F49 /* MainMenu.xib */ = {
+			isa = PBXVariantGroup;
+			children = (
+				1EE580B51A509DE9000F2F49 /* Base */,
+			);
+			name = MainMenu.xib;
+			sourceTree = "<group>";
+		};
+/* End PBXVariantGroup section */
+
+/* Begin XCBuildConfiguration section */
+		1EE580C31A509DE9000F2F49 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				CODE_SIGN_IDENTITY = "-";
+				COPY_PHASE_STRIP = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				MACOSX_DEPLOYMENT_TARGET = 10.10;
+				MTL_ENABLE_DEBUG_INFO = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				SDKROOT = macosx;
+			};
+			name = Debug;
+		};
+		1EE580C41A509DE9000F2F49 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				CODE_SIGN_IDENTITY = "-";
+				COPY_PHASE_STRIP = YES;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				MACOSX_DEPLOYMENT_TARGET = 10.10;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				SDKROOT = macosx;
+			};
+			name = Release;
+		};
+		1EE580C61A509DE9000F2F49 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				COMBINE_HIDPI_IMAGES = YES;
+				INFOPLIST_FILE = "Collaborative Editor/Info.plist";
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+			};
+			name = Debug;
+		};
+		1EE580C71A509DE9000F2F49 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				COMBINE_HIDPI_IMAGES = YES;
+				INFOPLIST_FILE = "Collaborative Editor/Info.plist";
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+			};
+			name = Release;
+		};
+		1EE580C91A509DE9000F2F49 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				COMBINE_HIDPI_IMAGES = YES;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(DEVELOPER_FRAMEWORKS_DIR)",
+					"$(inherited)",
+				);
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				INFOPLIST_FILE = "Collaborative EditorTests/Info.plist";
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks @loader_path/../Frameworks";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Collaborative Editor.app/Contents/MacOS/Collaborative Editor";
+			};
+			name = Debug;
+		};
+		1EE580CA1A509DE9000F2F49 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				COMBINE_HIDPI_IMAGES = YES;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(DEVELOPER_FRAMEWORKS_DIR)",
+					"$(inherited)",
+				);
+				INFOPLIST_FILE = "Collaborative EditorTests/Info.plist";
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks @loader_path/../Frameworks";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Collaborative Editor.app/Contents/MacOS/Collaborative Editor";
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		1EE580A31A509DE9000F2F49 /* Build configuration list for PBXProject "Collaborative Editor" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				1EE580C31A509DE9000F2F49 /* Debug */,
+				1EE580C41A509DE9000F2F49 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		1EE580C51A509DE9000F2F49 /* Build configuration list for PBXNativeTarget "Collaborative Editor" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				1EE580C61A509DE9000F2F49 /* Debug */,
+				1EE580C71A509DE9000F2F49 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+		};
+		1EE580C81A509DE9000F2F49 /* Build configuration list for PBXNativeTarget "Collaborative EditorTests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				1EE580C91A509DE9000F2F49 /* Debug */,
+				1EE580CA1A509DE9000F2F49 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = 1EE580A01A509DE9000F2F49 /* Project object */;
+}
