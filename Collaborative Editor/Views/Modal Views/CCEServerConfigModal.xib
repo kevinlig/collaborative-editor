@@ -1,0 +1,156 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="6254" systemVersion="14B25" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES">
+    <dependencies>
+        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="6254"/>
+    </dependencies>
+    <objects>
+        <customObject id="-2" userLabel="File's Owner" customClass="CCEServerConfigModal">
+            <connections>
+                <outlet property="blankRadio" destination="ZE6-xp-2RU" id="ssY-AR-OQr"/>
+                <outlet property="doneButton" destination="YrQ-ma-nm0" id="Ray-La-CrH"/>
+                <outlet property="existingRadio" destination="PaU-KO-jSk" id="QxV-vL-QFD"/>
+                <outlet property="fileNameLabel" destination="vlu-54-kZu" id="csm-iJ-cbd"/>
+                <outlet property="openButton" destination="gYf-mt-lP3" id="kGq-os-511"/>
+                <outlet property="view" destination="Hz6-mo-xeY" id="0bl-1N-x8E"/>
+            </connections>
+        </customObject>
+        <customObject id="-1" userLabel="First Responder" customClass="FirstResponder"/>
+        <customObject id="-3" userLabel="Application" customClass="NSObject"/>
+        <customView id="Hz6-mo-xeY">
+            <rect key="frame" x="0.0" y="0.0" width="480" height="272"/>
+            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+            <subviews>
+                <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="YrQ-ma-nm0">
+                    <rect key="frame" x="386" y="13" width="80" height="32"/>
+                    <constraints>
+                        <constraint firstAttribute="height" constant="21" id="WWm-hO-JoE"/>
+                        <constraint firstAttribute="width" constant="68" id="lYK-Vu-1YM"/>
+                    </constraints>
+                    <buttonCell key="cell" type="push" title="Done" bezelStyle="rounded" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="fqO-uF-svc">
+                        <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
+                        <font key="font" metaFont="system"/>
+                        <string key="keyEquivalent" base64-UTF8="YES">
+DQ
+</string>
+                    </buttonCell>
+                    <connections>
+                        <action selector="clickedDone:" target="-2" id="XFP-YF-31P"/>
+                    </connections>
+                </button>
+                <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="0Os-xk-P8m">
+                    <rect key="frame" x="306" y="13" width="80" height="32"/>
+                    <constraints>
+                        <constraint firstAttribute="height" constant="21" id="8B6-15-naE"/>
+                        <constraint firstAttribute="width" constant="68" id="Jvf-zH-BaF"/>
+                    </constraints>
+                    <buttonCell key="cell" type="push" title="Cancel" bezelStyle="rounded" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="6aP-nb-9f4">
+                        <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
+                        <font key="font" metaFont="system"/>
+                        <string key="keyEquivalent" base64-UTF8="YES">
+Gw
+</string>
+                    </buttonCell>
+                    <connections>
+                        <action selector="clickedCancel:" target="-2" id="N11-Z9-KjE"/>
+                    </connections>
+                </button>
+                <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="I5V-0N-gHZ">
+                    <rect key="frame" x="20" y="225" width="274" height="27"/>
+                    <constraints>
+                        <constraint firstAttribute="height" constant="27" id="ciw-xn-gGF"/>
+                        <constraint firstAttribute="width" constant="270" id="rfE-gg-fHa"/>
+                    </constraints>
+                    <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="What would you like to start with?" id="q8c-fH-Buj">
+                        <font key="font" size="18" name="HelveticaNeue-Thin"/>
+                        <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
+                        <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
+                    </textFieldCell>
+                </textField>
+                <matrix verticalHuggingPriority="750" fixedFrame="YES" autorecalculatesCellSize="YES" translatesAutoresizingMaskIntoConstraints="NO" id="xLo-Wy-Dy9">
+                    <rect key="frame" x="70" y="193" width="175" height="18"/>
+                    <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
+                    <size key="cellSize" width="75" height="18"/>
+                    <size key="intercellSpacing" width="4" height="2"/>
+                    <buttonCell key="prototype" type="radio" title="Radio" imagePosition="left" alignment="left" inset="2" id="cjO-Zx-Pxn">
+                        <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
+                        <font key="font" metaFont="system"/>
+                    </buttonCell>
+                    <cells>
+                        <column>
+                            <buttonCell type="radio" title="New File" imagePosition="left" alignment="left" state="on" inset="2" id="ZE6-xp-2RU">
+                                <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
+                                <font key="font" metaFont="system"/>
+                            </buttonCell>
+                        </column>
+                    </cells>
+                    <connections>
+                        <action selector="clickedRadio:" target="-2" id="kMi-tM-zkf"/>
+                    </connections>
+                </matrix>
+                <matrix verticalHuggingPriority="750" fixedFrame="YES" autorecalculatesCellSize="YES" translatesAutoresizingMaskIntoConstraints="NO" id="eJz-mI-TIs">
+                    <rect key="frame" x="70" y="141" width="175" height="18"/>
+                    <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
+                    <size key="cellSize" width="97" height="18"/>
+                    <size key="intercellSpacing" width="4" height="2"/>
+                    <buttonCell key="prototype" type="radio" title="Radio" imagePosition="left" alignment="left" inset="2" id="4A8-ha-plD">
+                        <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
+                        <font key="font" metaFont="system"/>
+                    </buttonCell>
+                    <cells>
+                        <column>
+                            <buttonCell type="radio" title="Existing File" imagePosition="left" alignment="left" inset="2" id="PaU-KO-jSk">
+                                <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
+                                <font key="font" metaFont="system"/>
+                            </buttonCell>
+                        </column>
+                    </cells>
+                    <connections>
+                        <action selector="clickedRadio:" target="-2" id="6lB-uI-LHP"/>
+                    </connections>
+                </matrix>
+                <textField verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" fixedFrame="YES" setsMaxLayoutWidthAtFirstLayout="YES" translatesAutoresizingMaskIntoConstraints="NO" id="lK6-nr-l5W">
+                    <rect key="frame" x="89" y="167" width="264" height="26"/>
+                    <textFieldCell key="cell" sendsActionOnEndEditing="YES" title="Start with a blank text editor." id="CaR-Hc-rwn">
+                        <font key="font" size="13" name="HelveticaNeue-Thin"/>
+                        <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
+                        <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
+                    </textFieldCell>
+                </textField>
+                <textField verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" fixedFrame="YES" setsMaxLayoutWidthAtFirstLayout="YES" translatesAutoresizingMaskIntoConstraints="NO" id="9ec-Lc-mUy">
+                    <rect key="frame" x="89" y="100" width="326" height="40"/>
+                    <textFieldCell key="cell" sendsActionOnEndEditing="YES" title="Start with an existing file. You'll need to select a file before continuing." id="170-sO-YGa">
+                        <font key="font" size="13" name="HelveticaNeue-Thin"/>
+                        <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
+                        <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
+                    </textFieldCell>
+                </textField>
+                <button hidden="YES" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="gYf-mt-lP3">
+                    <rect key="frame" x="85" y="65" width="77" height="28"/>
+                    <buttonCell key="cell" type="push" title="Open File" bezelStyle="rounded" alignment="center" controlSize="small" enabled="NO" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="Ail-uc-TJx">
+                        <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
+                        <font key="font" metaFont="smallSystem"/>
+                    </buttonCell>
+                    <connections>
+                        <action selector="clickedOpen:" target="-2" id="yCk-la-0kD"/>
+                    </connections>
+                </button>
+                <textField hidden="YES" horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="vlu-54-kZu">
+                    <rect key="frame" x="163" y="72" width="227" height="17"/>
+                    <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="No file selected" id="Uif-cP-fRR">
+                        <font key="font" size="11" name="HelveticaNeue-Thin"/>
+                        <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
+                        <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
+                    </textFieldCell>
+                </textField>
+            </subviews>
+            <constraints>
+                <constraint firstItem="I5V-0N-gHZ" firstAttribute="leading" secondItem="Hz6-mo-xeY" secondAttribute="leading" constant="22" id="5JN-pd-uIV"/>
+                <constraint firstItem="YrQ-ma-nm0" firstAttribute="leading" secondItem="0Os-xk-P8m" secondAttribute="trailing" constant="12" id="6qR-UG-7gi"/>
+                <constraint firstItem="I5V-0N-gHZ" firstAttribute="top" secondItem="Hz6-mo-xeY" secondAttribute="top" constant="20" id="IE2-gT-dVP"/>
+                <constraint firstAttribute="bottom" secondItem="YrQ-ma-nm0" secondAttribute="bottom" constant="20" id="KRY-XV-cfu"/>
+                <constraint firstAttribute="trailing" secondItem="YrQ-ma-nm0" secondAttribute="trailing" constant="20" id="j8U-tU-0SI"/>
+                <constraint firstAttribute="bottom" secondItem="0Os-xk-P8m" secondAttribute="bottom" constant="20" id="yB3-30-3rl"/>
+            </constraints>
+        </customView>
+    </objects>
+</document>

@@ -7,10 +7,13 @@
 //
 
 #import <Cocoa/Cocoa.h>
+#import <WebKit/WebKit.h>
 #import "CCEWebView.h"
 #import "CCEFooterBarViewController.h"
 
 @interface CCEEditorViewController : NSViewController <CCEFooterBarDelegate>
 
+/// @brief The file path of the file to load (may be nil if using a blank document).
+@property (nonatomic, strong) NSString *documentPath;
 
 @end

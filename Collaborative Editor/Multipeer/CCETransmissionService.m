@@ -11,7 +11,7 @@
 @implementation CCETransmissionService
 
 + (id)sharedManager {
-
+    
     static CCETransmissionService *sharedManager = nil;
     static dispatch_once_t onceToken;
     dispatch_once(&onceToken, ^{
@@ -25,29 +25,27 @@
     self = [super init];
     if (self) {
         self.isServer = NO;
-
+        
     }
     return self;
 }
 
 - (void)startServer {
-    if (self.masterServer) {
-        // server has already started!
+    if (self.masterServer && self.masterServer.advertising) {
+        // server has already started and is advertising
         return;
     }
     
     self.masterServer = [[CCEMasterServer alloc]init];
     self.masterServer.delegate = self;
-    // listen for app termination notice
-//    [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(stopServer) name:@"appKill" object:nil];
+    self.masterServer.userName = self.userName;
     self.isServer = YES;
+    
+    [self.masterServer startServer];
     
 }
 
 #pragma mark - Server delegate methods
-- (void)serverPoweredOn {
-    // server started, start advertising
-    [self.masterServer startAdvertising];
-}
+
 
 @end

@@ -48,6 +48,7 @@
 }
 
 - (IBAction)startServer:(id)sender {
+    [[CCETransmissionService sharedManager]setUserName:@"Master Server"];
     [[CCETransmissionService sharedManager]startServer];
 }
 

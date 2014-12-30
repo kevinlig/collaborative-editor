@@ -10,6 +10,10 @@
 
 @protocol CCEFooterBarDelegate <NSObject>
 
+/*!
+ * @discussion Delegate method triggered when the user changes the document syntax type from the footer dropdown menu.
+ * @param syntax The newly selected syntax, as expected by the Ace editor.
+ */
 - (void)footerChangedSyntax:(NSString *)syntax;
 
 @end

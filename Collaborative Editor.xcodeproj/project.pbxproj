@@ -7,6 +7,12 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		1E3591101A5252E600FEE9E0 /* CCEMasterServer.m in Sources */ = {isa = PBXBuildFile; fileRef = 1E35910F1A5252E600FEE9E0 /* CCEMasterServer.m */; };
+		1E3591121A5252F000FEE9E0 /* MultipeerConnectivity.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1E3591111A5252F000FEE9E0 /* MultipeerConnectivity.framework */; };
+		1E3591191A52540A00FEE9E0 /* CCETransmissionService.m in Sources */ = {isa = PBXBuildFile; fileRef = 1E3591181A52540A00FEE9E0 /* CCETransmissionService.m */; };
+		1E35911F1A525D6D00FEE9E0 /* NSString+Random.m in Sources */ = {isa = PBXBuildFile; fileRef = 1E35911E1A525D6D00FEE9E0 /* NSString+Random.m */; };
+		1E3591291A525FB200FEE9E0 /* CCEServerConfigModal.m in Sources */ = {isa = PBXBuildFile; fileRef = 1E3591271A525FB200FEE9E0 /* CCEServerConfigModal.m */; };
+		1E35912A1A525FB200FEE9E0 /* CCEServerConfigModal.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1E3591281A525FB200FEE9E0 /* CCEServerConfigModal.xib */; };
 		1EE580AF1A509DE9000F2F49 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 1EE580AE1A509DE9000F2F49 /* AppDelegate.m */; };
 		1EE580B11A509DE9000F2F49 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 1EE580B01A509DE9000F2F49 /* main.m */; };
 		1EE580B31A509DE9000F2F49 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 1EE580B21A509DE9000F2F49 /* Images.xcassets */; };
@@ -18,12 +24,8 @@
 		1EE580D41A509FB5000F2F49 /* WebKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1EE580D31A509FB5000F2F49 /* WebKit.framework */; };
 		1EE580D61A50A106000F2F49 /* web in Resources */ = {isa = PBXBuildFile; fileRef = 1EE580D51A50A106000F2F49 /* web */; };
 		1EE580DA1A50A38F000F2F49 /* CCEWebView.m in Sources */ = {isa = PBXBuildFile; fileRef = 1EE580D91A50A38F000F2F49 /* CCEWebView.m */; };
-		1EE580E41A50A5C5000F2F49 /* CCEMasterServer.m in Sources */ = {isa = PBXBuildFile; fileRef = 1EE580E31A50A5C5000F2F49 /* CCEMasterServer.m */; };
-		1EE580E71A50A77B000F2F49 /* CCETransmissionService.m in Sources */ = {isa = PBXBuildFile; fileRef = 1EE580E61A50A77B000F2F49 /* CCETransmissionService.m */; };
 		1EE580F01A50A930000F2F49 /* CCEFooterBarViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1EE580EE1A50A930000F2F49 /* CCEFooterBarViewController.m */; };
 		1EE580F11A50A930000F2F49 /* CCEFooterBarViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1EE580EF1A50A930000F2F49 /* CCEFooterBarViewController.xib */; };
-		1EE580F71A50D66C000F2F49 /* NSTimer+Blocks.m in Sources */ = {isa = PBXBuildFile; fileRef = 1EE580F61A50D66C000F2F49 /* NSTimer+Blocks.m */; };
-		1EE580FB1A50D8CE000F2F49 /* CCEClientObject.m in Sources */ = {isa = PBXBuildFile; fileRef = 1EE580FA1A50D8CE000F2F49 /* CCEClientObject.m */; };
 		1EE580FF1A518D73000F2F49 /* CCELaunchViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1EE580FD1A518D73000F2F49 /* CCELaunchViewController.m */; };
 		1EE581001A518D73000F2F49 /* CCELaunchViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1EE580FE1A518D73000F2F49 /* CCELaunchViewController.xib */; };
 		1EE581041A51B034000F2F49 /* CCELaunchWindow.m in Sources */ = {isa = PBXBuildFile; fileRef = 1EE581031A51B034000F2F49 /* CCELaunchWindow.m */; };
@@ -41,6 +43,17 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		1E35910B1A5251D400FEE9E0 /* CCEServiceDefinitions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CCEServiceDefinitions.h; path = Multipeer/CCEServiceDefinitions.h; sourceTree = "<group>"; };
+		1E35910E1A5252E600FEE9E0 /* CCEMasterServer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CCEMasterServer.h; path = Multipeer/CCEMasterServer.h; sourceTree = "<group>"; };
+		1E35910F1A5252E600FEE9E0 /* CCEMasterServer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = CCEMasterServer.m; path = Multipeer/CCEMasterServer.m; sourceTree = "<group>"; };
+		1E3591111A5252F000FEE9E0 /* MultipeerConnectivity.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MultipeerConnectivity.framework; path = System/Library/Frameworks/MultipeerConnectivity.framework; sourceTree = SDKROOT; };
+		1E3591171A52540A00FEE9E0 /* CCETransmissionService.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CCETransmissionService.h; path = Multipeer/CCETransmissionService.h; sourceTree = "<group>"; };
+		1E3591181A52540A00FEE9E0 /* CCETransmissionService.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = CCETransmissionService.m; path = Multipeer/CCETransmissionService.m; sourceTree = "<group>"; };
+		1E35911D1A525D6D00FEE9E0 /* NSString+Random.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "NSString+Random.h"; path = "Utilities/NSString+Random.h"; sourceTree = "<group>"; };
+		1E35911E1A525D6D00FEE9E0 /* NSString+Random.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "NSString+Random.m"; path = "Utilities/NSString+Random.m"; sourceTree = "<group>"; };
+		1E3591261A525FB200FEE9E0 /* CCEServerConfigModal.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CCEServerConfigModal.h; path = "Views/Modal Views/CCEServerConfigModal.h"; sourceTree = "<group>"; };
+		1E3591271A525FB200FEE9E0 /* CCEServerConfigModal.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = CCEServerConfigModal.m; path = "Views/Modal Views/CCEServerConfigModal.m"; sourceTree = "<group>"; };
+		1E3591281A525FB200FEE9E0 /* CCEServerConfigModal.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = CCEServerConfigModal.xib; path = "Views/Modal Views/CCEServerConfigModal.xib"; sourceTree = "<group>"; };
 		1EE580A81A509DE9000F2F49 /* Collaborative Editor.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Collaborative Editor.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		1EE580AC1A509DE9000F2F49 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		1EE580AD1A509DE9000F2F49 /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
@@ -59,18 +72,9 @@
 		1EE580D51A50A106000F2F49 /* web */ = {isa = PBXFileReference; lastKnownFileType = folder; path = web; sourceTree = "<group>"; };
 		1EE580D81A50A38F000F2F49 /* CCEWebView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CCEWebView.h; path = "Views/Custom Controls/CCEWebView.h"; sourceTree = "<group>"; };
 		1EE580D91A50A38F000F2F49 /* CCEWebView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = CCEWebView.m; path = "Views/Custom Controls/CCEWebView.m"; sourceTree = "<group>"; };
-		1EE580DC1A50A531000F2F49 /* CCEBluetoothServiceDefinitions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CCEBluetoothServiceDefinitions.h; path = Bluetooth/CCEBluetoothServiceDefinitions.h; sourceTree = "<group>"; };
-		1EE580E21A50A5C5000F2F49 /* CCEMasterServer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CCEMasterServer.h; path = Bluetooth/CCEMasterServer.h; sourceTree = "<group>"; };
-		1EE580E31A50A5C5000F2F49 /* CCEMasterServer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = CCEMasterServer.m; path = Bluetooth/CCEMasterServer.m; sourceTree = "<group>"; };
-		1EE580E51A50A77B000F2F49 /* CCETransmissionService.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CCETransmissionService.h; path = Bluetooth/CCETransmissionService.h; sourceTree = "<group>"; };
-		1EE580E61A50A77B000F2F49 /* CCETransmissionService.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = CCETransmissionService.m; path = Bluetooth/CCETransmissionService.m; sourceTree = "<group>"; };
 		1EE580ED1A50A930000F2F49 /* CCEFooterBarViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CCEFooterBarViewController.h; path = Views/CCEFooterBarViewController.h; sourceTree = "<group>"; };
 		1EE580EE1A50A930000F2F49 /* CCEFooterBarViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = CCEFooterBarViewController.m; path = Views/CCEFooterBarViewController.m; sourceTree = "<group>"; };
 		1EE580EF1A50A930000F2F49 /* CCEFooterBarViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = CCEFooterBarViewController.xib; path = Views/CCEFooterBarViewController.xib; sourceTree = "<group>"; };
-		1EE580F51A50D66C000F2F49 /* NSTimer+Blocks.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "NSTimer+Blocks.h"; path = "Bluetooth/NSTimer+Blocks.h"; sourceTree = "<group>"; };
-		1EE580F61A50D66C000F2F49 /* NSTimer+Blocks.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "NSTimer+Blocks.m"; path = "Bluetooth/NSTimer+Blocks.m"; sourceTree = "<group>"; };
-		1EE580F91A50D8CE000F2F49 /* CCEClientObject.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CCEClientObject.h; path = "Bluetooth/Data Types/CCEClientObject.h"; sourceTree = "<group>"; };
-		1EE580FA1A50D8CE000F2F49 /* CCEClientObject.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = CCEClientObject.m; path = "Bluetooth/Data Types/CCEClientObject.m"; sourceTree = "<group>"; };
 		1EE580FC1A518D73000F2F49 /* CCELaunchViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CCELaunchViewController.h; path = Views/CCELaunchViewController.h; sourceTree = "<group>"; };
 		1EE580FD1A518D73000F2F49 /* CCELaunchViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = CCELaunchViewController.m; path = Views/CCELaunchViewController.m; sourceTree = "<group>"; };
 		1EE580FE1A518D73000F2F49 /* CCELaunchViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = CCELaunchViewController.xib; path = Views/CCELaunchViewController.xib; sourceTree = "<group>"; };
@@ -85,6 +89,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				1E3591121A5252F000FEE9E0 /* MultipeerConnectivity.framework in Frameworks */,
 				1EE580D41A509FB5000F2F49 /* WebKit.framework in Frameworks */,
 				1EE580CC1A509DF2000F2F49 /* CoreBluetooth.framework in Frameworks */,
 			);
@@ -100,6 +105,37 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		1E35910A1A5251A500FEE9E0 /* Multipeer */ = {
+			isa = PBXGroup;
+			children = (
+				1E35910B1A5251D400FEE9E0 /* CCEServiceDefinitions.h */,
+				1E3591171A52540A00FEE9E0 /* CCETransmissionService.h */,
+				1E3591181A52540A00FEE9E0 /* CCETransmissionService.m */,
+				1E35910E1A5252E600FEE9E0 /* CCEMasterServer.h */,
+				1E35910F1A5252E600FEE9E0 /* CCEMasterServer.m */,
+			);
+			name = Multipeer;
+			sourceTree = "<group>";
+		};
+		1E3591161A5253CF00FEE9E0 /* Utilities */ = {
+			isa = PBXGroup;
+			children = (
+				1E35911D1A525D6D00FEE9E0 /* NSString+Random.h */,
+				1E35911E1A525D6D00FEE9E0 /* NSString+Random.m */,
+			);
+			name = Utilities;
+			sourceTree = "<group>";
+		};
+		1E3591201A525E9200FEE9E0 /* Modal Views */ = {
+			isa = PBXGroup;
+			children = (
+				1E3591261A525FB200FEE9E0 /* CCEServerConfigModal.h */,
+				1E3591271A525FB200FEE9E0 /* CCEServerConfigModal.m */,
+				1E3591281A525FB200FEE9E0 /* CCEServerConfigModal.xib */,
+			);
+			name = "Modal Views";
+			sourceTree = "<group>";
+		};
 		1EE5809F1A509DE9000F2F49 = {
 			isa = PBXGroup;
 			children = (
@@ -124,10 +160,12 @@
 				1EE580AD1A509DE9000F2F49 /* AppDelegate.h */,
 				1EE580AE1A509DE9000F2F49 /* AppDelegate.m */,
 				1EE580B41A509DE9000F2F49 /* MainMenu.xib */,
-				1EE580DB1A50A4FE000F2F49 /* Bluetooth */,
+				1E35910A1A5251A500FEE9E0 /* Multipeer */,
 				1EE580CD1A509DFB000F2F49 /* Views */,
+				1E3591161A5253CF00FEE9E0 /* Utilities */,
 				1EE580D51A50A106000F2F49 /* web */,
 				1EE580B21A509DE9000F2F49 /* Images.xcassets */,
+				1E3591111A5252F000FEE9E0 /* MultipeerConnectivity.framework */,
 				1EE580D31A509FB5000F2F49 /* WebKit.framework */,
 				1EE580CB1A509DF2000F2F49 /* CoreBluetooth.framework */,
 				1EE580AB1A509DE9000F2F49 /* Supporting Files */,
@@ -165,6 +203,7 @@
 			isa = PBXGroup;
 			children = (
 				1EE580D71A50A371000F2F49 /* Custom Controls */,
+				1E3591201A525E9200FEE9E0 /* Modal Views */,
 				1EE580CE1A509E14000F2F49 /* CCEEditorViewController.h */,
 				1EE580CF1A509E14000F2F49 /* CCEEditorViewController.m */,
 				1EE580D01A509E14000F2F49 /* CCEEditorViewController.xib */,
@@ -189,30 +228,6 @@
 				1EE581091A51D48F000F2F49 /* CCECloseButton.m */,
 			);
 			name = "Custom Controls";
-			sourceTree = "<group>";
-		};
-		1EE580DB1A50A4FE000F2F49 /* Bluetooth */ = {
-			isa = PBXGroup;
-			children = (
-				1EE580F81A50D8B5000F2F49 /* Data Types */,
-				1EE580DC1A50A531000F2F49 /* CCEBluetoothServiceDefinitions.h */,
-				1EE580E51A50A77B000F2F49 /* CCETransmissionService.h */,
-				1EE580E61A50A77B000F2F49 /* CCETransmissionService.m */,
-				1EE580E21A50A5C5000F2F49 /* CCEMasterServer.h */,
-				1EE580E31A50A5C5000F2F49 /* CCEMasterServer.m */,
-				1EE580F51A50D66C000F2F49 /* NSTimer+Blocks.h */,
-				1EE580F61A50D66C000F2F49 /* NSTimer+Blocks.m */,
-			);
-			name = Bluetooth;
-			sourceTree = "<group>";
-		};
-		1EE580F81A50D8B5000F2F49 /* Data Types */ = {
-			isa = PBXGroup;
-			children = (
-				1EE580F91A50D8CE000F2F49 /* CCEClientObject.h */,
-				1EE580FA1A50D8CE000F2F49 /* CCEClientObject.m */,
-			);
-			name = "Data Types";
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -301,6 +316,7 @@
 				1EE580D61A50A106000F2F49 /* web in Resources */,
 				1EE580F11A50A930000F2F49 /* CCEFooterBarViewController.xib in Resources */,
 				1EE580B31A509DE9000F2F49 /* Images.xcassets in Resources */,
+				1E35912A1A525FB200FEE9E0 /* CCEServerConfigModal.xib in Resources */,
 				1EE580B61A509DE9000F2F49 /* MainMenu.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -319,17 +335,17 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				1E3591291A525FB200FEE9E0 /* CCEServerConfigModal.m in Sources */,
+				1E3591101A5252E600FEE9E0 /* CCEMasterServer.m in Sources */,
+				1E3591191A52540A00FEE9E0 /* CCETransmissionService.m in Sources */,
 				1EE5810A1A51D48F000F2F49 /* CCECloseButton.m in Sources */,
 				1EE581041A51B034000F2F49 /* CCELaunchWindow.m in Sources */,
 				1EE580B11A509DE9000F2F49 /* main.m in Sources */,
+				1E35911F1A525D6D00FEE9E0 /* NSString+Random.m in Sources */,
 				1EE580D11A509E14000F2F49 /* CCEEditorViewController.m in Sources */,
-				1EE580F71A50D66C000F2F49 /* NSTimer+Blocks.m in Sources */,
 				1EE580F01A50A930000F2F49 /* CCEFooterBarViewController.m in Sources */,
-				1EE580E41A50A5C5000F2F49 /* CCEMasterServer.m in Sources */,
 				1EE580AF1A509DE9000F2F49 /* AppDelegate.m in Sources */,
 				1EE580DA1A50A38F000F2F49 /* CCEWebView.m in Sources */,
-				1EE580FB1A50D8CE000F2F49 /* CCEClientObject.m in Sources */,
-				1EE580E71A50A77B000F2F49 /* CCETransmissionService.m in Sources */,
 				1EE580FF1A518D73000F2F49 /* CCELaunchViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -517,6 +533,7 @@
 				1EE580C71A509DE9000F2F49 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		1EE580C81A509DE9000F2F49 /* Build configuration list for PBXNativeTarget "Collaborative EditorTests" */ = {
 			isa = XCConfigurationList;
@@ -525,6 +542,7 @@
 				1EE580CA1A509DE9000F2F49 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};

@@ -7,11 +7,24 @@
 //
 
 #import <Cocoa/Cocoa.h>
+#import "CCEServerConfigModal.h"
 
-@interface CCELaunchViewController : NSViewController
+@protocol CCELaunchViewDelegate <NSObject>
 
-- (IBAction)closeWindow:(id)sender;
-- (IBAction)startSession:(id)sender;
-- (IBAction)joinSession:(id)sender;
+/*!
+ * @discussion Starts the server with a blank document.
+ */
+- (void)startBlankServer;
+/*!
+ * @discussion Starts the server using the contents of an existing file.
+ * @param documentPath The file path of the target file.
+ */
+- (void)startDocumentServer: (NSString *)documentPath;
+
+@end
+
+@interface CCELaunchViewController : NSViewController <CCEServerConfigModalDelegate>
+
+@property id<CCELaunchViewDelegate> delegate;
 
 @end
