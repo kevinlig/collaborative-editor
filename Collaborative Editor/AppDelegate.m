@@ -63,7 +63,7 @@
     [self.window.contentView addSubview:self.editorViewController.view];
     [self.window.contentView setAutoresizesSubviews:YES];
     self.editorViewController.view.translatesAutoresizingMaskIntoConstraints = NO;
-    
+
     // also insert the footer bar
     self.footerViewController = [[CCEFooterBarViewController alloc]initWithNibName:@"CCEFooterBarViewController" bundle:nil];
     [self.window.contentView addSubview:self.footerViewController.view];

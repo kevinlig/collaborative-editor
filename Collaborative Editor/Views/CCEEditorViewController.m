@@ -32,7 +32,6 @@
     [self.editorView setMainFrameURL:appLocation];
 }
 
-
 - (void)changeSyntax:(NSString *)syntax {
     NSString *execJs = [NSString stringWithFormat:@"editor.getSession().setMode(\"%@\");", syntax];
     [self.editorView.windowScriptObject evaluateWebScript:execJs];
@@ -42,7 +41,5 @@
 - (void)footerChangedSyntax:(NSString *)syntax {
     [self changeSyntax:syntax];
 }
-
-
 
 @end
