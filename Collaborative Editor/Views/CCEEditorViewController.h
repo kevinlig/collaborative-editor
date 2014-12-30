@@ -8,8 +8,9 @@
 
 #import <Cocoa/Cocoa.h>
 #import "CCEWebView.h"
+#import "CCEFooterBarViewController.h"
 
-@interface CCEEditorViewController : NSViewController
+@interface CCEEditorViewController : NSViewController <CCEFooterBarDelegate>
 
 
 @end

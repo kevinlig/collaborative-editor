@@ -39,9 +39,13 @@
     self.masterServer = [[CCEMasterServer alloc]init];
     self.masterServer.delegate = self;
     
+    // listen for app termination notice
+//    [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(stopServer) name:@"appKill" object:nil];
+    
     self.isServer = YES;
     
 }
+
 
 #pragma mark - Server delegate methods
 - (void)serverPoweredOn {

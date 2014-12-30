@@ -8,6 +8,14 @@
 
 #import <Cocoa/Cocoa.h>
 
+@protocol CCEFooterBarDelegate <NSObject>
+
+- (void)footerChangedSyntax:(NSString *)syntax;
+
+@end
+
 @interface CCEFooterBarViewController : NSViewController
+
+@property id<CCEFooterBarDelegate> delegate;
 
 @end

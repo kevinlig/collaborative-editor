@@ -22,6 +22,12 @@
 		1EE580E71A50A77B000F2F49 /* CCETransmissionService.m in Sources */ = {isa = PBXBuildFile; fileRef = 1EE580E61A50A77B000F2F49 /* CCETransmissionService.m */; };
 		1EE580F01A50A930000F2F49 /* CCEFooterBarViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1EE580EE1A50A930000F2F49 /* CCEFooterBarViewController.m */; };
 		1EE580F11A50A930000F2F49 /* CCEFooterBarViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1EE580EF1A50A930000F2F49 /* CCEFooterBarViewController.xib */; };
+		1EE580F71A50D66C000F2F49 /* NSTimer+Blocks.m in Sources */ = {isa = PBXBuildFile; fileRef = 1EE580F61A50D66C000F2F49 /* NSTimer+Blocks.m */; };
+		1EE580FB1A50D8CE000F2F49 /* CCEClientObject.m in Sources */ = {isa = PBXBuildFile; fileRef = 1EE580FA1A50D8CE000F2F49 /* CCEClientObject.m */; };
+		1EE580FF1A518D73000F2F49 /* CCELaunchViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1EE580FD1A518D73000F2F49 /* CCELaunchViewController.m */; };
+		1EE581001A518D73000F2F49 /* CCELaunchViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1EE580FE1A518D73000F2F49 /* CCELaunchViewController.xib */; };
+		1EE581041A51B034000F2F49 /* CCELaunchWindow.m in Sources */ = {isa = PBXBuildFile; fileRef = 1EE581031A51B034000F2F49 /* CCELaunchWindow.m */; };
+		1EE5810A1A51D48F000F2F49 /* CCECloseButton.m in Sources */ = {isa = PBXBuildFile; fileRef = 1EE581091A51D48F000F2F49 /* CCECloseButton.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -61,6 +67,17 @@
 		1EE580ED1A50A930000F2F49 /* CCEFooterBarViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CCEFooterBarViewController.h; path = Views/CCEFooterBarViewController.h; sourceTree = "<group>"; };
 		1EE580EE1A50A930000F2F49 /* CCEFooterBarViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = CCEFooterBarViewController.m; path = Views/CCEFooterBarViewController.m; sourceTree = "<group>"; };
 		1EE580EF1A50A930000F2F49 /* CCEFooterBarViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = CCEFooterBarViewController.xib; path = Views/CCEFooterBarViewController.xib; sourceTree = "<group>"; };
+		1EE580F51A50D66C000F2F49 /* NSTimer+Blocks.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "NSTimer+Blocks.h"; path = "Bluetooth/NSTimer+Blocks.h"; sourceTree = "<group>"; };
+		1EE580F61A50D66C000F2F49 /* NSTimer+Blocks.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "NSTimer+Blocks.m"; path = "Bluetooth/NSTimer+Blocks.m"; sourceTree = "<group>"; };
+		1EE580F91A50D8CE000F2F49 /* CCEClientObject.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CCEClientObject.h; path = "Bluetooth/Data Types/CCEClientObject.h"; sourceTree = "<group>"; };
+		1EE580FA1A50D8CE000F2F49 /* CCEClientObject.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = CCEClientObject.m; path = "Bluetooth/Data Types/CCEClientObject.m"; sourceTree = "<group>"; };
+		1EE580FC1A518D73000F2F49 /* CCELaunchViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CCELaunchViewController.h; path = Views/CCELaunchViewController.h; sourceTree = "<group>"; };
+		1EE580FD1A518D73000F2F49 /* CCELaunchViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = CCELaunchViewController.m; path = Views/CCELaunchViewController.m; sourceTree = "<group>"; };
+		1EE580FE1A518D73000F2F49 /* CCELaunchViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = CCELaunchViewController.xib; path = Views/CCELaunchViewController.xib; sourceTree = "<group>"; };
+		1EE581021A51B034000F2F49 /* CCELaunchWindow.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CCELaunchWindow.h; path = "Views/Custom Controls/CCELaunchWindow.h"; sourceTree = "<group>"; };
+		1EE581031A51B034000F2F49 /* CCELaunchWindow.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = CCELaunchWindow.m; path = "Views/Custom Controls/CCELaunchWindow.m"; sourceTree = "<group>"; };
+		1EE581081A51D48F000F2F49 /* CCECloseButton.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CCECloseButton.h; path = "Views/Custom Controls/CCECloseButton.h"; sourceTree = "<group>"; };
+		1EE581091A51D48F000F2F49 /* CCECloseButton.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = CCECloseButton.m; path = "Views/Custom Controls/CCECloseButton.m"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -154,6 +171,9 @@
 				1EE580ED1A50A930000F2F49 /* CCEFooterBarViewController.h */,
 				1EE580EE1A50A930000F2F49 /* CCEFooterBarViewController.m */,
 				1EE580EF1A50A930000F2F49 /* CCEFooterBarViewController.xib */,
+				1EE580FC1A518D73000F2F49 /* CCELaunchViewController.h */,
+				1EE580FD1A518D73000F2F49 /* CCELaunchViewController.m */,
+				1EE580FE1A518D73000F2F49 /* CCELaunchViewController.xib */,
 			);
 			name = Views;
 			sourceTree = "<group>";
@@ -163,6 +183,10 @@
 			children = (
 				1EE580D81A50A38F000F2F49 /* CCEWebView.h */,
 				1EE580D91A50A38F000F2F49 /* CCEWebView.m */,
+				1EE581021A51B034000F2F49 /* CCELaunchWindow.h */,
+				1EE581031A51B034000F2F49 /* CCELaunchWindow.m */,
+				1EE581081A51D48F000F2F49 /* CCECloseButton.h */,
+				1EE581091A51D48F000F2F49 /* CCECloseButton.m */,
 			);
 			name = "Custom Controls";
 			sourceTree = "<group>";
@@ -170,13 +194,25 @@
 		1EE580DB1A50A4FE000F2F49 /* Bluetooth */ = {
 			isa = PBXGroup;
 			children = (
+				1EE580F81A50D8B5000F2F49 /* Data Types */,
 				1EE580DC1A50A531000F2F49 /* CCEBluetoothServiceDefinitions.h */,
 				1EE580E51A50A77B000F2F49 /* CCETransmissionService.h */,
 				1EE580E61A50A77B000F2F49 /* CCETransmissionService.m */,
 				1EE580E21A50A5C5000F2F49 /* CCEMasterServer.h */,
 				1EE580E31A50A5C5000F2F49 /* CCEMasterServer.m */,
+				1EE580F51A50D66C000F2F49 /* NSTimer+Blocks.h */,
+				1EE580F61A50D66C000F2F49 /* NSTimer+Blocks.m */,
 			);
 			name = Bluetooth;
+			sourceTree = "<group>";
+		};
+		1EE580F81A50D8B5000F2F49 /* Data Types */ = {
+			isa = PBXGroup;
+			children = (
+				1EE580F91A50D8CE000F2F49 /* CCEClientObject.h */,
+				1EE580FA1A50D8CE000F2F49 /* CCEClientObject.m */,
+			);
+			name = "Data Types";
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -261,6 +297,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				1EE580D21A509E14000F2F49 /* CCEEditorViewController.xib in Resources */,
+				1EE581001A518D73000F2F49 /* CCELaunchViewController.xib in Resources */,
 				1EE580D61A50A106000F2F49 /* web in Resources */,
 				1EE580F11A50A930000F2F49 /* CCEFooterBarViewController.xib in Resources */,
 				1EE580B31A509DE9000F2F49 /* Images.xcassets in Resources */,
@@ -282,13 +319,18 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				1EE5810A1A51D48F000F2F49 /* CCECloseButton.m in Sources */,
+				1EE581041A51B034000F2F49 /* CCELaunchWindow.m in Sources */,
 				1EE580B11A509DE9000F2F49 /* main.m in Sources */,
 				1EE580D11A509E14000F2F49 /* CCEEditorViewController.m in Sources */,
+				1EE580F71A50D66C000F2F49 /* NSTimer+Blocks.m in Sources */,
 				1EE580F01A50A930000F2F49 /* CCEFooterBarViewController.m in Sources */,
 				1EE580E41A50A5C5000F2F49 /* CCEMasterServer.m in Sources */,
 				1EE580AF1A509DE9000F2F49 /* AppDelegate.m in Sources */,
 				1EE580DA1A50A38F000F2F49 /* CCEWebView.m in Sources */,
+				1EE580FB1A50D8CE000F2F49 /* CCEClientObject.m in Sources */,
 				1EE580E71A50A77B000F2F49 /* CCETransmissionService.m in Sources */,
+				1EE580FF1A518D73000F2F49 /* CCELaunchViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

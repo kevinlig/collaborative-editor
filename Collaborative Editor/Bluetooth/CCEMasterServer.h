@@ -9,6 +9,8 @@
 #import <Foundation/Foundation.h>
 #import <CoreBluetooth/CoreBluetooth.h>
 #import "CCEBluetoothServiceDefinitions.h"
+#import "NSTimer+Blocks.h"
+#import "CCEClientObject.h"
 
 @protocol CCEMasterServerDelegate <NSObject>
 
@@ -21,9 +23,17 @@
 @property id<CCEMasterServerDelegate> delegate;
 
 @property (nonatomic, strong) CBPeripheralManager *peripheralManager;
+@property (nonatomic, strong) CBMutableService *mainService;
+@property (nonatomic, strong) CBMutableCharacteristic *changesCharacteristic;
+@property (nonatomic, strong) CBMutableCharacteristic *secondCharacteristic;
+@property (nonatomic, strong) CBMutableCharacteristic *registrationCharacteristic;
+
+@property (nonatomic, strong) NSMutableDictionary *subscribedClients;
 @property BOOL isAdvertising;
 
 - (void)startAdvertising;
 - (void)stopAdvertising;
+- (void)setupServices;
+
 
 @end

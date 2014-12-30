@@ -11,7 +11,13 @@
 
 @interface CCEFooterBarViewController ()
 
+@property (weak) IBOutlet NSPopUpButton *syntaxDropdown;
+@property (nonatomic, strong) NSDictionary *syntaxList;
+
 - (IBAction)startServer:(id)sender;
+
+- (void)populateSyntaxList;
+- (IBAction)changeSyntax:(id)sender;
 
 @end
 
@@ -20,6 +26,25 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do view setup here.
+    self.syntaxList = @{@"Objective-C": @"ace/mode/objectivec", @"JavaScript": @"ace/mode/javascript", @"PHP": @"ace/mode/php"};
+    
+    [self populateSyntaxList];
+}
+
+- (void)populateSyntaxList {
+
+
+    NSMenu *syntaxMenu = self.syntaxDropdown.menu;
+    
+    for (NSString *syntax in self.syntaxList) {
+        [syntaxMenu addItemWithTitle:syntax action:nil keyEquivalent:@""];
+    }
+}
+
+- (IBAction)changeSyntax:(id)sender {
+    NSString *displayTitle = self.syntaxDropdown.selectedItem.title;
+    NSString *aceValue = [self.syntaxList objectForKey:displayTitle];
+    [self.delegate footerChangedSyntax:aceValue];
 }
 
 - (IBAction)startServer:(id)sender {

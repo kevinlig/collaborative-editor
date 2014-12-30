@@ -17,6 +17,7 @@
 + (id)sharedManager;
 
 - (void)startServer;
-- (void)startAdvertising;
+- (void)stopServer;
+
 
 @end

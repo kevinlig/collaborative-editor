@@ -6,6 +6,7 @@
     <objects>
         <customObject id="-2" userLabel="File's Owner" customClass="CCEFooterBarViewController">
             <connections>
+                <outlet property="syntaxDropdown" destination="GGX-jx-O4M" id="7oo-W5-Ope"/>
                 <outlet property="view" destination="Hz6-mo-xeY" id="0bl-1N-x8E"/>
             </connections>
         </customObject>
@@ -29,9 +30,26 @@
                         <action selector="startServer:" target="-2" id="E9M-U8-FUn"/>
                     </connections>
                 </button>
+                <popUpButton verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="GGX-jx-O4M">
+                    <rect key="frame" x="347" y="2" width="125" height="26"/>
+                    <constraints>
+                        <constraint firstAttribute="height" constant="21" id="bbl-Js-Hss"/>
+                        <constraint firstAttribute="width" constant="120" id="w9t-N4-ugy"/>
+                    </constraints>
+                    <popUpButtonCell key="cell" type="push" bezelStyle="rounded" alignment="left" lineBreakMode="truncatingTail" borderStyle="borderAndBezel" imageScaling="proportionallyDown" inset="2" id="ON6-PN-8Kg">
+                        <behavior key="behavior" lightByBackground="YES" lightByGray="YES"/>
+                        <font key="font" metaFont="menu"/>
+                        <menu key="menu" id="lFc-Vn-onW"/>
+                        <connections>
+                            <action selector="changeSyntax:" target="-2" id="SY3-dS-GuN"/>
+                        </connections>
+                    </popUpButtonCell>
+                </popUpButton>
             </subviews>
             <constraints>
+                <constraint firstAttribute="centerY" secondItem="GGX-jx-O4M" secondAttribute="centerY" constant="0.5" id="8kh-TF-ezQ"/>
                 <constraint firstAttribute="centerY" secondItem="8Dc-aG-PSh" secondAttribute="centerY" constant="0.5" id="SmV-0i-ZNH"/>
+                <constraint firstAttribute="trailing" secondItem="GGX-jx-O4M" secondAttribute="trailing" constant="11" id="fZ6-21-qM0"/>
                 <constraint firstItem="8Dc-aG-PSh" firstAttribute="leading" secondItem="Hz6-mo-xeY" secondAttribute="leading" constant="10" id="jp1-kY-QgA"/>
             </constraints>
         </customView>
