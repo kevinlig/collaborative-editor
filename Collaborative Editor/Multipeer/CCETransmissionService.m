@@ -43,6 +43,22 @@
     
     [self.masterServer startServer];
     
+    self.sessionCode = self.masterServer.sessionCode;
+}
+
+
+- (void)startClient {
+    if (self.slaveClient && self.slaveClient.isScanning) {
+        // client has already started and is scanning
+        return;
+    }
+    
+    self.slaveClient = [[CCESlaveClient alloc]init];
+    self.slaveClient.delegate = self;
+    self.slaveClient.userName = self.userName;
+    self.slaveClient.sessionCode = self.sessionCode;
+    
+    
 }
 
 #pragma mark - Server delegate methods

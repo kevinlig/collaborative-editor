@@ -8,8 +8,9 @@
 
 #import <Foundation/Foundation.h>
 #import "CCEMasterServer.h"
+#import "CCESlaveClient.h"
 
-@interface CCETransmissionService : NSObject <CCEMasterServerDelegate>
+@interface CCETransmissionService : NSObject <CCEMasterServerDelegate, CCESlaveClientDelegate>
 
 /// @brief Indicates whether the application is acting as a master server or a slave client.
 @property BOOL isServer;
@@ -17,6 +18,12 @@
 @property (nonatomic, strong) NSString *userName;
 /// @brief The underlying server object (may be nil if the shared manager is not acting as a master server)
 @property (nonatomic, strong) CCEMasterServer *masterServer;
+/// @brief The 4-character access code for the server session
+@property (nonatomic, strong) NSString *sessionCode;
+
+
+/// @brief The underlying client object (may be nil if the shared manager is not acting as a slave client)
+@property (nonatomic, strong) CCESlaveClient *slaveClient;
 
 + (id)sharedManager;
 
@@ -25,5 +32,7 @@
  * @warning You must specify a userName before calling this method.
  */
 - (void)startServer;
+
+- (void)startClient;
 
 @end

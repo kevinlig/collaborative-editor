@@ -30,4 +30,7 @@
 
 @property id<CCEServerConfigModalDelegate> delegate;
 
+/// @brief The display name that will be shown to other users.
+@property (nonatomic, strong) NSString *userName;
+
 @end

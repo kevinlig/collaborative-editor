@@ -25,8 +25,6 @@
     self.session = [[MCSession alloc]initWithPeer:self.peerId];
     self.session.delegate = self;
     
-    NSLog(@"%@",self.sessionCode);
-    
     return self.sessionCode;
     
 }

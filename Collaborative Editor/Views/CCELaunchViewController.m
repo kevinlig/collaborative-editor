@@ -8,16 +8,22 @@
 
 #import "CCELaunchViewController.h"
 #import "CCECloseButton.h"
+#import "CCETransmissionService.h"
 
-
-@interface CCELaunchViewController ()
+@interface CCELaunchViewController () {
+    BOOL _createNew;
+    NSString *_docPath;
+}
 
 @property (weak) IBOutlet CCECloseButton *closeButton;
 @property (nonatomic, strong) CCEServerConfigModal *serverConfigModal;
+@property (nonatomic, strong) CCEServerDetailModal *serverDetailModal;
 
 - (IBAction)closeWindow:(id)sender;
 - (IBAction)startSession:(id)sender;
 - (IBAction)joinSession:(id)sender;
+
+- (void)displayServerDetailModal;
 
 @end
 
@@ -26,6 +32,8 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do view setup here.
+    
+    _createNew = YES;
     
     self.closeButton.primaryImage = [NSImage imageNamed:@"close"];
     self.closeButton.secondaryImage = [NSImage imageNamed:@"close_hover"];
@@ -54,6 +62,20 @@
     
 }
 
+- (void)displayServerDetailModal {
+    
+    // create a modal with server configuration options
+    if (self.serverDetailModal) {
+        self.serverDetailModal = nil;
+    }
+    self.serverDetailModal = [[CCEServerDetailModal alloc]initWithNibName:@"CCEServerDetailModal" bundle:nil];
+    self.serverDetailModal.delegate = self;
+    self.serverDetailModal.sessionCode =[[CCETransmissionService sharedManager]masterServer].sessionCode;
+    
+    [self presentViewControllerAsSheet:self.serverDetailModal];
+    
+}
+
 
 #pragma mark - Server configuration modal delegate methods
 - (void)cancelServerModal {
@@ -61,13 +83,40 @@
 }
 
 - (void)createBlankDocument {
+    self.userName = self.serverConfigModal.userName;
     [self dismissViewController:self.serverConfigModal];
-    [self.delegate startBlankServer];
+    
+    // start the server
+    [[CCETransmissionService sharedManager]setUserName:self.userName];
+    [[CCETransmissionService sharedManager]startServer];
+    
+    [self displayServerDetailModal];
+    
+    _createNew = YES;
 }
 
 - (void)openDocumentAt:(NSString *)documentPath {
+    self.userName = self.serverConfigModal.userName;    
     [self dismissViewController:self.serverConfigModal];
-    [self.delegate startDocumentServer:documentPath];
+    
+    // start the server
+    [[CCETransmissionService sharedManager]setUserName:self.userName];
+    [[CCETransmissionService sharedManager]startServer];
+    
+    [self displayServerDetailModal];
+    
+    _createNew = NO;
+    _docPath = documentPath;
+}
+
+#pragma mark - Server detail modal delegate methods
+- (void)serverDetailModalClosed {
+    if (_createNew) {
+        [self.delegate startBlankServer];
+    }
+    else {
+        [self.delegate startDocumentServer:_docPath];
+    }
 }
 
 @end

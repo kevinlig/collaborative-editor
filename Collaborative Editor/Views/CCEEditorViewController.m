@@ -8,16 +8,16 @@
 
 #import "CCEEditorViewController.h"
 
-@interface CCEEditorViewController () {
-    BOOL _firstLoad;
-}
+@interface CCEEditorViewController ()
 
 @property (weak) IBOutlet CCEWebView *editorView;
 
 @property (nonatomic, strong) NSString *documentContents;
+@property (nonatomic, strong) WebViewJavascriptBridge *bridge;
 
 - (void)openDocument;
 
+- (void) configureBridge;
 - (void)loadEditor;
 - (void)changeSyntax:(NSString *)syntax;
 
@@ -28,7 +28,6 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do view setup here.
-    _firstLoad = YES;
     [self loadEditor];
     
 
@@ -37,20 +36,42 @@
 - (void)openDocument {
     self.documentContents = [NSString stringWithContentsOfFile:self.documentPath encoding:NSUTF8StringEncoding error:nil];
     
-    NSString *encodedData = [[self.documentContents dataUsingEncoding:NSUTF8StringEncoding] base64EncodedStringWithOptions:NSDataBase64EncodingEndLineWithCarriageReturn];
-    
-    NSString *execJs = [NSString stringWithFormat:@"editor.setValue(atob(\"%@\"));editor.selection.moveCursorTo(0,0);editor.selection.clearSelection();",encodedData];
-    [self.editorView.windowScriptObject evaluateWebScript:execJs];
+    [self.bridge callHandler:@"pushFullDocument" data:self.documentContents];
+
 }
 
-- (void)loadEditor {    
+- (void) configureBridge {
+    self.bridge = [WebViewJavascriptBridge bridgeForWebView:self.editorView handler:nil];
+
+}
+
+- (void)loadEditor {
+    
+    self.editorReady = NO;
+    
+    // setup a javascript bridge
     NSString *appLocation = [[NSBundle mainBundle]pathForResource:@"web/editor/index" ofType:@"html"];
     [self.editorView setMainFrameURL:appLocation];
+    
+    [self configureBridge];
+    
+    // setup handler to JS to call when it is fully loaded
+    [self.bridge registerHandler:@"jsReady" handler:^(id data, WVJBResponseCallback responseCallback) {
+        
+        self.editorReady = YES;
+        
+        // JS editor is ready, load a document if it is needed
+        if (self.documentPath) {
+            // load the document
+            [self openDocument];
+        }
+    }];
 }
 
 - (void)changeSyntax:(NSString *)syntax {
-    NSString *execJs = [NSString stringWithFormat:@"editor.getSession().setMode(\"%@\");", syntax];
-    [self.editorView.windowScriptObject evaluateWebScript:execJs];
+    if (self.editorReady) {
+        [self.bridge callHandler:@"changeSyntax" data:syntax];
+    }
 }
 
 #pragma mark - Footer bar delegate
@@ -58,14 +79,4 @@
     [self changeSyntax:syntax];
 }
 
-#pragma mark - Webkit JS delegates
-- (void)webView:(WebView *)sender didFinishLoadForFrame:(WebFrame *)frame {
-    
-    if (_firstLoad && self.documentPath) {
-        // give it 200ms to finish executing, then load in the data
-        [self performSelector:@selector(openDocument) withObject:nil afterDelay:0.2f];
-    }
-    
-    _firstLoad = NO;
-}
 @end

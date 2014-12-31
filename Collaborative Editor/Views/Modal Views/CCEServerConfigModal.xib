@@ -7,6 +7,7 @@
         <customObject id="-2" userLabel="File's Owner" customClass="CCEServerConfigModal">
             <connections>
                 <outlet property="blankRadio" destination="ZE6-xp-2RU" id="ssY-AR-OQr"/>
+                <outlet property="displayNameField" destination="TIk-Vw-H9e" id="Tgi-jz-zEM"/>
                 <outlet property="doneButton" destination="YrQ-ma-nm0" id="Ray-La-CrH"/>
                 <outlet property="existingRadio" destination="PaU-KO-jSk" id="QxV-vL-QFD"/>
                 <outlet property="fileNameLabel" destination="vlu-54-kZu" id="csm-iJ-cbd"/>
@@ -17,7 +18,7 @@
         <customObject id="-1" userLabel="First Responder" customClass="FirstResponder"/>
         <customObject id="-3" userLabel="Application" customClass="NSObject"/>
         <customView id="Hz6-mo-xeY">
-            <rect key="frame" x="0.0" y="0.0" width="480" height="272"/>
+            <rect key="frame" x="0.0" y="0.0" width="480" height="300"/>
             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
             <subviews>
                 <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="YrQ-ma-nm0">
@@ -26,7 +27,7 @@
                         <constraint firstAttribute="height" constant="21" id="WWm-hO-JoE"/>
                         <constraint firstAttribute="width" constant="68" id="lYK-Vu-1YM"/>
                     </constraints>
-                    <buttonCell key="cell" type="push" title="Done" bezelStyle="rounded" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="fqO-uF-svc">
+                    <buttonCell key="cell" type="push" title="Done" bezelStyle="rounded" alignment="center" enabled="NO" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="fqO-uF-svc">
                         <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                         <font key="font" metaFont="system"/>
                         <string key="keyEquivalent" base64-UTF8="YES">
@@ -55,7 +56,7 @@ Gw
                     </connections>
                 </button>
                 <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="I5V-0N-gHZ">
-                    <rect key="frame" x="20" y="225" width="274" height="27"/>
+                    <rect key="frame" x="20" y="253" width="274" height="27"/>
                     <constraints>
                         <constraint firstAttribute="height" constant="27" id="ciw-xn-gGF"/>
                         <constraint firstAttribute="width" constant="270" id="rfE-gg-fHa"/>
@@ -67,7 +68,7 @@ Gw
                     </textFieldCell>
                 </textField>
                 <matrix verticalHuggingPriority="750" fixedFrame="YES" autorecalculatesCellSize="YES" translatesAutoresizingMaskIntoConstraints="NO" id="xLo-Wy-Dy9">
-                    <rect key="frame" x="70" y="193" width="175" height="18"/>
+                    <rect key="frame" x="70" y="219" width="175" height="18"/>
                     <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
                     <size key="cellSize" width="75" height="18"/>
                     <size key="intercellSpacing" width="4" height="2"/>
@@ -88,7 +89,7 @@ Gw
                     </connections>
                 </matrix>
                 <matrix verticalHuggingPriority="750" fixedFrame="YES" autorecalculatesCellSize="YES" translatesAutoresizingMaskIntoConstraints="NO" id="eJz-mI-TIs">
-                    <rect key="frame" x="70" y="141" width="175" height="18"/>
+                    <rect key="frame" x="70" y="167" width="175" height="18"/>
                     <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
                     <size key="cellSize" width="97" height="18"/>
                     <size key="intercellSpacing" width="4" height="2"/>
@@ -109,7 +110,7 @@ Gw
                     </connections>
                 </matrix>
                 <textField verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" fixedFrame="YES" setsMaxLayoutWidthAtFirstLayout="YES" translatesAutoresizingMaskIntoConstraints="NO" id="lK6-nr-l5W">
-                    <rect key="frame" x="89" y="167" width="264" height="26"/>
+                    <rect key="frame" x="89" y="193" width="264" height="26"/>
                     <textFieldCell key="cell" sendsActionOnEndEditing="YES" title="Start with a blank text editor." id="CaR-Hc-rwn">
                         <font key="font" size="13" name="HelveticaNeue-Thin"/>
                         <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
@@ -117,7 +118,7 @@ Gw
                     </textFieldCell>
                 </textField>
                 <textField verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" fixedFrame="YES" setsMaxLayoutWidthAtFirstLayout="YES" translatesAutoresizingMaskIntoConstraints="NO" id="9ec-Lc-mUy">
-                    <rect key="frame" x="89" y="100" width="326" height="40"/>
+                    <rect key="frame" x="89" y="126" width="326" height="40"/>
                     <textFieldCell key="cell" sendsActionOnEndEditing="YES" title="Start with an existing file. You'll need to select a file before continuing." id="170-sO-YGa">
                         <font key="font" size="13" name="HelveticaNeue-Thin"/>
                         <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
@@ -125,7 +126,7 @@ Gw
                     </textFieldCell>
                 </textField>
                 <button hidden="YES" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="gYf-mt-lP3">
-                    <rect key="frame" x="85" y="65" width="77" height="28"/>
+                    <rect key="frame" x="85" y="91" width="77" height="28"/>
                     <buttonCell key="cell" type="push" title="Open File" bezelStyle="rounded" alignment="center" controlSize="small" enabled="NO" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="Ail-uc-TJx">
                         <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                         <font key="font" metaFont="smallSystem"/>
@@ -135,11 +136,27 @@ Gw
                     </connections>
                 </button>
                 <textField hidden="YES" horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="vlu-54-kZu">
-                    <rect key="frame" x="163" y="72" width="227" height="17"/>
+                    <rect key="frame" x="163" y="98" width="227" height="17"/>
                     <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="No file selected" id="Uif-cP-fRR">
                         <font key="font" size="11" name="HelveticaNeue-Thin"/>
                         <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
                         <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
+                    </textFieldCell>
+                </textField>
+                <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="LXC-Bt-U1Q">
+                    <rect key="frame" x="20" y="66" width="94" height="17"/>
+                    <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="Display Name:" id="gCU-2y-HHc">
+                        <font key="font" metaFont="system"/>
+                        <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
+                        <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
+                    </textFieldCell>
+                </textField>
+                <textField verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="TIk-Vw-H9e">
+                    <rect key="frame" x="133" y="62" width="247" height="22"/>
+                    <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" selectable="YES" editable="YES" sendsActionOnEndEditing="YES" state="on" borderStyle="bezel" placeholderString="Enter your name as others will see it" drawsBackground="YES" id="Lg2-vS-DPu">
+                        <font key="font" metaFont="system"/>
+                        <color key="textColor" name="textColor" catalog="System" colorSpace="catalog"/>
+                        <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
                     </textFieldCell>
                 </textField>
             </subviews>
@@ -151,6 +168,7 @@ Gw
                 <constraint firstAttribute="trailing" secondItem="YrQ-ma-nm0" secondAttribute="trailing" constant="20" id="j8U-tU-0SI"/>
                 <constraint firstAttribute="bottom" secondItem="0Os-xk-P8m" secondAttribute="bottom" constant="20" id="yB3-30-3rl"/>
             </constraints>
+            <point key="canvasLocation" x="340" y="394"/>
         </customView>
     </objects>
 </document>

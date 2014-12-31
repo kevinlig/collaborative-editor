@@ -10,10 +10,14 @@
 #import <WebKit/WebKit.h>
 #import "CCEWebView.h"
 #import "CCEFooterBarViewController.h"
+#import "WebViewJavascriptBridge.h"
 
 @interface CCEEditorViewController : NSViewController <CCEFooterBarDelegate>
 
 /// @brief The file path of the file to load (may be nil if using a blank document).
 @property (nonatomic, strong) NSString *documentPath;
+
+/// @brief Indicates whether the JS editor has been fully loaded and can receive commands.
+@property BOOL editorReady;
 
 @end

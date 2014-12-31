@@ -8,6 +8,7 @@
 
 #import <Cocoa/Cocoa.h>
 #import "CCEServerConfigModal.h"
+#import "CCEServerDetailModal.h"
 
 @protocol CCELaunchViewDelegate <NSObject>
 
@@ -23,8 +24,11 @@
 
 @end
 
-@interface CCELaunchViewController : NSViewController <CCEServerConfigModalDelegate>
+@interface CCELaunchViewController : NSViewController <CCEServerConfigModalDelegate, CCEServerDetailModalDelegate>
 
 @property id<CCELaunchViewDelegate> delegate;
+
+/// @brief The user name that will displayed to other users.
+@property (nonatomic, strong) NSString *userName;
 
 @end
