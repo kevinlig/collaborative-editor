@@ -18,6 +18,7 @@
 @property (weak) IBOutlet CCECloseButton *closeButton;
 @property (nonatomic, strong) CCEServerConfigModal *serverConfigModal;
 @property (nonatomic, strong) CCEServerDetailModal *serverDetailModal;
+@property (nonatomic, strong) CCEJoinSessionModal *joinSessionModal;
 
 - (IBAction)closeWindow:(id)sender;
 - (IBAction)startSession:(id)sender;
@@ -59,7 +60,14 @@
     
 }
 - (IBAction)joinSession:(id)sender {
+    if (self.joinSessionModal) {
+        self.joinSessionModal = nil;
+    }
     
+    self.joinSessionModal = [[CCEJoinSessionModal alloc]initWithNibName:@"CCEJoinSessionModal" bundle:nil];
+    self.joinSessionModal.delegate = self;
+    
+    [self presentViewControllerAsSheet:self.joinSessionModal];
 }
 
 - (void)displayServerDetailModal {
@@ -70,7 +78,7 @@
     }
     self.serverDetailModal = [[CCEServerDetailModal alloc]initWithNibName:@"CCEServerDetailModal" bundle:nil];
     self.serverDetailModal.delegate = self;
-    self.serverDetailModal.sessionCode =[[CCETransmissionService sharedManager]masterServer].sessionCode;
+    self.serverDetailModal.sessionCode = [[CCETransmissionService sharedManager]masterServer].sessionCode;
     
     [self presentViewControllerAsSheet:self.serverDetailModal];
     
@@ -117,6 +125,19 @@
     else {
         [self.delegate startDocumentServer:_docPath];
     }
+}
+
+#pragma mark - Join session modal delegate methods
+- (void)joinSessionModalWithSessionCode:(NSString *)sessionCode andUserName:(NSString *)userName {
+    // join the session
+    [[CCETransmissionService sharedManager]setUserName:userName];
+    [[CCETransmissionService sharedManager]setSessionCode:sessionCode];
+    
+    [[CCETransmissionService sharedManager]startClient];
+}
+
+- (void)joinSessionModalCancelled {
+    [self dismissViewController:self.joinSessionModal];
 }
 
 @end

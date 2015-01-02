@@ -9,6 +9,7 @@
 #import <Cocoa/Cocoa.h>
 #import "CCEServerConfigModal.h"
 #import "CCEServerDetailModal.h"
+#import "CCEJoinSessionModal.h"
 
 @protocol CCELaunchViewDelegate <NSObject>
 
@@ -24,7 +25,7 @@
 
 @end
 
-@interface CCELaunchViewController : NSViewController <CCEServerConfigModalDelegate, CCEServerDetailModalDelegate>
+@interface CCELaunchViewController : NSViewController <CCEServerConfigModalDelegate, CCEServerDetailModalDelegate, CCEJoinSessionModalDelegate>
 
 @property id<CCELaunchViewDelegate> delegate;
 

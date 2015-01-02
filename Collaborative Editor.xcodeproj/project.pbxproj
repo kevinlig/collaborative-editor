@@ -18,6 +18,8 @@
 		1E3591351A534BC600FEE9E0 /* CCEServerDetailModal.m in Sources */ = {isa = PBXBuildFile; fileRef = 1E3591331A534BC600FEE9E0 /* CCEServerDetailModal.m */; };
 		1E3591361A534BC600FEE9E0 /* CCEServerDetailModal.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1E3591341A534BC600FEE9E0 /* CCEServerDetailModal.xib */; };
 		1E3591391A5394DB00FEE9E0 /* CCESlaveClient.m in Sources */ = {isa = PBXBuildFile; fileRef = 1E3591381A5394DB00FEE9E0 /* CCESlaveClient.m */; };
+		1E3731251A575BD7009B0685 /* CCEJoinSessionModal.m in Sources */ = {isa = PBXBuildFile; fileRef = 1E3731231A575BD7009B0685 /* CCEJoinSessionModal.m */; };
+		1E3731261A575BD7009B0685 /* CCEJoinSessionModal.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1E3731241A575BD7009B0685 /* CCEJoinSessionModal.xib */; };
 		1EE580AF1A509DE9000F2F49 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 1EE580AE1A509DE9000F2F49 /* AppDelegate.m */; };
 		1EE580B11A509DE9000F2F49 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 1EE580B01A509DE9000F2F49 /* main.m */; };
 		1EE580B31A509DE9000F2F49 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 1EE580B21A509DE9000F2F49 /* Images.xcassets */; };
@@ -67,6 +69,9 @@
 		1E3591341A534BC600FEE9E0 /* CCEServerDetailModal.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = CCEServerDetailModal.xib; path = "Views/Modal Views/CCEServerDetailModal.xib"; sourceTree = "<group>"; };
 		1E3591371A5394DB00FEE9E0 /* CCESlaveClient.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CCESlaveClient.h; path = Multipeer/CCESlaveClient.h; sourceTree = "<group>"; };
 		1E3591381A5394DB00FEE9E0 /* CCESlaveClient.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = CCESlaveClient.m; path = Multipeer/CCESlaveClient.m; sourceTree = "<group>"; };
+		1E3731221A575BD7009B0685 /* CCEJoinSessionModal.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CCEJoinSessionModal.h; path = "Views/Modal Views/CCEJoinSessionModal.h"; sourceTree = "<group>"; };
+		1E3731231A575BD7009B0685 /* CCEJoinSessionModal.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = CCEJoinSessionModal.m; path = "Views/Modal Views/CCEJoinSessionModal.m"; sourceTree = "<group>"; };
+		1E3731241A575BD7009B0685 /* CCEJoinSessionModal.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = CCEJoinSessionModal.xib; path = "Views/Modal Views/CCEJoinSessionModal.xib"; sourceTree = "<group>"; };
 		1EE580A81A509DE9000F2F49 /* Collaborative Editor.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Collaborative Editor.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		1EE580AC1A509DE9000F2F49 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		1EE580AD1A509DE9000F2F49 /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
@@ -151,6 +156,9 @@
 				1E3591321A534BC600FEE9E0 /* CCEServerDetailModal.h */,
 				1E3591331A534BC600FEE9E0 /* CCEServerDetailModal.m */,
 				1E3591341A534BC600FEE9E0 /* CCEServerDetailModal.xib */,
+				1E3731221A575BD7009B0685 /* CCEJoinSessionModal.h */,
+				1E3731231A575BD7009B0685 /* CCEJoinSessionModal.m */,
+				1E3731241A575BD7009B0685 /* CCEJoinSessionModal.xib */,
 			);
 			name = "Modal Views";
 			sourceTree = "<group>";
@@ -347,6 +355,7 @@
 				1EE580D61A50A106000F2F49 /* web in Resources */,
 				1EE580F11A50A930000F2F49 /* CCEFooterBarViewController.xib in Resources */,
 				1E35912F1A5325D500FEE9E0 /* WebViewJavascriptBridge.js.txt in Resources */,
+				1E3731261A575BD7009B0685 /* CCEJoinSessionModal.xib in Resources */,
 				1EE580B31A509DE9000F2F49 /* Images.xcassets in Resources */,
 				1E35912A1A525FB200FEE9E0 /* CCEServerConfigModal.xib in Resources */,
 				1EE580B61A509DE9000F2F49 /* MainMenu.xib in Resources */,
@@ -379,6 +388,7 @@
 				1EE580F01A50A930000F2F49 /* CCEFooterBarViewController.m in Sources */,
 				1E3591301A5325D500FEE9E0 /* WebViewJavascriptBridge.m in Sources */,
 				1EE580AF1A509DE9000F2F49 /* AppDelegate.m in Sources */,
+				1E3731251A575BD7009B0685 /* CCEJoinSessionModal.m in Sources */,
 				1EE580DA1A50A38F000F2F49 /* CCEWebView.m in Sources */,
 				1EE580FF1A518D73000F2F49 /* CCELaunchViewController.m in Sources */,
 				1E3591391A5394DB00FEE9E0 /* CCESlaveClient.m in Sources */,

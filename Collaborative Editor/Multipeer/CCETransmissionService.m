@@ -58,6 +58,8 @@
     self.slaveClient.userName = self.userName;
     self.slaveClient.sessionCode = self.sessionCode;
     
+    [self.slaveClient startScanning];
+    
     
 }
 

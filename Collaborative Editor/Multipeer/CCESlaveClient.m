@@ -30,6 +30,8 @@
     }
     
     [self.browser startBrowsingForPeers];
+    
+    NSLog(@"Looking for service %@", self.browser.serviceType);
 }
 
 #pragma mark - Browser delegate methods
