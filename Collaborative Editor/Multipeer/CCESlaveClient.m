@@ -22,6 +22,8 @@
 
     self.browser = [[MCNearbyServiceBrowser alloc]initWithPeer:self.peerId serviceType:serviceType];
     self.browser.delegate = self;
+    
+    self.session = [[MCSession alloc]initWithPeer:self.peerId];
 }
 
 - (void)startScanning {
@@ -36,7 +38,9 @@
 
 #pragma mark - Browser delegate methods
 - (void)browser:(MCNearbyServiceBrowser *)browser foundPeer:(MCPeerID *)peerID withDiscoveryInfo:(NSDictionary *)info {
-    NSLog(@"%@",peerID);
+    // found the server, connect to it and stop scanning
+    [self.browser invitePeer:self.peerId toSession:self.session withContext:nil timeout:30];
+    [self.browser stopBrowsingForPeers];
 }
 
 

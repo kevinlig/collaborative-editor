@@ -20,6 +20,7 @@
 		1E3591391A5394DB00FEE9E0 /* CCESlaveClient.m in Sources */ = {isa = PBXBuildFile; fileRef = 1E3591381A5394DB00FEE9E0 /* CCESlaveClient.m */; };
 		1E3731251A575BD7009B0685 /* CCEJoinSessionModal.m in Sources */ = {isa = PBXBuildFile; fileRef = 1E3731231A575BD7009B0685 /* CCEJoinSessionModal.m */; };
 		1E3731261A575BD7009B0685 /* CCEJoinSessionModal.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1E3731241A575BD7009B0685 /* CCEJoinSessionModal.xib */; };
+		1E37312D1A576344009B0685 /* CCEClientModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 1E37312C1A576344009B0685 /* CCEClientModel.m */; };
 		1EE580AF1A509DE9000F2F49 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 1EE580AE1A509DE9000F2F49 /* AppDelegate.m */; };
 		1EE580B11A509DE9000F2F49 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 1EE580B01A509DE9000F2F49 /* main.m */; };
 		1EE580B31A509DE9000F2F49 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 1EE580B21A509DE9000F2F49 /* Images.xcassets */; };
@@ -72,6 +73,8 @@
 		1E3731221A575BD7009B0685 /* CCEJoinSessionModal.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CCEJoinSessionModal.h; path = "Views/Modal Views/CCEJoinSessionModal.h"; sourceTree = "<group>"; };
 		1E3731231A575BD7009B0685 /* CCEJoinSessionModal.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = CCEJoinSessionModal.m; path = "Views/Modal Views/CCEJoinSessionModal.m"; sourceTree = "<group>"; };
 		1E3731241A575BD7009B0685 /* CCEJoinSessionModal.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = CCEJoinSessionModal.xib; path = "Views/Modal Views/CCEJoinSessionModal.xib"; sourceTree = "<group>"; };
+		1E37312B1A576344009B0685 /* CCEClientModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CCEClientModel.h; path = "Multipeer/Data Models/CCEClientModel.h"; sourceTree = "<group>"; };
+		1E37312C1A576344009B0685 /* CCEClientModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = CCEClientModel.m; path = "Multipeer/Data Models/CCEClientModel.m"; sourceTree = "<group>"; };
 		1EE580A81A509DE9000F2F49 /* Collaborative Editor.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Collaborative Editor.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		1EE580AC1A509DE9000F2F49 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		1EE580AD1A509DE9000F2F49 /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
@@ -126,6 +129,7 @@
 		1E35910A1A5251A500FEE9E0 /* Multipeer */ = {
 			isa = PBXGroup;
 			children = (
+				1E3731271A57630F009B0685 /* Data Models */,
 				1E35910B1A5251D400FEE9E0 /* CCEServiceDefinitions.h */,
 				1E3591171A52540A00FEE9E0 /* CCETransmissionService.h */,
 				1E3591181A52540A00FEE9E0 /* CCETransmissionService.m */,
@@ -172,6 +176,15 @@
 			);
 			name = WebViewJavascriptBridge;
 			path = Utilities/WebViewJavascriptBridge;
+			sourceTree = "<group>";
+		};
+		1E3731271A57630F009B0685 /* Data Models */ = {
+			isa = PBXGroup;
+			children = (
+				1E37312B1A576344009B0685 /* CCEClientModel.h */,
+				1E37312C1A576344009B0685 /* CCEClientModel.m */,
+			);
+			name = "Data Models";
 			sourceTree = "<group>";
 		};
 		1EE5809F1A509DE9000F2F49 = {
@@ -382,6 +395,7 @@
 				1EE5810A1A51D48F000F2F49 /* CCECloseButton.m in Sources */,
 				1EE581041A51B034000F2F49 /* CCELaunchWindow.m in Sources */,
 				1EE580B11A509DE9000F2F49 /* main.m in Sources */,
+				1E37312D1A576344009B0685 /* CCEClientModel.m in Sources */,
 				1E35911F1A525D6D00FEE9E0 /* NSString+Random.m in Sources */,
 				1E3591351A534BC600FEE9E0 /* CCEServerDetailModal.m in Sources */,
 				1EE580D11A509E14000F2F49 /* CCEEditorViewController.m in Sources */,

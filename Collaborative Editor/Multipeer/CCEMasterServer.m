@@ -10,7 +10,7 @@
 
 @interface CCEMasterServer ()
 
-
+@property int totalCount;
 
 @end
 
@@ -41,11 +41,33 @@
     [self.advertiser start];
     
     self.advertising = YES;
+    
+    self.connectedPeers = [NSMutableDictionary dictionary];
+    self.totalCount = 0;
 }
 
 #pragma mark - MCSession delegate methods
 - (void)session:(MCSession *)session peer:(MCPeerID *)peerID didChangeState:(MCSessionState)state {
-    
+    if (state == MCSessionStateConnected) {
+        if (![self.connectedPeers objectForKey:peerID.displayName]) {
+            // only accept if the display name doesn't yet exist
+            
+            self.totalCount++;
+            
+            // create a new client object
+            CCEClientModel *newClient = [[CCEClientModel alloc]init];
+            newClient.peerId = peerID;
+            newClient.userName = peerID.displayName;
+            newClient.isOnline = YES;
+            newClient.priority = self.totalCount;
+            
+            // TODO: add color
+            
+            [self.connectedPeers setObject:newClient forKey:peerID.displayName];
+            
+            [[NSNotificationCenter defaultCenter]postNotificationName:@"clientConnected" object:nil];
+        }
+    }
 }
 
 @end

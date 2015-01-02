@@ -10,6 +10,7 @@
 #import <MultipeerConnectivity/MultipeerConnectivity.h>
 #import "CCEServiceDefinitions.h"
 #import "NSString+Random.h"
+#import "CCEClientModel.h"
 
 @protocol CCEMasterServerDelegate <NSObject>
 
@@ -35,6 +36,9 @@
 
 /// @brief Indicates if the server is currently advertising its presence.
 @property BOOL advertising;
+
+/// @brief An dictionary of clients that are connected to the server.
+@property (nonatomic, strong) NSMutableDictionary *connectedPeers;
 
 /*!
  * @discussion Sets up the multipeer network that will be used to connect clients together.
