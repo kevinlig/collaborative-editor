@@ -62,7 +62,7 @@
         
         // display a user notification
         NSUserNotification *notification = [[NSUserNotification alloc]init];
-        notification.title = @"Connected to session";
+        notification.title = @"Connected to session.";
         notification.informativeText = [NSString stringWithFormat:@"This session is hosted by %@.", [response objectForKey:@"serverName"]];
         [[NSUserNotificationCenter defaultUserNotificationCenter]deliverNotification:notification];
         
