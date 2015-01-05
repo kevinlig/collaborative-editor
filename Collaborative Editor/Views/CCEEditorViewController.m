@@ -14,6 +14,7 @@
 
 @property (nonatomic, strong) NSString *documentContents;
 @property (nonatomic, strong) WebViewJavascriptBridge *bridge;
+@property BOOL isServer;
 
 - (void)openDocument;
 
@@ -28,13 +29,15 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do view setup here.
-    [self loadEditor];
     
+    self.isServer = [CCETransmissionService sharedManager].isServer;
+    
+    [self loadEditor];
 
 }
 
 - (void)openDocument {
-    if ([CCETransmissionService sharedManager].isServer) {
+    if (self.isServer) {
         self.documentContents = [CCETransmissionService sharedManager].masterServer.document.originalText;
     }
     else {
@@ -66,7 +69,7 @@
         self.editorReady = YES;
         
         // JS editor is ready, load a document if it is needed
-        if (self.documentPath) {
+        if (self.documentPath || !self.isServer) {
             // load the document
             [self openDocument];
         }

@@ -44,6 +44,9 @@
 }
 
 #pragma mark - Session delegate methods
+- (void)session:(MCSession *)session peer:(MCPeerID *)peerID didChangeState:(MCSessionState)state {
+    
+}
 - (void)session:(MCSession *)session didReceiveData:(NSData *)data fromPeer:(MCPeerID *)peerID {
     // received data from the master server
     // convert the data to a dictionary
@@ -56,6 +59,12 @@
         self.document = [[CCEDocumentModel alloc]init];
         self.document.documentName = [response objectForKey:@"documentName"];
         self.document.originalText = [response objectForKey:@"originalText"];
+        
+        // display a user notification
+        NSUserNotification *notification = [[NSUserNotification alloc]init];
+        notification.title = @"Connected to session";
+        notification.informativeText = [NSString stringWithFormat:@"This session is hosted by %@.", [response objectForKey:@"serverName"]];
+        [[NSUserNotificationCenter defaultUserNotificationCenter]deliverNotification:notification];
         
         [[NSNotificationCenter defaultCenter]postNotificationName:@"initialContact" object:nil];
     }

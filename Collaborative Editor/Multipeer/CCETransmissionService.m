@@ -57,6 +57,7 @@
     self.slaveClient.delegate = self;
     self.slaveClient.userName = self.userName;
     self.slaveClient.sessionCode = self.sessionCode;
+    self.isServer = NO;
     
     [self.slaveClient startScanning];
     

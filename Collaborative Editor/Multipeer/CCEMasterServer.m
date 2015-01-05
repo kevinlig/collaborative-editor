@@ -85,7 +85,7 @@
         [[NSUserNotificationCenter defaultUserNotificationCenter]deliverNotification:notification];
         
         // okay let's respond to the client
-        NSDictionary *response = @{@"type":@"initial", @"userName":newUserName, @"originalText":self.document.originalText, @"documentName":self.document.documentName};
+        NSDictionary *response = @{@"type":@"initial", @"serverName": self.userName, @"userName":newUserName, @"originalText":self.document.originalText, @"documentName":self.document.documentName};
         NSData *responseData = [NSKeyedArchiver archivedDataWithRootObject:response];
         [self.session sendData:responseData toPeers:@[peerID] withMode:MCSessionSendDataReliable error:nil];
     }

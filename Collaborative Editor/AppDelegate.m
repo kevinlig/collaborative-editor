@@ -123,7 +123,10 @@
 
 - (void)startDocumentClient {
     [self.launchWindow close];
-    [self displayEditorWindowUsingDocument:nil];
+    // there's a big where sometimes this is executed on a background thread, force it to the main thread since it's UI/webview
+    dispatch_async(dispatch_get_main_queue(), ^{
+        [self displayEditorWindowUsingDocument:nil];
+    });
 }
 
 #pragma mark - Notification center delegate
