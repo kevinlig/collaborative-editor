@@ -9,13 +9,14 @@
 #import <Foundation/Foundation.h>
 #import <MultipeerConnectivity/MultipeerConnectivity.h>
 #import "CCEServiceDefinitions.h"
+#import "CCEDocumentModel.h"
 
 @protocol CCESlaveClientDelegate <NSObject>
 
 
 @end
 
-@interface CCESlaveClient : NSObject <MCNearbyServiceBrowserDelegate>
+@interface CCESlaveClient : NSObject <MCSessionDelegate, MCNearbyServiceBrowserDelegate>
 
 @property id<CCESlaveClientDelegate> delegate;
 
@@ -32,6 +33,10 @@
 /// @brief A random 4-character code that clients will provide in order to connect into the multipeer network.
 @property (nonatomic, strong) NSString *sessionCode;
 
+/// @brief The document being shared in the session.
+@property (nonatomic, strong) CCEDocumentModel *document;
+
+/// @brief The underlying multipeer connectivity device scanner.
 @property (nonatomic, strong) MCNearbyServiceBrowser *browser;
 
 - (void)configureService;

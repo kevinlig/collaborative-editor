@@ -25,6 +25,8 @@
 /// @brief The underlying client object (may be nil if the shared manager is not acting as a slave client)
 @property (nonatomic, strong) CCESlaveClient *slaveClient;
 
+
+
 + (CCETransmissionService *)sharedManager;
 
 /*!

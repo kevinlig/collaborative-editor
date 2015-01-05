@@ -45,8 +45,9 @@
     self.connectedPeers = [NSMutableDictionary dictionary];
     self.currentUserNames = [NSMutableDictionary dictionary];
     self.totalCount = 0;
-    self.sourceDocument = @"";
-    self.documentName = @"";
+    self.document = [[CCEDocumentModel alloc]init];
+    self.document.originalText = @"";
+    self.document.documentName = @"";
 }
 
 #pragma mark - MCSession delegate methods
@@ -60,14 +61,13 @@
             
             // TODO: come up with a way of generating display names that is collision proof
         }
-
         
         self.totalCount++;
         
         // create a new client object
         CCEClientModel *newClient = [[CCEClientModel alloc]init];
         newClient.peerId = peerID;
-        newClient.userName = peerID.displayName;
+        newClient.userName = newUserName;
         newClient.isOnline = YES;
         newClient.priority = self.totalCount;
         
@@ -85,7 +85,7 @@
         [[NSUserNotificationCenter defaultUserNotificationCenter]deliverNotification:notification];
         
         // okay let's respond to the client
-        NSDictionary *response = @{@"userName":newUserName, @"sourceDocument":self.sourceDocument, @"documentName":self.documentName};
+        NSDictionary *response = @{@"type":@"initial", @"userName":newUserName, @"originalText":self.document.originalText, @"documentName":self.document.documentName};
         NSData *responseData = [NSKeyedArchiver archivedDataWithRootObject:response];
         [self.session sendData:responseData toPeers:@[peerID] withMode:MCSessionSendDataReliable error:nil];
     }

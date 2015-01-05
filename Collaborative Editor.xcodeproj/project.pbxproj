@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		1E12284D1A5A398300A569D8 /* CCEDocumentModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 1E12284C1A5A398300A569D8 /* CCEDocumentModel.m */; };
 		1E3591101A5252E600FEE9E0 /* CCEMasterServer.m in Sources */ = {isa = PBXBuildFile; fileRef = 1E35910F1A5252E600FEE9E0 /* CCEMasterServer.m */; };
 		1E3591121A5252F000FEE9E0 /* MultipeerConnectivity.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1E3591111A5252F000FEE9E0 /* MultipeerConnectivity.framework */; };
 		1E3591191A52540A00FEE9E0 /* CCETransmissionService.m in Sources */ = {isa = PBXBuildFile; fileRef = 1E3591181A52540A00FEE9E0 /* CCETransmissionService.m */; };
@@ -51,6 +52,8 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		1E12284B1A5A398300A569D8 /* CCEDocumentModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CCEDocumentModel.h; path = "Multipeer/Data Models/Document Model/CCEDocumentModel.h"; sourceTree = "<group>"; };
+		1E12284C1A5A398300A569D8 /* CCEDocumentModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = CCEDocumentModel.m; path = "Multipeer/Data Models/Document Model/CCEDocumentModel.m"; sourceTree = "<group>"; };
 		1E35910B1A5251D400FEE9E0 /* CCEServiceDefinitions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CCEServiceDefinitions.h; path = Multipeer/CCEServiceDefinitions.h; sourceTree = "<group>"; };
 		1E35910E1A5252E600FEE9E0 /* CCEMasterServer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CCEMasterServer.h; path = Multipeer/CCEMasterServer.h; sourceTree = "<group>"; };
 		1E35910F1A5252E600FEE9E0 /* CCEMasterServer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = CCEMasterServer.m; path = Multipeer/CCEMasterServer.m; sourceTree = "<group>"; };
@@ -126,6 +129,15 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		1E12284A1A5A396700A569D8 /* Document Model */ = {
+			isa = PBXGroup;
+			children = (
+				1E12284B1A5A398300A569D8 /* CCEDocumentModel.h */,
+				1E12284C1A5A398300A569D8 /* CCEDocumentModel.m */,
+			);
+			name = "Document Model";
+			sourceTree = "<group>";
+		};
 		1E35910A1A5251A500FEE9E0 /* Multipeer */ = {
 			isa = PBXGroup;
 			children = (
@@ -181,6 +193,7 @@
 		1E3731271A57630F009B0685 /* Data Models */ = {
 			isa = PBXGroup;
 			children = (
+				1E12284A1A5A396700A569D8 /* Document Model */,
 				1E37312B1A576344009B0685 /* CCEClientModel.h */,
 				1E37312C1A576344009B0685 /* CCEClientModel.m */,
 			);
@@ -399,6 +412,7 @@
 				1E35911F1A525D6D00FEE9E0 /* NSString+Random.m in Sources */,
 				1E3591351A534BC600FEE9E0 /* CCEServerDetailModal.m in Sources */,
 				1EE580D11A509E14000F2F49 /* CCEEditorViewController.m in Sources */,
+				1E12284D1A5A398300A569D8 /* CCEDocumentModel.m in Sources */,
 				1EE580F01A50A930000F2F49 /* CCEFooterBarViewController.m in Sources */,
 				1E3591301A5325D500FEE9E0 /* WebViewJavascriptBridge.m in Sources */,
 				1EE580AF1A509DE9000F2F49 /* AppDelegate.m in Sources */,

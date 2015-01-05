@@ -24,6 +24,7 @@
     self.browser.delegate = self;
     
     self.session = [[MCSession alloc]initWithPeer:self.peerId];
+    self.session.delegate = self;
 }
 
 - (void)startScanning {
@@ -33,14 +34,31 @@
     
     [self.browser startBrowsingForPeers];
     
-    NSLog(@"Looking for service %@", self.browser.serviceType);
 }
 
 #pragma mark - Browser delegate methods
 - (void)browser:(MCNearbyServiceBrowser *)browser foundPeer:(MCPeerID *)peerID withDiscoveryInfo:(NSDictionary *)info {
     // found the server, connect to it and stop scanning
-    [self.browser invitePeer:self.peerId toSession:self.session withContext:nil timeout:30];
+    [self.browser invitePeer:peerID toSession:self.session withContext:nil timeout:30];
     [self.browser stopBrowsingForPeers];
+}
+
+#pragma mark - Session delegate methods
+- (void)session:(MCSession *)session didReceiveData:(NSData *)data fromPeer:(MCPeerID *)peerID {
+    // received data from the master server
+    // convert the data to a dictionary
+    NSDictionary *response = [NSKeyedUnarchiver unarchiveObjectWithData:data];
+    NSString *responseType = [response objectForKey:@"type"];
+    
+    if ([responseType isEqualToString:@"initial"]) {
+        // this is the initial response after a connection
+        
+        self.document = [[CCEDocumentModel alloc]init];
+        self.document.documentName = [response objectForKey:@"documentName"];
+        self.document.originalText = [response objectForKey:@"originalText"];
+        
+        [[NSNotificationCenter defaultCenter]postNotificationName:@"initialContact" object:nil];
+    }
 }
 
 

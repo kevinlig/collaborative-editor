@@ -23,6 +23,11 @@
  */
 - (void)startDocumentServer: (NSString *)documentPath;
 
+/*!
+ * @discussion Launch the editor window as a client.
+ */
+- (void)startDocumentClient;
+
 @end
 
 @interface CCELaunchViewController : NSViewController <CCEServerConfigModalDelegate, CCEServerDetailModalDelegate, CCEJoinSessionModalDelegate>

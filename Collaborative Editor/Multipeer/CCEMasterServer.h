@@ -11,6 +11,7 @@
 #import "CCEServiceDefinitions.h"
 #import "NSString+Random.h"
 #import "CCEClientModel.h"
+#import "CCEDocumentModel.h"
 
 @protocol CCEMasterServerDelegate <NSObject>
 
@@ -42,10 +43,8 @@
 /// @brief A dictionary of user names.
 @property (nonatomic, strong) NSMutableDictionary *currentUserNames;
 
-/// @brief The original document contents.
-@property (nonatomic, strong) NSString *sourceDocument;
-/// @brief The original document name.
-@property (nonatomic, strong) NSString *documentName;
+/// @brief The document being shared in the session.
+@property (nonatomic, strong) CCEDocumentModel *document;
 
 
 

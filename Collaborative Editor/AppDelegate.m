@@ -67,8 +67,17 @@
     CGFloat yPos = NSHeight([[self.window screen] frame])/2 - launchHeight/2;
     [self.window setFrame:NSMakeRect(xPos, yPos, launchWidth, launchHeight) display:YES];
     
-    if (documentPath) {
-        [self.window setTitle:[NSString stringWithFormat:@"Collaborative Editor - %@",documentPath.lastPathComponent]];
+    if ([CCETransmissionService sharedManager].isServer) {
+        if (documentPath) {
+            [self.window setTitle:[NSString stringWithFormat:@"Collaborative Editor - %@",documentPath.lastPathComponent]];
+        }
+    }
+    else {
+        // check to see if there's a document title
+        if (![[CCETransmissionService sharedManager].slaveClient.document.documentName isEqualToString:@""]) {
+            // there is a title, set it
+            [self.window setTitle:[NSString stringWithFormat:@"Collaborative Editor - %@",[CCETransmissionService sharedManager].slaveClient.document.documentName]];
+        }
     }
     
     // insert the editor view controller into the window
@@ -110,6 +119,11 @@
 - (void)startDocumentServer: (NSString *)documentPath {
     [self.launchWindow close];
     [self displayEditorWindowUsingDocument:documentPath];
+}
+
+- (void)startDocumentClient {
+    [self.launchWindow close];
+    [self displayEditorWindowUsingDocument:nil];
 }
 
 #pragma mark - Notification center delegate

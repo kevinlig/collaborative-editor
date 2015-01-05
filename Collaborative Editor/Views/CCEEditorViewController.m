@@ -34,7 +34,12 @@
 }
 
 - (void)openDocument {
-    self.documentContents = [CCETransmissionService sharedManager].masterServer.sourceDocument;
+    if ([CCETransmissionService sharedManager].isServer) {
+        self.documentContents = [CCETransmissionService sharedManager].masterServer.document.originalText;
+    }
+    else {
+        self.documentContents = [CCETransmissionService sharedManager].slaveClient.document.originalText;
+    }
     
     [self.bridge callHandler:@"pushFullDocument" data:self.documentContents];
 

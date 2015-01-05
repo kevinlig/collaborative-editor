@@ -26,6 +26,8 @@
 
 - (void)displayServerDetailModal;
 
+- (void)initialContactMade;
+
 @end
 
 @implementation CCELaunchViewController
@@ -38,6 +40,9 @@
     
     self.closeButton.primaryImage = [NSImage imageNamed:@"close"];
     self.closeButton.secondaryImage = [NSImage imageNamed:@"close_hover"];
+    
+    // listen for notifications
+    [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(initialContactMade) name:@"initialContact" object:nil];
 
 }
 
@@ -84,6 +89,14 @@
     
 }
 
+- (void)initialContactMade {
+    // made initial contact, dismiss the modal
+    [self dismissController:self.joinSessionModal];
+    
+    // load up the editor
+    [self.delegate startDocumentClient];
+}
+
 
 #pragma mark - Server configuration modal delegate methods
 - (void)cancelServerModal {
@@ -97,8 +110,8 @@
     // start the server
     [[CCETransmissionService sharedManager]setUserName:self.userName];
     [[CCETransmissionService sharedManager]startServer];
-    [CCETransmissionService sharedManager].masterServer.sourceDocument = @"";
-    [CCETransmissionService sharedManager].masterServer.documentName = @"";
+    [CCETransmissionService sharedManager].masterServer.document.originalText = @"";
+    [CCETransmissionService sharedManager].masterServer.document.documentName = @"";
     
     [self displayServerDetailModal];
     
@@ -115,8 +128,8 @@
     
     // open the file
     NSString *documentContents = [NSString stringWithContentsOfFile:documentPath encoding:NSUTF8StringEncoding error:nil];
-    [CCETransmissionService sharedManager].masterServer.sourceDocument = documentContents;
-    [CCETransmissionService sharedManager].masterServer.documentName = [documentPath lastPathComponent];
+    [CCETransmissionService sharedManager].masterServer.document.originalText = documentContents;
+    [CCETransmissionService sharedManager].masterServer.document.documentName = [documentPath lastPathComponent];
     
     [self displayServerDetailModal];
     
