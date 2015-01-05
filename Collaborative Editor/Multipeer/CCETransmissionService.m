@@ -10,7 +10,7 @@
 
 @implementation CCETransmissionService
 
-+ (id)sharedManager {
++ (CCETransmissionService *)sharedManager {
     
     static CCETransmissionService *sharedManager = nil;
     static dispatch_once_t onceToken;

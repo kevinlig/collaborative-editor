@@ -8,6 +8,7 @@
 
 #import <Cocoa/Cocoa.h>
 #import <WebKit/WebKit.h>
+#import "CCETransmissionService.h"
 #import "CCEWebView.h"
 #import "CCEFooterBarViewController.h"
 #import "WebViewJavascriptBridge.h"

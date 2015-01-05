@@ -37,8 +37,17 @@
 /// @brief Indicates if the server is currently advertising its presence.
 @property BOOL advertising;
 
-/// @brief An dictionary of clients that are connected to the server.
+/// @brief A dictionary of clients that are connected to the server.
 @property (nonatomic, strong) NSMutableDictionary *connectedPeers;
+/// @brief A dictionary of user names.
+@property (nonatomic, strong) NSMutableDictionary *currentUserNames;
+
+/// @brief The original document contents.
+@property (nonatomic, strong) NSString *sourceDocument;
+/// @brief The original document name.
+@property (nonatomic, strong) NSString *documentName;
+
+
 
 /*!
  * @discussion Sets up the multipeer network that will be used to connect clients together.

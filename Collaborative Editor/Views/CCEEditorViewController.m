@@ -34,7 +34,7 @@
 }
 
 - (void)openDocument {
-    self.documentContents = [NSString stringWithContentsOfFile:self.documentPath encoding:NSUTF8StringEncoding error:nil];
+    self.documentContents = [CCETransmissionService sharedManager].masterServer.sourceDocument;
     
     [self.bridge callHandler:@"pushFullDocument" data:self.documentContents];
 

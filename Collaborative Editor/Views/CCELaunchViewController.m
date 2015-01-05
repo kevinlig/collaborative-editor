@@ -97,6 +97,8 @@
     // start the server
     [[CCETransmissionService sharedManager]setUserName:self.userName];
     [[CCETransmissionService sharedManager]startServer];
+    [CCETransmissionService sharedManager].masterServer.sourceDocument = @"";
+    [CCETransmissionService sharedManager].masterServer.documentName = @"";
     
     [self displayServerDetailModal];
     
@@ -110,6 +112,11 @@
     // start the server
     [[CCETransmissionService sharedManager]setUserName:self.userName];
     [[CCETransmissionService sharedManager]startServer];
+    
+    // open the file
+    NSString *documentContents = [NSString stringWithContentsOfFile:documentPath encoding:NSUTF8StringEncoding error:nil];
+    [CCETransmissionService sharedManager].masterServer.sourceDocument = documentContents;
+    [CCETransmissionService sharedManager].masterServer.documentName = [documentPath lastPathComponent];
     
     [self displayServerDetailModal];
     

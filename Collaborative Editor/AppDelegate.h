@@ -9,7 +9,7 @@
 #import <Cocoa/Cocoa.h>
 #import "CCELaunchViewController.h"
 
-@interface AppDelegate : NSObject <NSApplicationDelegate, CCELaunchViewDelegate>
+@interface AppDelegate : NSObject <NSApplicationDelegate, NSUserNotificationCenterDelegate, CCELaunchViewDelegate>
 
 
 @end

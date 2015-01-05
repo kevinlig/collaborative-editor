@@ -25,7 +25,7 @@
 /// @brief The underlying client object (may be nil if the shared manager is not acting as a slave client)
 @property (nonatomic, strong) CCESlaveClient *slaveClient;
 
-+ (id)sharedManager;
++ (CCETransmissionService *)sharedManager;
 
 /*!
  * @discussion Creates and starts the master server.

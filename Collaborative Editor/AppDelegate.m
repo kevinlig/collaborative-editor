@@ -28,6 +28,9 @@
 - (void)applicationDidFinishLaunching:(NSNotification *)aNotification {
     // Insert code here to initialize your application
     
+    // display user notifications
+    [[NSUserNotificationCenter defaultUserNotificationCenter] setDelegate:self];
+    
     // display the launch window and center it in the screen
     float launchHeight = 480;
     float launchWidth = 700;
@@ -107,6 +110,11 @@
 - (void)startDocumentServer: (NSString *)documentPath {
     [self.launchWindow close];
     [self displayEditorWindowUsingDocument:documentPath];
+}
+
+#pragma mark - Notification center delegate
+- (BOOL)userNotificationCenter:(NSUserNotificationCenter *)center shouldPresentNotification:(NSUserNotification *)notification{
+    return YES;
 }
 
 @end
