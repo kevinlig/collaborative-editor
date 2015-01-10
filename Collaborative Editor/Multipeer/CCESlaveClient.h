@@ -13,7 +13,6 @@
 
 @protocol CCESlaveClientDelegate <NSObject>
 
-
 @end
 
 @interface CCESlaveClient : NSObject <MCSessionDelegate, MCNearbyServiceBrowserDelegate>
@@ -38,6 +37,8 @@
 
 /// @brief The underlying multipeer connectivity device scanner.
 @property (nonatomic, strong) MCNearbyServiceBrowser *browser;
+
+@property (nonatomic, strong) NSDictionary *lastUpdateData;
 
 - (void)configureService;
 - (void)startScanning;

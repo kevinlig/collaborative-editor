@@ -64,6 +64,14 @@
     
 }
 
+- (void)transmitUpdate:(NSDictionary *)updateData {
+
+    if (self.isServer) {
+        [self.masterServer sendUpdate:updateData];
+    }
+    
+}
+
 #pragma mark - Server delegate methods
 
 

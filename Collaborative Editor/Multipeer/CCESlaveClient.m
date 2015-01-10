@@ -10,6 +10,8 @@
 
 @interface CCESlaveClient ()
 
+- (void)receivedUpdate:(NSDictionary *)updateData;
+
 @end
 
 
@@ -36,9 +38,15 @@
     
 }
 
+- (void)receivedUpdate:(NSDictionary *)updateData {
+    self.lastUpdateData = updateData;
+    [[NSNotificationCenter defaultCenter]postNotificationName:@"receivedUpdate" object:nil];
+}
+
 #pragma mark - Browser delegate methods
 - (void)browser:(MCNearbyServiceBrowser *)browser foundPeer:(MCPeerID *)peerID withDiscoveryInfo:(NSDictionary *)info {
     // found the server, connect to it and stop scanning
+    NSLog(@"%@",peerID);
     [self.browser invitePeer:peerID toSession:self.session withContext:nil timeout:30];
     [self.browser stopBrowsingForPeers];
 }
@@ -67,6 +75,11 @@
         [[NSUserNotificationCenter defaultUserNotificationCenter]deliverNotification:notification];
         
         [[NSNotificationCenter defaultCenter]postNotificationName:@"initialContact" object:nil];
+    }
+    else if ([responseType isEqualToString:@"update"]) {
+        
+        [self receivedUpdate:response];
+        
     }
 }
 

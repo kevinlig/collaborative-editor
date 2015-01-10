@@ -22,6 +22,8 @@
 - (void)loadEditor;
 - (void)changeSyntax:(NSString *)syntax;
 
+- (void)receivedUpdate;
+
 @end
 
 @implementation CCEEditorViewController
@@ -33,7 +35,9 @@
     self.isServer = [CCETransmissionService sharedManager].isServer;
     
     [self loadEditor];
-
+    
+    [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(receivedUpdate) name:@"receivedUpdate" object:nil];
+    
 }
 
 - (void)openDocument {
@@ -43,13 +47,14 @@
     else {
         self.documentContents = [CCETransmissionService sharedManager].slaveClient.document.originalText;
     }
-    
     [self.bridge callHandler:@"pushFullDocument" data:self.documentContents];
 
 }
 
 - (void) configureBridge {
     self.bridge = [WebViewJavascriptBridge bridgeForWebView:self.editorView handler:nil];
+    
+   
 
 }
 
@@ -63,7 +68,7 @@
     
     [self configureBridge];
     
-    // setup handler to JS to call when it is fully loaded
+    // setup handler for JS to call when it is fully loaded
     [self.bridge registerHandler:@"jsReady" handler:^(id data, WVJBResponseCallback responseCallback) {
         
         self.editorReady = YES;
@@ -74,12 +79,25 @@
             [self openDocument];
         }
     }];
+    
+    // setup handlers
+    [self.bridge registerHandler:@"changeCursor" handler:^(NSDictionary *cursorData, WVJBResponseCallback responseCallback) {
+        dispatch_async(dispatch_get_global_queue( DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^(void) {
+            [[CCETransmissionService sharedManager]transmitUpdate:cursorData];
+        });
+    }];
+    
 }
 
 - (void)changeSyntax:(NSString *)syntax {
     if (self.editorReady) {
         [self.bridge callHandler:@"changeSyntax" data:syntax];
     }
+}
+
+- (void)receivedUpdate {
+    NSDictionary *updatedDictionary = [CCETransmissionService sharedManager].slaveClient.lastUpdateData;
+    [self.bridge callHandler:@"updateCursor" data:updatedDictionary];
 }
 
 #pragma mark - Footer bar delegate

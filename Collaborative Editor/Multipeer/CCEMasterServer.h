@@ -59,4 +59,6 @@
  */
 - (void)startServer;
 
+- (void)sendUpdate:(NSDictionary *)updateData;
+
 @end

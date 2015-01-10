@@ -50,6 +50,19 @@
     self.document.documentName = @"";
 }
 
+- (void)sendUpdate:(NSDictionary *)updateData {
+    NSMutableDictionary *transmissionDictionary = [NSMutableDictionary dictionaryWithDictionary:updateData];
+    [transmissionDictionary setObject:[NSDate date] forKey:@"time"];
+    [transmissionDictionary setObject:self.userName forKey:@"user"];
+    [transmissionDictionary setObject:@(0) forKey:@"priority"];
+    [transmissionDictionary setObject:@"update" forKey:@"type"];
+    
+    NSData *transmissionData = [NSKeyedArchiver archivedDataWithRootObject:transmissionDictionary];
+    
+    [self.session sendData:transmissionData toPeers:nil withMode:MCSessionSendDataReliable error:nil];
+
+}
+
 #pragma mark - MCSession delegate methods
 - (void)session:(MCSession *)session peer:(MCPeerID *)peerID didChangeState:(MCSessionState)state {
     if (state == MCSessionStateConnected) {
