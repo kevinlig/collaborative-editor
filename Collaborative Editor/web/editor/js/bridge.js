@@ -37,7 +37,7 @@ connectWebViewJavascriptBridge(function(bridge) {
     bridge.registerHandler("updateCursor", function(updateData) {
         // check if cursor exists
         var cursor;
-        var cursorRange = new Range(updateData.cursor.col, updateData.cursor.row, updateData.selection.start, updateData.selection.end);
+        var cursorRange = new Range(updateData.cursor.row, updateData.cursor.col, updateData.cursor.row, updateData.cursor.col + 1);
 
         if (existingCursors['cursor' + updateData.priority] != undefined) {
             // cursor exists
@@ -49,7 +49,7 @@ connectWebViewJavascriptBridge(function(bridge) {
         cursor = editor.session.addMarker(cursorRange, "bar", true);
     
 
-        cursor = existingCursors['cursor' + updateData.priority];
+        existingCursors['cursor' + updateData.priority] = cursor;
     });
 
     editorNativeCallbacks(bridge);

@@ -20,16 +20,15 @@
 
     .bar{
       position:absolute;
-      background:rgba(100,100,200,0.5);
+      background:rgba(100,100,200,1);
       z-index:40; width:2px!important
     }
   
-  .bar::before{
-    position:absolute;
-    background:rgba(100,100,200,1);
-    z-index:999;
-    top: -100%; content: 'User Name'; left:0px; font-family: Arial; padding:1px 2px
-  }
+    .bar::before{
+      position:absolute;
+      background:rgba(100,100,200,1);
+      z-index:999;
+      top: -100%; content: 'User Name'; left:0px; font-family: Arial; padding:1px 2px
     }
   </style>
 </head>

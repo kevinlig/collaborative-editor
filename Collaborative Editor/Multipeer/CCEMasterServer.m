@@ -52,14 +52,19 @@
 
 - (void)sendUpdate:(NSDictionary *)updateData {
     NSMutableDictionary *transmissionDictionary = [NSMutableDictionary dictionaryWithDictionary:updateData];
-    [transmissionDictionary setObject:[NSDate date] forKey:@"time"];
+    [transmissionDictionary setObject:@([[NSDate date]timeIntervalSince1970]) forKey:@"time"];
     [transmissionDictionary setObject:self.userName forKey:@"user"];
     [transmissionDictionary setObject:@(0) forKey:@"priority"];
     [transmissionDictionary setObject:@"update" forKey:@"type"];
     
     NSData *transmissionData = [NSKeyedArchiver archivedDataWithRootObject:transmissionDictionary];
     
-    [self.session sendData:transmissionData toPeers:nil withMode:MCSessionSendDataReliable error:nil];
+    NSMutableArray *peerArray = [NSMutableArray array];
+    for (MCPeerID *client in self.connectedPeers) {
+        [peerArray addObject:client];
+    }
+    
+    [self.session sendData:transmissionData toPeers:peerArray withMode:MCSessionSendDataReliable error:nil];
 
 }
 
