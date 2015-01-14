@@ -21,6 +21,9 @@
 
 - (void) displayEditorWindowUsingDocument:(NSString *)documentPath;
 
+- (IBAction)toggleVim:(id)sender;
+- (IBAction)toggleEmacs:(id)sender;
+
 @end
 
 @implementation AppDelegate
@@ -108,6 +111,19 @@
     
     [self.window makeKeyAndOrderFront:self];
     [NSApp activateIgnoringOtherApps:YES];
+}
+
+#pragma mark - Editing style emulators
+- (IBAction)toggleVim:(id)sender {
+    if (self.editorViewController) {
+        [self.editorViewController toggleVimMode];
+    }
+}
+
+- (IBAction)toggleEmacs:(id)sender {
+    if (self.editorViewController) {
+        [self.editorViewController toggleEmacsMode];
+    }
 }
 
 #pragma mark - Launch view delegate methods

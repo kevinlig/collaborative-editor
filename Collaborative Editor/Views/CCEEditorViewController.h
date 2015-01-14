@@ -21,4 +21,14 @@
 /// @brief Indicates whether the JS editor has been fully loaded and can receive commands.
 @property BOOL editorReady;
 
+/*!
+ * @discussion Toggles Vim mode in editor.
+ */
+- (void)toggleVimMode;
+
+/*!
+ * @discussion Toggles Emacs mode in editor.
+ */
+- (void)toggleEmacsMode;
+
 @end

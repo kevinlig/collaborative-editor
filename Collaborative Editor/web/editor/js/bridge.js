@@ -10,6 +10,8 @@ function connectWebViewJavascriptBridge(callback) {
 
 var documentLoadEvent = false;
 
+var editorMode = "";
+
 var existingCursors = {};
 
 connectWebViewJavascriptBridge(function(bridge) {
@@ -55,8 +57,29 @@ connectWebViewJavascriptBridge(function(bridge) {
     editorNativeCallbacks(bridge);
 
 
- 
+    bridge.registerHandler("toggleVim", function() {
+        if (editorMode != "vim") {
+            editor.setKeyboardHandler("");
+            editor.setKeyboardHandler("ace/keyboard/vim");
+            editorMode = "vim";
+        }
+        else {
+            editor.setKeyboardHandler("");
+            editorMode = "";
+        }
+    });
 
+    bridge.registerHandler("toggleEmacs", function() {
+        if (editorMode != "emacs") {
+            editor.setKeyboardHandler("");
+            editor.setKeyboardHandler("ace/keyboard/emacs");
+            editorMode = "emacs";
+        }
+        else {
+            editor.setKeyboardHandler("");
+            editorMode = "";
+        }
+    });
 
     // okay, we're ready to go, let the native side know
     bridge.callHandler("jsReady");

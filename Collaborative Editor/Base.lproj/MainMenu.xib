@@ -628,6 +628,25 @@
                         </items>
                     </menu>
                 </menuItem>
+                <menuItem title="Tools" id="7x9-tc-jJd" userLabel="Tools">
+                    <modifierMask key="keyEquivalentModifierMask"/>
+                    <menu key="submenu" title="Tools" id="koa-Tk-MKT" userLabel="Tools">
+                        <items>
+                            <menuItem title="Vim Mode" keyEquivalent="v" id="49T-yn-uZR">
+                                <modifierMask key="keyEquivalentModifierMask" control="YES" option="YES" command="YES"/>
+                                <connections>
+                                    <action selector="toggleVim:" target="Voe-Tx-rLC" id="TpS-Dg-boA"/>
+                                </connections>
+                            </menuItem>
+                            <menuItem title="Emacs Mode" keyEquivalent="e" id="DkI-hz-Coy" userLabel="Emacs Mode">
+                                <modifierMask key="keyEquivalentModifierMask" control="YES" option="YES" command="YES"/>
+                                <connections>
+                                    <action selector="toggleEmacs:" target="Voe-Tx-rLC" id="75b-Yc-8Qd"/>
+                                </connections>
+                            </menuItem>
+                        </items>
+                    </menu>
+                </menuItem>
                 <menuItem title="Window" id="aUF-d1-5bR">
                     <modifierMask key="keyEquivalentModifierMask"/>
                     <menu key="submenu" title="Window" systemMenu="window" id="Td7-aD-5lo">

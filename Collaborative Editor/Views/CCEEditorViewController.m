@@ -100,6 +100,15 @@
     [self.bridge callHandler:@"updateCursor" data:updatedDictionary];
 }
 
+#pragma mark - Editing style emulators
+- (void)toggleVimMode {
+    [self.bridge callHandler:@"toggleVim"];
+}
+
+- (void)toggleEmacsMode {
+    [self.bridge callHandler:@"toggleEmacs"];
+}
+
 #pragma mark - Footer bar delegate
 - (void)footerChangedSyntax:(NSString *)syntax {
     [self changeSyntax:syntax];
