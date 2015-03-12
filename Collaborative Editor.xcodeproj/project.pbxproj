@@ -22,6 +22,8 @@
 		1E3731251A575BD7009B0685 /* CCEJoinSessionModal.m in Sources */ = {isa = PBXBuildFile; fileRef = 1E3731231A575BD7009B0685 /* CCEJoinSessionModal.m */; };
 		1E3731261A575BD7009B0685 /* CCEJoinSessionModal.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1E3731241A575BD7009B0685 /* CCEJoinSessionModal.xib */; };
 		1E37312D1A576344009B0685 /* CCEClientModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 1E37312C1A576344009B0685 /* CCEClientModel.m */; };
+		1EB845C71AB12E4A00B2ADE6 /* CCEUserListViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1EB845C51AB12E4A00B2ADE6 /* CCEUserListViewController.m */; };
+		1EB845C81AB12E4A00B2ADE6 /* CCEUserListViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1EB845C61AB12E4A00B2ADE6 /* CCEUserListViewController.xib */; };
 		1EE580AF1A509DE9000F2F49 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 1EE580AE1A509DE9000F2F49 /* AppDelegate.m */; };
 		1EE580B11A509DE9000F2F49 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 1EE580B01A509DE9000F2F49 /* main.m */; };
 		1EE580B31A509DE9000F2F49 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 1EE580B21A509DE9000F2F49 /* Images.xcassets */; };
@@ -78,6 +80,9 @@
 		1E3731241A575BD7009B0685 /* CCEJoinSessionModal.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = CCEJoinSessionModal.xib; path = "Views/Modal Views/CCEJoinSessionModal.xib"; sourceTree = "<group>"; };
 		1E37312B1A576344009B0685 /* CCEClientModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CCEClientModel.h; path = "Multipeer/Data Models/CCEClientModel.h"; sourceTree = "<group>"; };
 		1E37312C1A576344009B0685 /* CCEClientModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = CCEClientModel.m; path = "Multipeer/Data Models/CCEClientModel.m"; sourceTree = "<group>"; };
+		1EB845C41AB12E4A00B2ADE6 /* CCEUserListViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CCEUserListViewController.h; path = Views/CCEUserListViewController.h; sourceTree = "<group>"; };
+		1EB845C51AB12E4A00B2ADE6 /* CCEUserListViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = CCEUserListViewController.m; path = Views/CCEUserListViewController.m; sourceTree = "<group>"; };
+		1EB845C61AB12E4A00B2ADE6 /* CCEUserListViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = CCEUserListViewController.xib; path = Views/CCEUserListViewController.xib; sourceTree = "<group>"; };
 		1EE580A81A509DE9000F2F49 /* Collaborative Editor.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Collaborative Editor.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		1EE580AC1A509DE9000F2F49 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		1EE580AD1A509DE9000F2F49 /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
@@ -274,6 +279,9 @@
 				1EE580ED1A50A930000F2F49 /* CCEFooterBarViewController.h */,
 				1EE580EE1A50A930000F2F49 /* CCEFooterBarViewController.m */,
 				1EE580EF1A50A930000F2F49 /* CCEFooterBarViewController.xib */,
+				1EB845C41AB12E4A00B2ADE6 /* CCEUserListViewController.h */,
+				1EB845C51AB12E4A00B2ADE6 /* CCEUserListViewController.m */,
+				1EB845C61AB12E4A00B2ADE6 /* CCEUserListViewController.xib */,
 				1EE580FC1A518D73000F2F49 /* CCELaunchViewController.h */,
 				1EE580FD1A518D73000F2F49 /* CCELaunchViewController.m */,
 				1EE580FE1A518D73000F2F49 /* CCELaunchViewController.xib */,
@@ -377,6 +385,7 @@
 			files = (
 				1E3591361A534BC600FEE9E0 /* CCEServerDetailModal.xib in Resources */,
 				1EE580D21A509E14000F2F49 /* CCEEditorViewController.xib in Resources */,
+				1EB845C81AB12E4A00B2ADE6 /* CCEUserListViewController.xib in Resources */,
 				1EE581001A518D73000F2F49 /* CCELaunchViewController.xib in Resources */,
 				1EE580D61A50A106000F2F49 /* web in Resources */,
 				1EE580F11A50A930000F2F49 /* CCEFooterBarViewController.xib in Resources */,
@@ -411,6 +420,7 @@
 				1E37312D1A576344009B0685 /* CCEClientModel.m in Sources */,
 				1E35911F1A525D6D00FEE9E0 /* NSString+Random.m in Sources */,
 				1E3591351A534BC600FEE9E0 /* CCEServerDetailModal.m in Sources */,
+				1EB845C71AB12E4A00B2ADE6 /* CCEUserListViewController.m in Sources */,
 				1EE580D11A509E14000F2F49 /* CCEEditorViewController.m in Sources */,
 				1E12284D1A5A398300A569D8 /* CCEDocumentModel.m in Sources */,
 				1EE580F01A50A930000F2F49 /* CCEFooterBarViewController.m in Sources */,

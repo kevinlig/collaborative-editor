@@ -9,6 +9,7 @@
 #import "AppDelegate.h"
 #import "CCELaunchWindow.h"
 #import "CCEEditorViewController.h"
+#import "CCEUserListviewController.h"
 #import "CCEFooterBarViewController.h"
 
 @interface AppDelegate ()
@@ -17,6 +18,7 @@
 @property (weak) IBOutlet CCELaunchWindow *launchWindow;
 @property (nonatomic, strong) CCELaunchViewController *launchViewController;
 @property (nonatomic, strong) CCEEditorViewController *editorViewController;
+@property (nonatomic, strong) CCEUserListViewController *userListViewController;
 @property (nonatomic, strong) CCEFooterBarViewController *footerViewController;
 
 - (void) displayEditorWindowUsingDocument:(NSString *)documentPath;
@@ -96,9 +98,14 @@
     [self.window.contentView addSubview:self.footerViewController.view];
     self.footerViewController.view.translatesAutoresizingMaskIntoConstraints = NO;
     
+    // insert the user list
+    self.userListViewController = [[CCEUserListViewController alloc]initWithNibName:@"CCEUserListViewController" bundle:nil];
+    [self.window.contentView addSubview:self.userListViewController.view];
+    self.userListViewController.view.translatesAutoresizingMaskIntoConstraints = NO;
+    
     // make subviews resize with window via autolayout constraints
-    NSDictionary *viewsDictionary = @{@"editorView":self.editorViewController.view, @"footerView":self.footerViewController.view};
-    NSArray *editorConstraintsH = [NSLayoutConstraint constraintsWithVisualFormat:@"H:|-0-[editorView]-0-|" options:0 metrics:nil views:viewsDictionary];
+    NSDictionary *viewsDictionary = @{@"editorView":self.editorViewController.view, @"userListView":self.userListViewController.view, @"footerView":self.footerViewController.view};
+    NSArray *editorConstraintsH = [NSLayoutConstraint constraintsWithVisualFormat:@"H:|-0-[editorView][userListView(150)]-0-|" options:0 metrics:nil views:viewsDictionary];
     NSArray *footerConstraintsH = [NSLayoutConstraint constraintsWithVisualFormat:@"H:|-0-[footerView]-0-|" options:0 metrics:nil views:viewsDictionary];
     NSArray *windowConstraintsV = [NSLayoutConstraint constraintsWithVisualFormat:@"V:|-0-[editorView][footerView(30)]-0-|" options:0 metrics:nil views:viewsDictionary];
     
