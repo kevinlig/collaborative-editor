@@ -41,6 +41,12 @@ connectWebViewJavascriptBridge(function(bridge) {
         var cursor;
         var cursorRange = new Range(updateData.cursor.row, updateData.cursor.col, updateData.cursor.row, updateData.cursor.col + 1);
 
+        var selection = false;
+        if (updateData.selection.empty == false) {
+            cursorRange = new Range(updateData.selection.start.row, updateData.selection.start.col, updateData.selection.end.row, updateData.selection.end.col);
+            selection = true;
+        }
+
         if (existingCursors['cursor' + updateData.priority] != undefined) {
             // cursor exists
             cursor = existingCursors['cursor' + updateData.priority];
@@ -48,7 +54,12 @@ connectWebViewJavascriptBridge(function(bridge) {
         }
         
         // make the cursor
-        cursor = editor.session.addMarker(cursorRange, "bar", true);
+        if (selection) {
+            cursor = editor.session.addMarker(cursorRange, "test", "line");
+        }
+        else {
+            cursor = editor.session.addMarker(cursorRange, "bar", true);
+        }
     
 
         existingCursors['cursor' + updateData.priority] = cursor;
@@ -101,3 +112,4 @@ function editorNativeCallbacks(bridge) {
         }
     });
 }
+

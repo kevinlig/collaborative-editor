@@ -7,6 +7,7 @@
 //
 
 #import "CCESlaveClient.h"
+#import "TransmissionMessage.pb.h"
 
 @interface CCESlaveClient ()
 
@@ -57,30 +58,41 @@
 }
 - (void)session:(MCSession *)session didReceiveData:(NSData *)data fromPeer:(MCPeerID *)peerID {
     // received data from the master server
-    // convert the data to a dictionary
-    NSDictionary *response = [NSKeyedUnarchiver unarchiveObjectWithData:data];
-    NSString *responseType = [response objectForKey:@"type"];
+
+    // parse the response
+    Transmission *message = [Transmission parseFromData:data];
     
-    if ([responseType isEqualToString:@"initial"]) {
+    if (message.type == TransmissionMessageTypeInitial) {
         // this is the initial response after a connection
         
         self.document = [[CCEDocumentModel alloc]init];
-        self.document.documentName = [response objectForKey:@"documentName"];
-        self.document.originalText = [response objectForKey:@"originalText"];
+        if (message.document) {
+            self.document.documentName = message.document.documentName;
+            self.document.originalText = message.document.documentText;
+        }
         
         // display a user notification
         NSUserNotification *notification = [[NSUserNotification alloc]init];
         notification.title = @"Connected to session.";
-        notification.informativeText = [NSString stringWithFormat:@"This session is hosted by %@.", [response objectForKey:@"serverName"]];
+        notification.informativeText = [NSString stringWithFormat:@"This session is hosted by %@.", message.serverName];
         [[NSUserNotificationCenter defaultUserNotificationCenter]deliverNotification:notification];
         
         [[NSNotificationCenter defaultCenter]postNotificationName:@"initialContact" object:nil];
     }
-    else if ([responseType isEqualToString:@"update"]) {
-        
-        [self receivedUpdate:response];
+    else if (message.type == TransmissionMessageTypeState) {
+        // received a state message
+        // TEMP CODE
+        TransmissionUserState *currentState = [message.states objectAtIndex:0];
+        self.lastUpdateData = [NSKeyedUnarchiver unarchiveObjectWithData:currentState.state];
+        NSLog(@"%@",self.lastUpdateData);
+        [[NSNotificationCenter defaultCenter]postNotificationName:@"receivedUpdate" object:nil];
         
     }
+//    else if ([responseType isEqualToString:@"update"]) {
+//        
+//        [self receivedUpdate:response];
+//        
+//    }
 }
 
 
