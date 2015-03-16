@@ -15,4 +15,6 @@
 /// @brief The document's name.
 @property (nonatomic, strong) NSString *documentName;
 
+@property (nonatomic, strong) NSMutableDictionary *userStates;
+
 @end

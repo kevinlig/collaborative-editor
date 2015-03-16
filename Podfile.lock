@@ -1,0 +1,21 @@
+PODS:
+  - Google-Diff-Match-Patch (0.0.1)
+  - HexColors (2.2.1)
+  - ProtocolBuffers (1.9.7)
+  - Realm (0.91.1):
+    - Realm/Headers (= 0.91.1)
+  - Realm/Headers (0.91.1)
+
+DEPENDENCIES:
+  - Google-Diff-Match-Patch
+  - HexColors (~> 2.2.1)
+  - ProtocolBuffers (= 1.9.7)
+  - Realm (~> 0.91.1)
+
+SPEC CHECKSUMS:
+  Google-Diff-Match-Patch: 1f9c0b972c351d9c0a4fee137eb96896460477cd
+  HexColors: 01384d2bbe8dc4ffa43c3b4135db6e976952d153
+  ProtocolBuffers: 37fdd327d36856f965ea9029b5ec0c7120e3a452
+  Realm: 81adfc7f43f9301f40bbc46d5e8a10aaf71b9504
+
+COCOAPODS: 0.36.0

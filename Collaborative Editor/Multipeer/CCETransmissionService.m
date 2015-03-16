@@ -67,7 +67,7 @@
 - (void)transmitUpdate:(NSDictionary *)updateData {
 
     if (self.isServer) {
-        [self.masterServer sendUpdate:updateData];
+        [self.masterServer updateState:updateData];
     }
     
 }

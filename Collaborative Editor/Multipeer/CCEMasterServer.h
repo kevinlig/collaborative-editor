@@ -10,8 +10,9 @@
 #import <MultipeerConnectivity/MultipeerConnectivity.h>
 #import "CCEServiceDefinitions.h"
 #import "NSString+Random.h"
-#import "CCEClientModel.h"
+#import "CCEUserModel.h"
 #import "CCEDocumentModel.h"
+#import "TransmissionMessage.pb.h"
 
 @protocol CCEMasterServerDelegate <NSObject>
 
@@ -43,6 +44,8 @@
 /// @brief A dictionary of user names.
 @property (nonatomic, strong) NSMutableDictionary *currentUserNames;
 
+@property (nonatomic, strong) NSMutableArray *allUsers;
+
 /// @brief The document being shared in the session.
 @property (nonatomic, strong) CCEDocumentModel *document;
 
@@ -60,5 +63,9 @@
 - (void)startServer;
 
 - (void)sendUpdate:(NSDictionary *)updateData;
+
+- (void)updateState:(NSDictionary *)updatedState;
+
+- (void)sendBuffer:(Transmission *)protoBuffer toUsers:(NSArray *)recipients;
 
 @end

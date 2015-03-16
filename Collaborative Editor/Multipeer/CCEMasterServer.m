@@ -7,10 +7,13 @@
 //
 
 #import "CCEMasterServer.h"
+#import <HexColors/HexColor.h>
 
 @interface CCEMasterServer ()
 
 @property int totalCount;
+
+@property (nonatomic, strong) NSArray *userColors;
 
 @end
 
@@ -44,10 +47,14 @@
     
     self.connectedPeers = [NSMutableDictionary dictionary];
     self.currentUserNames = [NSMutableDictionary dictionary];
+    self.allUsers = [NSMutableArray array];
     self.totalCount = 0;
     self.document = [[CCEDocumentModel alloc]init];
     self.document.originalText = @"";
     self.document.documentName = @"";
+    
+    // populate the user color array
+    self.userColors = @[[NSColor colorWithHexString:@"e83a30"],[NSColor colorWithHexString:@"8930e8"],[NSColor colorWithHexString:@"3080e8"],[NSColor colorWithHexString:@"30e849"],[NSColor colorWithHexString:@"e8e230"]];
 }
 
 - (void)sendUpdate:(NSDictionary *)updateData {
@@ -68,6 +75,33 @@
 
 }
 
+- (void)updateState:(NSDictionary *)updatedState {
+    
+    // wrap the data into a Protobuf
+    TransmissionBuilder *builder = [Transmission builder];
+    [builder setType:TransmissionMessageTypeState];
+    [builder setUserName:self.userName];
+    
+    TransmissionUserStateBuilder *stateBuilder = [TransmissionUserState builder];
+    NSData *stateData = [NSKeyedArchiver archivedDataWithRootObject:updatedState];
+    [stateBuilder setState:stateData];
+    
+    TransmissionUserState *state = [stateBuilder build];
+    
+    [builder setStatesArray:@[state]];
+    
+    // send the data
+    [self sendBuffer:[builder build] toUsers:self.allUsers];
+    
+}
+
+- (void)sendBuffer:(Transmission *)protoBuffer toUsers:(NSArray *)recipients {
+    NSData *bufferData = protoBuffer.data;
+    
+    [self.session sendData:bufferData toPeers:recipients withMode:MCSessionSendDataReliable error:nil];
+    
+}
+
 #pragma mark - MCSession delegate methods
 - (void)session:(MCSession *)session peer:(MCPeerID *)peerID didChangeState:(MCSessionState)state {
     if (state == MCSessionStateConnected) {
@@ -80,19 +114,18 @@
             // TODO: come up with a way of generating display names that is collision proof
         }
         
+        // create a new user
+        CCEUserModel *newUser = [[CCEUserModel alloc]init];
+        newUser.peerId = peerID;
+        newUser.userName = newUserName;
+        newUser.isOnline = YES;
+        newUser.displayColor = [self.userColors objectAtIndex:self.totalCount];
+        
         self.totalCount++;
         
-        // create a new client object
-        CCEClientModel *newClient = [[CCEClientModel alloc]init];
-        newClient.peerId = peerID;
-        newClient.userName = newUserName;
-        newClient.isOnline = YES;
-        newClient.priority = self.totalCount;
-        
-        // TODO: add color
-        
-        [self.connectedPeers setObject:newClient forKey:peerID];
-        [self.currentUserNames setObject:@(1) forKey:newUserName];
+        [self.connectedPeers setObject:newUser forKey:peerID];
+        [self.currentUserNames setObject:newUser forKey:newUserName];
+        [self.allUsers addObject:peerID];
         
         [[NSNotificationCenter defaultCenter]postNotificationName:@"clientConnected" object:nil];
         
@@ -103,10 +136,29 @@
         [[NSUserNotificationCenter defaultUserNotificationCenter]deliverNotification:notification];
         
         // okay let's respond to the client
-        NSDictionary *response = @{@"type":@"initial", @"serverName": self.userName, @"userName":newUserName, @"originalText":self.document.originalText, @"documentName":self.document.documentName};
-        NSData *responseData = [NSKeyedArchiver archivedDataWithRootObject:response];
+//        NSDictionary *response = @{@"type":@"initial", @"serverName": self.userName, @"userName":newUserName, @"originalText":self.document.originalText, @"documentName":self.document.documentName};
+//        NSData *oldData = [NSKeyedArchiver archivedDataWithRootObject:response];
+//      
+        
+        TransmissionBuilder *message = [Transmission builder];
+        [message setType:TransmissionMessageTypeInitial];
+        [message setServerName:self.userName];
+        [message setUserName:newUserName];
+        
+        TransmissionDocumentBuilder *documentBuilder = [TransmissionDocument builder];
+        [documentBuilder setDocumentText:self.document.originalText];
+        [documentBuilder setDocumentName:self.document.documentName];
+        
+        [message setDocument:[documentBuilder build]];
+    
+        NSData *responseData = [message build].data;
+        
         [self.session sendData:responseData toPeers:@[peerID] withMode:MCSessionSendDataReliable error:nil];
     }
+}
+
+- (void)session:(MCSession *)session didReceiveData:(NSData *)data fromPeer:(MCPeerID *)peerID {
+    
 }
 
 @end

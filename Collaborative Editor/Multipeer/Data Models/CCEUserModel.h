@@ -1,5 +1,5 @@
 //
-//  CCEClientModel.h
+//  CCEUserModel.h
 //  Collaborative Editor
 //
 //  Created by Kevin Li on 1/2/15.
@@ -9,7 +9,7 @@
 #import <Foundation/Foundation.h>
 #import <MultipeerConnectivity/MultipeerConnectivity.h>
 
-@interface CCEClientModel : NSObject
+@interface CCEUserModel : NSObject
 
 /// @brief The underlying MCPeerID object.
 @property (nonatomic, strong) MCPeerID *peerId;
@@ -21,7 +21,9 @@
 @property (nonatomic, strong) NSColor *displayColor;
 /// @brief The time that the client was last seen.
 @property (nonatomic, strong) NSDate *lastSeen;
-/// @brief The edit priority order that the client will be given if conflicting edits occur.
-@property int priority;
+
+/// @brief The user's current cursor position and selection.
+@property (nonatomic, strong) NSMutableDictionary *cursorState;
+
 
 @end

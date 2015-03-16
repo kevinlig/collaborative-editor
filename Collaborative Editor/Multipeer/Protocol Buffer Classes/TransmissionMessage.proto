@@ -1,0 +1,60 @@
+message Transmission {
+
+	enum MessageType {
+		INITIAL = 0;
+		STATE = 1;
+		SEQUENCE = 2;
+		ACK = 3;
+		REQ_QUEUE = 4;
+		REQ_STATE = 5;
+		UPDATE_QUEUE = 6;
+		UPDATE_STATE = 7;
+		FORCE_TEXT = 8;
+		USER_LIST = 9;
+	}
+
+	required MessageType type = 1;
+	optional int32 sequenceId = 2;	
+	optional string serverName = 3;
+	optional string userName = 4;
+
+	message User {
+		required string id = 1;
+		required string userName = 2;
+		optional string color = 3;
+	}
+
+	repeated User userList = 5;
+
+	message Document {
+		optional string documentText = 1;
+		optional string documentName = 2;
+	}
+
+	optional Document document = 6;
+
+	optional int32 ackSender = 7;
+
+	message QueueItem {
+		required int32 sequenceId = 1;
+		optional bytes diff = 2;
+	}
+
+	repeated QueueItem queueItems = 8;
+
+	message ChangeItem {
+		required int32 lastSequence = 1;
+		optional bytes diff = 2;
+	}
+
+	optional ChangeItem changeItem = 9;
+
+
+	message UserState {
+		optional string userName = 1;
+		optional bytes state = 2;
+	}
+
+	repeated UserState states = 10;
+
+}

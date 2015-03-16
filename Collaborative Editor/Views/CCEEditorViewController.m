@@ -18,7 +18,7 @@
 
 - (void)openDocument;
 
-- (void) configureBridge;
+- (void)configureBridge;
 - (void)loadEditor;
 - (void)changeSyntax:(NSString *)syntax;
 
@@ -51,7 +51,7 @@
 
 }
 
-- (void) configureBridge {
+- (void)configureBridge {
     self.bridge = [WebViewJavascriptBridge bridgeForWebView:self.editorView handler:nil];
     
    
@@ -86,6 +86,10 @@
             [[CCETransmissionService sharedManager]transmitUpdate:cursorData];
         });
     }];
+    
+//    [self.bridge registerHandler:@"debug" handler:^(id data, WVJBResponseCallback callback) {
+//        NSLog(@"%@",data);
+//    }];
     
 }
 
