@@ -421,9 +421,11 @@ NSString *NSStringFromTransmissionMessageType(TransmissionMessageType value) {
 }
 
 @interface TransmissionUser ()
-@property (strong) NSString* id;
+@property SInt32 id;
 @property (strong) NSString* userName;
 @property (strong) NSString* color;
+@property BOOL isYou;
+@property BOOL isServer;
 @end
 
 @implementation TransmissionUser
@@ -449,11 +451,37 @@ NSString *NSStringFromTransmissionMessageType(TransmissionMessageType value) {
   hasColor_ = !!_value_;
 }
 @synthesize color;
+- (BOOL) hasIsYou {
+  return !!hasIsYou_;
+}
+- (void) setHasIsYou:(BOOL) _value_ {
+  hasIsYou_ = !!_value_;
+}
+- (BOOL) isYou {
+  return !!isYou_;
+}
+- (void) setIsYou:(BOOL) _value_ {
+  isYou_ = !!_value_;
+}
+- (BOOL) hasIsServer {
+  return !!hasIsServer_;
+}
+- (void) setHasIsServer:(BOOL) _value_ {
+  hasIsServer_ = !!_value_;
+}
+- (BOOL) isServer {
+  return !!isServer_;
+}
+- (void) setIsServer:(BOOL) _value_ {
+  isServer_ = !!_value_;
+}
 - (instancetype) init {
   if ((self = [super init])) {
-    self.id = @"";
+    self.id = 0;
     self.userName = @"";
     self.color = @"";
+    self.isYou = NO;
+    self.isServer = NO;
   }
   return self;
 }
@@ -480,13 +508,19 @@ static TransmissionUser* defaultTransmissionUserInstance = nil;
 }
 - (void) writeToCodedOutputStream:(PBCodedOutputStream*) output {
   if (self.hasId) {
-    [output writeString:1 value:self.id];
+    [output writeInt32:1 value:self.id];
   }
   if (self.hasUserName) {
     [output writeString:2 value:self.userName];
   }
   if (self.hasColor) {
     [output writeString:3 value:self.color];
+  }
+  if (self.hasIsYou) {
+    [output writeBool:4 value:self.isYou];
+  }
+  if (self.hasIsServer) {
+    [output writeBool:5 value:self.isServer];
   }
   [self.unknownFields writeToCodedOutputStream:output];
 }
@@ -498,13 +532,19 @@ static TransmissionUser* defaultTransmissionUserInstance = nil;
 
   size_ = 0;
   if (self.hasId) {
-    size_ += computeStringSize(1, self.id);
+    size_ += computeInt32Size(1, self.id);
   }
   if (self.hasUserName) {
     size_ += computeStringSize(2, self.userName);
   }
   if (self.hasColor) {
     size_ += computeStringSize(3, self.color);
+  }
+  if (self.hasIsYou) {
+    size_ += computeBoolSize(4, self.isYou);
+  }
+  if (self.hasIsServer) {
+    size_ += computeBoolSize(5, self.isServer);
   }
   size_ += self.unknownFields.serializedSize;
   memoizedSerializedSize = size_;
@@ -542,13 +582,19 @@ static TransmissionUser* defaultTransmissionUserInstance = nil;
 }
 - (void) writeDescriptionTo:(NSMutableString*) output withIndent:(NSString*) indent {
   if (self.hasId) {
-    [output appendFormat:@"%@%@: %@\n", indent, @"id", self.id];
+    [output appendFormat:@"%@%@: %@\n", indent, @"id", [NSNumber numberWithInteger:self.id]];
   }
   if (self.hasUserName) {
     [output appendFormat:@"%@%@: %@\n", indent, @"userName", self.userName];
   }
   if (self.hasColor) {
     [output appendFormat:@"%@%@: %@\n", indent, @"color", self.color];
+  }
+  if (self.hasIsYou) {
+    [output appendFormat:@"%@%@: %@\n", indent, @"isYou", [NSNumber numberWithBool:self.isYou]];
+  }
+  if (self.hasIsServer) {
+    [output appendFormat:@"%@%@: %@\n", indent, @"isServer", [NSNumber numberWithBool:self.isServer]];
   }
   [self.unknownFields writeDescriptionTo:output withIndent:indent];
 }
@@ -562,23 +608,33 @@ static TransmissionUser* defaultTransmissionUserInstance = nil;
   TransmissionUser *otherMessage = other;
   return
       self.hasId == otherMessage.hasId &&
-      (!self.hasId || [self.id isEqual:otherMessage.id]) &&
+      (!self.hasId || self.id == otherMessage.id) &&
       self.hasUserName == otherMessage.hasUserName &&
       (!self.hasUserName || [self.userName isEqual:otherMessage.userName]) &&
       self.hasColor == otherMessage.hasColor &&
       (!self.hasColor || [self.color isEqual:otherMessage.color]) &&
+      self.hasIsYou == otherMessage.hasIsYou &&
+      (!self.hasIsYou || self.isYou == otherMessage.isYou) &&
+      self.hasIsServer == otherMessage.hasIsServer &&
+      (!self.hasIsServer || self.isServer == otherMessage.isServer) &&
       (self.unknownFields == otherMessage.unknownFields || (self.unknownFields != nil && [self.unknownFields isEqual:otherMessage.unknownFields]));
 }
 - (NSUInteger) hash {
   __block NSUInteger hashCode = 7;
   if (self.hasId) {
-    hashCode = hashCode * 31 + [self.id hash];
+    hashCode = hashCode * 31 + [[NSNumber numberWithInteger:self.id] hash];
   }
   if (self.hasUserName) {
     hashCode = hashCode * 31 + [self.userName hash];
   }
   if (self.hasColor) {
     hashCode = hashCode * 31 + [self.color hash];
+  }
+  if (self.hasIsYou) {
+    hashCode = hashCode * 31 + [[NSNumber numberWithBool:self.isYou] hash];
+  }
+  if (self.hasIsServer) {
+    hashCode = hashCode * 31 + [[NSNumber numberWithBool:self.isServer] hash];
   }
   hashCode = hashCode * 31 + [self.unknownFields hash];
   return hashCode;
@@ -632,6 +688,12 @@ static TransmissionUser* defaultTransmissionUserInstance = nil;
   if (other.hasColor) {
     [self setColor:other.color];
   }
+  if (other.hasIsYou) {
+    [self setIsYou:other.isYou];
+  }
+  if (other.hasIsServer) {
+    [self setIsServer:other.isServer];
+  }
   [self mergeUnknownFields:other.unknownFields];
   return self;
 }
@@ -653,8 +715,8 @@ static TransmissionUser* defaultTransmissionUserInstance = nil;
         }
         break;
       }
-      case 10: {
-        [self setId:[input readString]];
+      case 8: {
+        [self setId:[input readInt32]];
         break;
       }
       case 18: {
@@ -665,23 +727,31 @@ static TransmissionUser* defaultTransmissionUserInstance = nil;
         [self setColor:[input readString]];
         break;
       }
+      case 32: {
+        [self setIsYou:[input readBool]];
+        break;
+      }
+      case 40: {
+        [self setIsServer:[input readBool]];
+        break;
+      }
     }
   }
 }
 - (BOOL) hasId {
   return resultUser.hasId;
 }
-- (NSString*) id {
+- (SInt32) id {
   return resultUser.id;
 }
-- (TransmissionUserBuilder*) setId:(NSString*) value {
+- (TransmissionUserBuilder*) setId:(SInt32) value {
   resultUser.hasId = YES;
   resultUser.id = value;
   return self;
 }
 - (TransmissionUserBuilder*) clearId {
   resultUser.hasId = NO;
-  resultUser.id = @"";
+  resultUser.id = 0;
   return self;
 }
 - (BOOL) hasUserName {
@@ -714,6 +784,38 @@ static TransmissionUser* defaultTransmissionUserInstance = nil;
 - (TransmissionUserBuilder*) clearColor {
   resultUser.hasColor = NO;
   resultUser.color = @"";
+  return self;
+}
+- (BOOL) hasIsYou {
+  return resultUser.hasIsYou;
+}
+- (BOOL) isYou {
+  return resultUser.isYou;
+}
+- (TransmissionUserBuilder*) setIsYou:(BOOL) value {
+  resultUser.hasIsYou = YES;
+  resultUser.isYou = value;
+  return self;
+}
+- (TransmissionUserBuilder*) clearIsYou {
+  resultUser.hasIsYou = NO;
+  resultUser.isYou = NO;
+  return self;
+}
+- (BOOL) hasIsServer {
+  return resultUser.hasIsServer;
+}
+- (BOOL) isServer {
+  return resultUser.isServer;
+}
+- (TransmissionUserBuilder*) setIsServer:(BOOL) value {
+  resultUser.hasIsServer = YES;
+  resultUser.isServer = value;
+  return self;
+}
+- (TransmissionUserBuilder*) clearIsServer {
+  resultUser.hasIsServer = NO;
+  resultUser.isServer = NO;
   return self;
 }
 @end

@@ -81,15 +81,15 @@
     }];
     
     // setup handlers
-    [self.bridge registerHandler:@"changeCursor" handler:^(NSDictionary *cursorData, WVJBResponseCallback responseCallback) {
+    [self.bridge registerHandler:@"changeCursor" handler:^(NSDictionary *cursorData, WVJBResponseCallback responseCallback) {        
         dispatch_async(dispatch_get_global_queue( DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^(void) {
-            [[CCETransmissionService sharedManager]transmitUpdate:cursorData];
+            [[CCETransmissionService sharedManager]transmitState:cursorData];
         });
     }];
     
-//    [self.bridge registerHandler:@"debug" handler:^(id data, WVJBResponseCallback callback) {
-//        NSLog(@"%@",data);
-//    }];
+    [self.bridge registerHandler:@"debug" handler:^(id data, WVJBResponseCallback callback) {
+        NSLog(@"%@",data);
+    }];
     
 }
 
@@ -100,8 +100,14 @@
 }
 
 - (void)receivedUpdate {
-    NSDictionary *updatedDictionary = [CCETransmissionService sharedManager].slaveClient.lastUpdateData;
-    [self.bridge callHandler:@"updateCursor" data:updatedDictionary];
+    NSArray *currentDocumentState;
+    if (self.isServer) {
+        currentDocumentState = [CCETransmissionService sharedManager].masterServer.currentState;
+    }
+    else {
+        currentDocumentState = [CCETransmissionService sharedManager].slaveClient.currentState;
+    }
+    [self.bridge callHandler:@"updateCursor" data:currentDocumentState];
 }
 
 #pragma mark - Editing style emulators

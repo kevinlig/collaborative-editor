@@ -15,6 +15,7 @@
     if (self) {
         self.originalText = @"";
         self.documentName = @"";
+        self.userStates = [NSMutableDictionary dictionary];
     }
     return self;
 }

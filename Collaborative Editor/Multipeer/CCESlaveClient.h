@@ -10,6 +10,8 @@
 #import <MultipeerConnectivity/MultipeerConnectivity.h>
 #import "CCEServiceDefinitions.h"
 #import "CCEDocumentModel.h"
+#import "CCEUserModel.h"
+#import "TransmissionMessage.pb.h"
 
 @protocol CCESlaveClientDelegate <NSObject>
 
@@ -29,6 +31,8 @@
 /// @brief The communication session in the multipeer network.
 @property (nonatomic, strong) MCSession *session;
 
+@property (nonatomic, strong) MCPeerID *serverPeer;
+
 /// @brief A random 4-character code that clients will provide in order to connect into the multipeer network.
 @property (nonatomic, strong) NSString *sessionCode;
 
@@ -38,10 +42,19 @@
 /// @brief The underlying multipeer connectivity device scanner.
 @property (nonatomic, strong) MCNearbyServiceBrowser *browser;
 
-@property (nonatomic, strong) NSDictionary *lastUpdateData;
+@property (nonatomic, strong) NSArray *currentState;
+@property (nonatomic, strong) NSDate *lastStateUpdate;
+
+@property (nonatomic, strong) NSMutableArray *userList;
+@property (nonatomic, strong) NSMutableDictionary *userDict;
+
 
 - (void)configureService;
 - (void)startScanning;
+
+- (void)sendMessageToServer:(Transmission *)message;
+
+- (void)transmitState:(NSDictionary *)stateData;
 
 
 @end

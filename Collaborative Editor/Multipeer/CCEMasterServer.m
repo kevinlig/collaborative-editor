@@ -13,6 +13,8 @@
 
 @property int totalCount;
 
+@property (nonatomic, strong) CCEUserModel *serverUser;
+
 @property (nonatomic, strong) NSArray *userColors;
 
 @end
@@ -54,7 +56,19 @@
     self.document.documentName = @"";
     
     // populate the user color array
-    self.userColors = @[[NSColor colorWithHexString:@"e83a30"],[NSColor colorWithHexString:@"8930e8"],[NSColor colorWithHexString:@"3080e8"],[NSColor colorWithHexString:@"30e849"],[NSColor colorWithHexString:@"e8e230"]];
+    self.userColors = @[@"e83a30",@"c69cf4",@"3080e8",@"109121",@"c76f16"];
+    
+    // create the server user
+    self.serverUser = [[CCEUserModel alloc]init];
+    self.serverUser.peerId = self.peerId;
+    self.serverUser.userName = self.userName;
+    self.serverUser.isOnline = YES;
+    self.serverUser.internalId = self.totalCount;
+    
+    self.serverUser.displayColor = [self.userColors objectAtIndex:self.totalCount];
+    
+    self.totalCount++;
+
 }
 
 - (void)sendUpdate:(NSDictionary *)updateData {
@@ -75,24 +89,96 @@
 
 }
 
+- (NSMutableArray *)buildUserList:(NSString *)recipientUserName {
+    NSMutableArray *userList = [NSMutableArray array];
+    
+    for (MCPeerID *peer in self.allUsers) {
+        CCEUserModel *user = [self.connectedPeers objectForKey:peer];
+        
+        TransmissionUserBuilder *userBuilder = [TransmissionUser builder];
+        [userBuilder setId:user.internalId];
+        [userBuilder setUserName:user.userName];
+        [userBuilder setColor:user.displayColor];
+        
+        if (recipientUserName && [recipientUserName isEqualToString:user.userName]) {
+            [userBuilder setIsYou:YES];
+        }
+        else {
+            [userBuilder setIsYou:NO];
+        }
+        
+        [userBuilder setIsServer:NO];
+        
+        TransmissionUser *userMsg = [userBuilder build];
+        [userList addObject:userMsg];
+    }
+    
+    // add in the current server user
+    TransmissionUserBuilder *serverUser = [TransmissionUser builder];
+    [serverUser setId:self.serverUser.internalId];
+    [serverUser setUserName:self.serverUser.userName];
+    [serverUser setColor:self.serverUser.displayColor];
+    [serverUser setIsYou:NO];
+    [serverUser setIsServer:YES];
+    
+    TransmissionUser *serverUserMsg = [serverUser build];
+    [userList addObject:serverUserMsg];
+    
+    return userList;
+}
+
 - (void)updateState:(NSDictionary *)updatedState {
     
+    // add the state to the document model
+    [self.document.userStates setObject:updatedState forKey:self.serverUser.userName];
+    
+    [self broadcastState];
+    
+}
+
+- (void)broadcastState {
     // wrap the data into a Protobuf
     TransmissionBuilder *builder = [Transmission builder];
     [builder setType:TransmissionMessageTypeState];
-    [builder setUserName:self.userName];
     
-    TransmissionUserStateBuilder *stateBuilder = [TransmissionUserState builder];
-    NSData *stateData = [NSKeyedArchiver archivedDataWithRootObject:updatedState];
-    [stateBuilder setState:stateData];
+    NSMutableArray *stateArray = [NSMutableArray array];
     
-    TransmissionUserState *state = [stateBuilder build];
-    
-    [builder setStatesArray:@[state]];
+    for (NSString *userName in self.document.userStates.allKeys) {
+        NSDictionary *userState = [self.document.userStates objectForKey:userName];
+        
+        TransmissionUserStateBuilder *stateBuilder = [TransmissionUserState builder];
+        NSData *stateData = [NSKeyedArchiver archivedDataWithRootObject:userState];
+        [stateBuilder setState:stateData];
+        [stateBuilder setUserName:userName];
+        
+        [stateArray addObject:[stateBuilder build]];
+        
+    }
+
+    [builder setStatesArray:stateArray];
     
     // send the data
     [self sendBuffer:[builder build] toUsers:self.allUsers];
     
+    // now locally update the server's own UI with the latest data
+    // update the local state array
+    self.currentState = [NSMutableArray array];
+    for (NSString *thisUserName in self.document.userStates.allKeys) {
+        CCEUserModel *userModel;
+        
+        if ([thisUserName isEqualToString:self.serverUser.userName]) {
+            continue;
+        }
+
+        userModel = [self.currentUserNames objectForKey:thisUserName];
+        
+        NSDictionary *stateWrapper = @{@"user":@(userModel.internalId), @"state":[self.document.userStates objectForKey:thisUserName]};
+        
+        [self.currentState addObject:stateWrapper];
+    }
+    
+    [[NSNotificationCenter defaultCenter]postNotificationName:@"receivedUpdate" object:nil];
+
 }
 
 - (void)sendBuffer:(Transmission *)protoBuffer toUsers:(NSArray *)recipients {
@@ -119,9 +205,9 @@
         newUser.peerId = peerID;
         newUser.userName = newUserName;
         newUser.isOnline = YES;
-        newUser.displayColor = [self.userColors objectAtIndex:self.totalCount];
+        newUser.internalId = self.totalCount;
         
-        self.totalCount++;
+        newUser.displayColor = [self.userColors objectAtIndex:self.totalCount];
         
         [self.connectedPeers setObject:newUser forKey:peerID];
         [self.currentUserNames setObject:newUser forKey:newUserName];
@@ -143,7 +229,8 @@
         TransmissionBuilder *message = [Transmission builder];
         [message setType:TransmissionMessageTypeInitial];
         [message setServerName:self.userName];
-        [message setUserName:newUserName];
+                
+        [message setUserListArray:[self buildUserList:newUserName]];
         
         TransmissionDocumentBuilder *documentBuilder = [TransmissionDocument builder];
         [documentBuilder setDocumentText:self.document.originalText];
@@ -154,11 +241,28 @@
         NSData *responseData = [message build].data;
         
         [self.session sendData:responseData toPeers:@[peerID] withMode:MCSessionSendDataReliable error:nil];
+         
+        self.totalCount++;
     }
 }
 
 - (void)session:(MCSession *)session didReceiveData:(NSData *)data fromPeer:(MCPeerID *)peerID {
+
+    // parse the message
+    Transmission *message = [Transmission parseFromData:data];
     
+    if (message.type == TransmissionMessageTypeUpdateState) {
+        // user is pushing a new state
+        
+        TransmissionUserState *stateMessage = [message.states objectAtIndex:0];
+        
+        NSDictionary *stateData = [NSKeyedUnarchiver unarchiveObjectWithData:stateMessage.state];
+        
+        // add the state to the document model
+        [self.document.userStates setObject:stateData forKey:stateMessage.userName];
+        
+        [self broadcastState];
+    }
 }
 
 @end

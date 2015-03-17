@@ -102,19 +102,27 @@ NSString *NSStringFromTransmissionMessageType(TransmissionMessageType value);
 
 @interface TransmissionUser : PBGeneratedMessage<GeneratedMessageProtocol> {
 @private
+  BOOL hasIsYou_:1;
+  BOOL hasIsServer_:1;
   BOOL hasId_:1;
   BOOL hasUserName_:1;
   BOOL hasColor_:1;
-  NSString* id;
+  BOOL isYou_:1;
+  BOOL isServer_:1;
+  SInt32 id;
   NSString* userName;
   NSString* color;
 }
 - (BOOL) hasId;
 - (BOOL) hasUserName;
 - (BOOL) hasColor;
-@property (readonly, strong) NSString* id;
+- (BOOL) hasIsYou;
+- (BOOL) hasIsServer;
+@property (readonly) SInt32 id;
 @property (readonly, strong) NSString* userName;
 @property (readonly, strong) NSString* color;
+- (BOOL) isYou;
+- (BOOL) isServer;
 
 + (instancetype) defaultInstance;
 - (instancetype) defaultInstance;
@@ -152,8 +160,8 @@ NSString *NSStringFromTransmissionMessageType(TransmissionMessageType value);
 - (TransmissionUserBuilder*) mergeFromCodedInputStream:(PBCodedInputStream*) input extensionRegistry:(PBExtensionRegistry*) extensionRegistry;
 
 - (BOOL) hasId;
-- (NSString*) id;
-- (TransmissionUserBuilder*) setId:(NSString*) value;
+- (SInt32) id;
+- (TransmissionUserBuilder*) setId:(SInt32) value;
 - (TransmissionUserBuilder*) clearId;
 
 - (BOOL) hasUserName;
@@ -165,6 +173,16 @@ NSString *NSStringFromTransmissionMessageType(TransmissionMessageType value);
 - (NSString*) color;
 - (TransmissionUserBuilder*) setColor:(NSString*) value;
 - (TransmissionUserBuilder*) clearColor;
+
+- (BOOL) hasIsYou;
+- (BOOL) isYou;
+- (TransmissionUserBuilder*) setIsYou:(BOOL) value;
+- (TransmissionUserBuilder*) clearIsYou;
+
+- (BOOL) hasIsServer;
+- (BOOL) isServer;
+- (TransmissionUserBuilder*) setIsServer:(BOOL) value;
+- (TransmissionUserBuilder*) clearIsServer;
 @end
 
 @interface TransmissionDocument : PBGeneratedMessage<GeneratedMessageProtocol> {

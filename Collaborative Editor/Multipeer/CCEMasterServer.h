@@ -49,6 +49,8 @@
 /// @brief The document being shared in the session.
 @property (nonatomic, strong) CCEDocumentModel *document;
 
+@property (nonatomic, strong) NSMutableArray *currentState;
+
 
 
 /*!
@@ -66,6 +68,10 @@
 
 - (void)updateState:(NSDictionary *)updatedState;
 
+- (void)broadcastState;
+
 - (void)sendBuffer:(Transmission *)protoBuffer toUsers:(NSArray *)recipients;
+
+- (NSMutableArray *)buildUserList:(NSString *)recipientUserName;
 
 @end

@@ -19,9 +19,11 @@ message Transmission {
 	optional string userName = 4;
 
 	message User {
-		required string id = 1;
+		required int32 id = 1;
 		required string userName = 2;
 		optional string color = 3;
+		optional bool isYou = 4;
+		optional bool isServer = 5;
 	}
 
 	repeated User userList = 5;

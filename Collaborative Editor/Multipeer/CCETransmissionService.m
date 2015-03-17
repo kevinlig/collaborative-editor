@@ -64,12 +64,13 @@
     
 }
 
-- (void)transmitUpdate:(NSDictionary *)updateData {
-
+- (void)transmitState:(NSDictionary *)stateData {
     if (self.isServer) {
-        [self.masterServer updateState:updateData];
+        [self.masterServer updateState:stateData];
     }
-    
+    else {
+        [self.slaveClient transmitState:stateData];
+    }
 }
 
 #pragma mark - Server delegate methods

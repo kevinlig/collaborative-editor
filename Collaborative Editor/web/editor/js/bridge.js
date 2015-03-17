@@ -13,6 +13,7 @@ var documentLoadEvent = false;
 var editorMode = "";
 
 var existingCursors = {};
+var existingSelections = {};
 
 connectWebViewJavascriptBridge(function(bridge) {
 
@@ -36,33 +37,16 @@ connectWebViewJavascriptBridge(function(bridge) {
         editor.getSession().setMode(syntaxString);
     });
 
-    bridge.registerHandler("updateCursor", function(updateData) {
-        // check if cursor exists
-        var cursor;
-        var cursorRange = new Range(updateData.cursor.row, updateData.cursor.col, updateData.cursor.row, updateData.cursor.col + 1);
+    bridge.registerHandler("updateCursor", function(updateArray) {
+        
+        for (var i = 0; i < updateArray.length; i++) {
+            var userState = updateArray[i];
+            var userId = userState['user'];
+            var userCursor = userState['state'];
 
-        var selection = false;
-        if (updateData.selection.empty == false) {
-            cursorRange = new Range(updateData.selection.start.row, updateData.selection.start.col, updateData.selection.end.row, updateData.selection.end.col);
-            selection = true;
-        }
-
-        if (existingCursors['cursor' + updateData.priority] != undefined) {
-            // cursor exists
-            cursor = existingCursors['cursor' + updateData.priority];
-            editor.session.removeMarker(cursor);
+            displayUserCursors(userCursor, userId);
         }
         
-        // make the cursor
-        if (selection) {
-            cursor = editor.session.addMarker(cursorRange, "test", "line");
-        }
-        else {
-            cursor = editor.session.addMarker(cursorRange, "bar", true);
-        }
-    
-
-        existingCursors['cursor' + updateData.priority] = cursor;
     });
 
     editorNativeCallbacks(bridge);
@@ -111,5 +95,45 @@ function editorNativeCallbacks(bridge) {
             bridge.callHandler("changeCursor",nativeData);
         }
     });
+}
+
+
+function displayUserCursors(cursorData, userId) {
+    // check if cursor exists
+    var cursor;
+    var cursorRange = new Range(cursorData.cursor.row, cursorData.cursor.col, cursorData.cursor.row, cursorData.cursor.col + 1);
+
+    var selectionCursor;
+    var selectionRange;
+
+    var selection = false;
+    if (cursorData.selection.empty == false) {
+        selectionRange = new Range(cursorData.selection.start.row, cursorData.selection.start.col, cursorData.selection.end.row, cursorData.selection.end.col);
+        cursorRange = new Range(cursorData.selection.start.row, cursorData.selection.start.col, cursorData.selection.start.row, cursorData.selection.start.col + 1);
+        selection = true;
+    }
+
+    if (existingCursors['cursor' + userId] != undefined) {
+        // cursor exists
+        cursor = existingCursors['cursor' + userId];
+        editor.session.removeMarker(cursor);
+    }
+
+    if (existingSelections['selection' + userId] != undefined) {
+        // selection exists
+        selectionCursor = existingSelections['selection' + userId];
+        editor.session.removeMarker(selectionCursor);
+    }
+    
+    // make the cursor
+    cursor = editor.session.addMarker(cursorRange, "remoteCursor user" + userId, true);
+    existingCursors['cursor' + userId] = cursor;
+
+    // make the selection if necessary
+    if (selection) {
+        selectionCursor = editor.session.addMarker(selectionRange, "remoteSelection user" + userId, "line");
+        existingSelections['selection' + userId] = selectionCursor;
+    }
+
 }
 

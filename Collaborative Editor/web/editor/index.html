@@ -21,7 +21,7 @@
     .bar{
       position:absolute;
       background:rgba(100,100,200,1);
-      z-index:40;
+      z-index:9999;
       width:2px !important;
     }
   
@@ -37,6 +37,62 @@
       position:absolute;
       background:rgba(100,200,100,0.5);
       z-index:20
+    }
+
+    /* multiple cursors */
+    .remoteCursor {
+      position: absolute;
+      z-index:20;
+      width:2px !important;
+    }
+
+    .remoteCursor::before {
+      position:absolute;
+      z-index:20;
+      top: -10px;
+      left: 0px;
+      width: 10px;
+      height: 10px;
+      content: '';
+      padding: 1px 2px;
+    }
+
+
+    .remoteSelection {
+      position: absolute;
+      z-index:20;
+    }
+
+    /* user colors */
+    .user0 {
+      background: rgba(232, 58, 48, 0.5);
+    }
+    .user0::before {
+      background: rgba(232, 58, 48, 1);
+    }
+    .user1 {
+      background:rgba(198, 156, 244, 0.5);
+    }
+    .user1::before {
+      background:rgba(198, 156, 244, 1);
+    }
+    .user2 {
+      background: rgba(48, 128, 232, 0.5);
+    }
+    .user2::before {
+      background: rgba(48, 128, 232, 1);
+    }
+    .user3 {
+      background: rgba(16, 145, 33, 0.5);
+    }
+    .user3::before {
+      background: rgba(16, 145, 33, 1);
+    }
+    .user4 {
+      background: rgba(199, 111, 22, 0.5);
+    }
+    .user4::before {
+      background: rgba(199, 111, 22, 1);
     }
   </style>
 </head>

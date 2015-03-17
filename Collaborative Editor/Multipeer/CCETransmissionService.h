@@ -37,6 +37,6 @@
 
 - (void)startClient;
 
-- (void)transmitUpdate:(NSDictionary *)updateData;
+- (void)transmitState:(NSDictionary *)stateData;
 
 @end
