@@ -9,6 +9,8 @@
 /* Begin PBXBuildFile section */
 		1E0788651AB4F12A00B86B69 /* TransmissionMessage.pb.m in Sources */ = {isa = PBXBuildFile; fileRef = 1E0788641AB4F12A00B86B69 /* TransmissionMessage.pb.m */; };
 		1E12284D1A5A398300A569D8 /* CCEDocumentModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 1E12284C1A5A398300A569D8 /* CCEDocumentModel.m */; };
+		1E3555B61AB870C900F32AE9 /* CCERealmQueue.m in Sources */ = {isa = PBXBuildFile; fileRef = 1E3555B51AB870C900F32AE9 /* CCERealmQueue.m */; };
+		1E3555B91AB9169900F32AE9 /* Diff+Encoding.m in Sources */ = {isa = PBXBuildFile; fileRef = 1E3555B81AB9169900F32AE9 /* Diff+Encoding.m */; };
 		1E3591101A5252E600FEE9E0 /* CCEMasterServer.m in Sources */ = {isa = PBXBuildFile; fileRef = 1E35910F1A5252E600FEE9E0 /* CCEMasterServer.m */; };
 		1E3591121A5252F000FEE9E0 /* MultipeerConnectivity.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1E3591111A5252F000FEE9E0 /* MultipeerConnectivity.framework */; };
 		1E3591191A52540A00FEE9E0 /* CCETransmissionService.m in Sources */ = {isa = PBXBuildFile; fileRef = 1E3591181A52540A00FEE9E0 /* CCETransmissionService.m */; };
@@ -60,6 +62,10 @@
 		1E0788641AB4F12A00B86B69 /* TransmissionMessage.pb.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = TransmissionMessage.pb.m; path = "Multipeer/Protocol Buffer Classes/TransmissionMessage.pb.m"; sourceTree = "<group>"; };
 		1E12284B1A5A398300A569D8 /* CCEDocumentModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CCEDocumentModel.h; path = "Multipeer/Data Models/Document Model/CCEDocumentModel.h"; sourceTree = "<group>"; };
 		1E12284C1A5A398300A569D8 /* CCEDocumentModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = CCEDocumentModel.m; path = "Multipeer/Data Models/Document Model/CCEDocumentModel.m"; sourceTree = "<group>"; };
+		1E3555B41AB870C900F32AE9 /* CCERealmQueue.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CCERealmQueue.h; path = "Multipeer/Data Models/Document Model/Diff Queue/CCERealmQueue.h"; sourceTree = "<group>"; };
+		1E3555B51AB870C900F32AE9 /* CCERealmQueue.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = CCERealmQueue.m; path = "Multipeer/Data Models/Document Model/Diff Queue/CCERealmQueue.m"; sourceTree = "<group>"; };
+		1E3555B71AB9169900F32AE9 /* Diff+Encoding.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "Diff+Encoding.h"; path = "Utilities/Diff+Encoding.h"; sourceTree = "<group>"; };
+		1E3555B81AB9169900F32AE9 /* Diff+Encoding.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "Diff+Encoding.m"; path = "Utilities/Diff+Encoding.m"; sourceTree = "<group>"; };
 		1E35910B1A5251D400FEE9E0 /* CCEServiceDefinitions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CCEServiceDefinitions.h; path = Multipeer/CCEServiceDefinitions.h; sourceTree = "<group>"; };
 		1E35910E1A5252E600FEE9E0 /* CCEMasterServer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CCEMasterServer.h; path = Multipeer/CCEMasterServer.h; sourceTree = "<group>"; };
 		1E35910F1A5252E600FEE9E0 /* CCEMasterServer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = CCEMasterServer.m; path = Multipeer/CCEMasterServer.m; sourceTree = "<group>"; };
@@ -163,10 +169,20 @@
 		1E12284A1A5A396700A569D8 /* Document Model */ = {
 			isa = PBXGroup;
 			children = (
+				1E3555B31AB870A400F32AE9 /* Diff Queue */,
 				1E12284B1A5A398300A569D8 /* CCEDocumentModel.h */,
 				1E12284C1A5A398300A569D8 /* CCEDocumentModel.m */,
 			);
 			name = "Document Model";
+			sourceTree = "<group>";
+		};
+		1E3555B31AB870A400F32AE9 /* Diff Queue */ = {
+			isa = PBXGroup;
+			children = (
+				1E3555B41AB870C900F32AE9 /* CCERealmQueue.h */,
+				1E3555B51AB870C900F32AE9 /* CCERealmQueue.m */,
+			);
+			name = "Diff Queue";
 			sourceTree = "<group>";
 		};
 		1E35910A1A5251A500FEE9E0 /* Multipeer */ = {
@@ -191,6 +207,8 @@
 				1E35912B1A5325D500FEE9E0 /* WebViewJavascriptBridge */,
 				1E35911D1A525D6D00FEE9E0 /* NSString+Random.h */,
 				1E35911E1A525D6D00FEE9E0 /* NSString+Random.m */,
+				1E3555B71AB9169900F32AE9 /* Diff+Encoding.h */,
+				1E3555B81AB9169900F32AE9 /* Diff+Encoding.m */,
 			);
 			name = Utilities;
 			sourceTree = "<group>";
@@ -490,9 +508,11 @@
 				1EE581041A51B034000F2F49 /* CCELaunchWindow.m in Sources */,
 				1EE580B11A509DE9000F2F49 /* main.m in Sources */,
 				1E0788651AB4F12A00B86B69 /* TransmissionMessage.pb.m in Sources */,
+				1E3555B61AB870C900F32AE9 /* CCERealmQueue.m in Sources */,
 				1E37312D1A576344009B0685 /* CCEUserModel.m in Sources */,
 				1E35911F1A525D6D00FEE9E0 /* NSString+Random.m in Sources */,
 				1E3591351A534BC600FEE9E0 /* CCEServerDetailModal.m in Sources */,
+				1E3555B91AB9169900F32AE9 /* Diff+Encoding.m in Sources */,
 				1EB845C71AB12E4A00B2ADE6 /* CCEUserListViewController.m in Sources */,
 				1EE580D11A509E14000F2F49 /* CCEEditorViewController.m in Sources */,
 				1E12284D1A5A398300A569D8 /* CCEDocumentModel.m in Sources */,

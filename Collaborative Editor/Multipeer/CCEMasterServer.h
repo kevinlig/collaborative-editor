@@ -43,12 +43,13 @@
 @property (nonatomic, strong) NSMutableDictionary *connectedPeers;
 /// @brief A dictionary of user names.
 @property (nonatomic, strong) NSMutableDictionary *currentUserNames;
-
+/// @brief An array of peer IDs to broadcast to (since we don't need to broadcast to ourselves, this should exclude the master server).
 @property (nonatomic, strong) NSMutableArray *allUsers;
 
 /// @brief The document being shared in the session.
 @property (nonatomic, strong) CCEDocumentModel *document;
 
+/// @brief An array of dictionaries (user numeric identifier + state data) showing each connected user's cursor/selection state.
 @property (nonatomic, strong) NSMutableArray *currentState;
 
 
@@ -64,13 +65,15 @@
  */
 - (void)startServer;
 
-- (void)sendUpdate:(NSDictionary *)updateData;
-
 - (void)updateState:(NSDictionary *)updatedState;
-
 - (void)broadcastState;
 
+- (void)updateDiff:(NSMutableArray *)diffArray;
+
+
 - (void)sendBuffer:(Transmission *)protoBuffer toUsers:(NSArray *)recipients;
+
+- (void)notifyQueueChanged:(NSArray *)recipients;
 
 - (NSMutableArray *)buildUserList:(NSString *)recipientUserName;
 

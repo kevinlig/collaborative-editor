@@ -113,6 +113,9 @@
     [CCETransmissionService sharedManager].masterServer.document.originalText = @"";
     [CCETransmissionService sharedManager].masterServer.document.documentName = @"";
     
+    // start the queue DB
+    [[CCETransmissionService sharedManager].masterServer.document beginDiffQueue];
+    
     [self displayServerDetailModal];
     
     _createNew = YES;
@@ -130,6 +133,9 @@
     NSString *documentContents = [NSString stringWithContentsOfFile:documentPath encoding:NSUTF8StringEncoding error:nil];
     [CCETransmissionService sharedManager].masterServer.document.originalText = documentContents;
     [CCETransmissionService sharedManager].masterServer.document.documentName = [documentPath lastPathComponent];
+    
+    // start the queue DB
+    [[CCETransmissionService sharedManager].masterServer.document beginDiffQueue];
     
     [self displayServerDetailModal];
     

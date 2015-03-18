@@ -15,6 +15,10 @@ var editorMode = "";
 var existingCursors = {};
 var existingSelections = {};
 
+var textUpdateTimer;
+
+var preventStateUpdates = false;
+
 connectWebViewJavascriptBridge(function(bridge) {
 
     /* Init your app here */
@@ -26,11 +30,22 @@ connectWebViewJavascriptBridge(function(bridge) {
     bridge.registerHandler("pushFullDocument", function(data) {
         // received full document, replace the editor text with the data
         documentLoadEvent = true;
-        editor.setValue(data);
+        editor.setValue(data, -1);
         editor.selection.moveCursorTo(0,0);
         editor.selection.clearSelection();
 
         documentLoadEvent = false;
+    });
+
+    bridge.registerHandler("pushText", function(data) {
+
+        var cursorPos = editor.getCursorPosition();
+        var scrollTop = editor.getSession().getScrollTop();
+
+        editor.setValue(data, -1);
+        editor.moveCursorToPosition(cursorPos);
+        editor.getSession().setScrollTop(scrollTop);
+
     });
 
     bridge.registerHandler("changeSyntax", function(syntaxString) {
@@ -39,6 +54,10 @@ connectWebViewJavascriptBridge(function(bridge) {
 
     bridge.registerHandler("updateCursor", function(updateArray) {
         
+        if (preventStateUpdates == true) {
+            return;
+        }
+
         for (var i = 0; i < updateArray.length; i++) {
             var userState = updateArray[i];
             var userId = userState['user'];
@@ -82,8 +101,9 @@ connectWebViewJavascriptBridge(function(bridge) {
 
 // set up event callbacks
 function editorNativeCallbacks(bridge) {
+    // listen for cursor and selection position changes
     editor.selection.on("changeCursor",function() {
-        if (documentLoadEvent == false) {
+        if (documentLoadEvent == false && preventStateUpdates == false) {
             
             var cursor = editor.selection.getCursor();
             var range = editor.selection.getRange();
@@ -95,8 +115,20 @@ function editorNativeCallbacks(bridge) {
             bridge.callHandler("changeCursor",nativeData);
         }
     });
-}
 
+
+    // listen for non-programmatic text changes
+    editor.on("change", function(changeData) {
+        if (editor.curOp && editor.curOp.command.name) {
+            // this is a user change
+            textChangeEvent(bridge);
+        }
+    });
+
+    editor.on("paste", function() {
+        textChangeEvent(bridge);
+    });
+}
 
 function displayUserCursors(cursorData, userId) {
     // check if cursor exists
@@ -137,3 +169,18 @@ function displayUserCursors(cursorData, userId) {
 
 }
 
+function textChangeEvent(bridge) {
+
+    preventStateUpdates = true;
+
+    if (textUpdateTimer != undefined) {
+        window.clearTimeout(textUpdateTimer);
+    }
+    
+    textUpdateTimer = window.setTimeout(function() {
+        bridge.callHandler("textChange", editor.getValue());
+
+        preventStateUpdates = false;
+    }, 300);
+
+}

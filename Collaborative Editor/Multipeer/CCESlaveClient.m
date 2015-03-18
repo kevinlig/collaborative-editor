@@ -8,8 +8,11 @@
 
 #import "CCESlaveClient.h"
 #import "TransmissionMessage.pb.h"
+#import <Google-Diff-Match-Patch/DiffMatchPatch.h>
 
 @interface CCESlaveClient ()
+
+@property (nonatomic, strong) DiffMatchPatch *diffEngine;
 
 - (void)receivedUpdate:(NSDictionary *)updateData;
 
@@ -31,6 +34,8 @@
     
     self.userList = [NSMutableArray array];
     self.userDict = [NSMutableDictionary dictionary];
+    
+    self.diffEngine = [[DiffMatchPatch alloc]init];
 }
 
 - (void)startScanning {
@@ -68,6 +73,15 @@
     
 }
 
+- (void)requestUpdatedQueue {
+    
+    TransmissionBuilder *builder = [Transmission builder];
+    [builder setType:TransmissionMessageTypeReqQueue];
+    [builder setSequenceId:self.document.currentSequenceId];
+    
+    [self sendMessageToServer:[builder build]];
+}
+
 #pragma mark - Browser delegate methods
 - (void)browser:(MCNearbyServiceBrowser *)browser foundPeer:(MCPeerID *)peerID withDiscoveryInfo:(NSDictionary *)info {
     // found the server, connect to it and stop scanning
@@ -93,6 +107,7 @@
         if (message.document) {
             self.document.documentName = message.document.documentName;
             self.document.originalText = message.document.documentText;
+            self.document.currentSequenceId = 1;
         }
         
         // populate the current user list
@@ -122,14 +137,15 @@
     }
     else if (message.type == TransmissionMessageTypeState) {
         // received a state message
-        // TEMP CODE
         
+        // we need to create an array of dictionaries, which will contain a user's numeric identifier and their state data
         NSMutableArray *userStates = [NSMutableArray array];
         
+        // iterate through each state item passed in the message (there should be one state per user that has interacted with the editor before)
         for (TransmissionUserState *currentState in message.states) {
             
             if ([currentState.userName isEqualToString:self.userName]) {
-                // we don't need to see our own state
+                // we don't need to see our own state so we can skip this one
                 continue;
             }
             
@@ -143,9 +159,36 @@
         }
         
         self.currentState = [userStates copy];
+        
+        // okay, we're done, notify the editor JS that it's ready to be displayed
         [[NSNotificationCenter defaultCenter]postNotificationName:@"receivedUpdate" object:nil];
         
     }
+    else if (message.type == TransmissionMessageTypeSequence) {
+        // received a queue sequence
+        
+        TransmissionQueueItem *item = [message.queueItems objectAtIndex:0];
+        
+        self.document.currentSequenceId = item.sequenceId;
+        NSMutableArray *diffs = [NSKeyedUnarchiver unarchiveObjectWithData:item.diff];
+        
+        // patch the diffs
+        NSMutableArray *patches = [self.diffEngine patch_makeFromDiffs:diffs];
+        NSString *newString = [[self.diffEngine patch_apply:patches toString:self.document.originalText]objectAtIndex:0];
+        
+        self.document.originalText = newString;
+        
+        [[NSNotificationCenter defaultCenter]postNotificationName:@"updatedDocument" object:nil];
+        
+    }
+    else if (message.type == TransmissionMessageTypeNotifyQueueChange) {
+        // the diff queue has changed (aka, new things have been added to it)
+        // since we could be behind, we'll need to request all changes since our last received sequence
+        
+        [self requestUpdatedQueue];
+        
+    }
+    
 //    else if ([responseType isEqualToString:@"update"]) {
 //        
 //        [self receivedUpdate:response];

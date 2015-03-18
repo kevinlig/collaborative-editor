@@ -17,11 +17,11 @@
 @property (nonatomic, strong) NSString *userName;
 /// @brief Indicates if the client is online or not.
 @property BOOL isOnline;
-/// @brief The color that the client is associated with.
+/// @brief The hex code representing the color that the client is associated with.
 @property (nonatomic, strong) NSString *displayColor;
 /// @brief The time that the client was last seen.
 @property (nonatomic, strong) NSDate *lastSeen;
-
+/// @brief A numeric identifier used by the JS editor client.
 @property int internalId;
 
 /// @brief The user's current cursor position and selection.

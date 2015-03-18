@@ -7,14 +7,18 @@
 //
 
 #import "CCEEditorViewController.h"
+#import <Google-Diff-Match-Patch/DiffMatchPatch.h>
+#import "Diff+Encoding.h"
 
 @interface CCEEditorViewController ()
 
 @property (weak) IBOutlet CCEWebView *editorView;
 
-@property (nonatomic, strong) NSString *documentContents;
+@property (nonatomic, copy) NSString *documentContents;
 @property (nonatomic, strong) WebViewJavascriptBridge *bridge;
 @property BOOL isServer;
+
+@property (nonatomic, strong) DiffMatchPatch *diffEngine;
 
 - (void)openDocument;
 
@@ -23,6 +27,7 @@
 - (void)changeSyntax:(NSString *)syntax;
 
 - (void)receivedUpdate;
+- (void)receivedText;
 
 @end
 
@@ -34,9 +39,13 @@
     
     self.isServer = [CCETransmissionService sharedManager].isServer;
     
+    self.diffEngine = [[DiffMatchPatch alloc]init];
+    
     [self loadEditor];
     
     [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(receivedUpdate) name:@"receivedUpdate" object:nil];
+    
+    [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(receivedText) name:@"updatedDocument" object:nil];
     
 }
 
@@ -81,7 +90,8 @@
     }];
     
     // setup handlers
-    [self.bridge registerHandler:@"changeCursor" handler:^(NSDictionary *cursorData, WVJBResponseCallback responseCallback) {        
+    [self.bridge registerHandler:@"changeCursor" handler:^(NSDictionary *cursorData, WVJBResponseCallback responseCallback) {
+        NSLog(@"PUSH CURSOR CHANGE");
         dispatch_async(dispatch_get_global_queue( DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^(void) {
             [[CCETransmissionService sharedManager]transmitState:cursorData];
         });
@@ -89,6 +99,22 @@
     
     [self.bridge registerHandler:@"debug" handler:^(id data, WVJBResponseCallback callback) {
         NSLog(@"%@",data);
+    }];
+    
+    [self.bridge registerHandler:@"textChange" handler:^(id data, WVJBResponseCallback callback) {
+        NSLog(@"TEXT CHANGE");
+        // diff the new contents against the old contents
+        dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
+            NSString *newContents = data;
+            NSMutableArray *diffs = [self.diffEngine diff_mainOfOldString:self.documentContents andNewString:newContents];
+            
+            [[CCETransmissionService sharedManager]transmitDiff:diffs];
+            
+            self.documentContents = newContents;
+            
+        });
+        
+        
     }];
     
 }
@@ -107,7 +133,25 @@
     else {
         currentDocumentState = [CCETransmissionService sharedManager].slaveClient.currentState;
     }
-    [self.bridge callHandler:@"updateCursor" data:currentDocumentState];
+
+    dispatch_async(dispatch_get_main_queue(), ^{
+            [self.bridge callHandler:@"updateCursor" data:currentDocumentState];
+    });
+
+}
+
+- (void)receivedText {
+    if (self.isServer) {
+        self.documentContents = [CCETransmissionService sharedManager].masterServer.document.originalText;
+    }
+    else {
+        self.documentContents = [CCETransmissionService sharedManager].slaveClient.document.originalText;
+    }
+    
+    dispatch_async(dispatch_get_main_queue(), ^{
+        [self.bridge callHandler:@"pushText" data:self.documentContents];
+    });
+    
 }
 
 #pragma mark - Editing style emulators

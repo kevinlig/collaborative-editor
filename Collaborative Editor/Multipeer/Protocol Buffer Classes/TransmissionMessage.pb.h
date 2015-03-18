@@ -29,6 +29,7 @@ typedef NS_ENUM(SInt32, TransmissionMessageType) {
   TransmissionMessageTypeUpdateState = 7,
   TransmissionMessageTypeForceText = 8,
   TransmissionMessageTypeUserList = 9,
+  TransmissionMessageTypeNotifyQueueChange = 10,
 };
 
 BOOL TransmissionMessageTypeIsValidValue(TransmissionMessageType value);

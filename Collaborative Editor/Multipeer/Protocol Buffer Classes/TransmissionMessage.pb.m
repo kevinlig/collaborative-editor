@@ -388,6 +388,7 @@ BOOL TransmissionMessageTypeIsValidValue(TransmissionMessageType value) {
     case TransmissionMessageTypeUpdateState:
     case TransmissionMessageTypeForceText:
     case TransmissionMessageTypeUserList:
+    case TransmissionMessageTypeNotifyQueueChange:
       return YES;
     default:
       return NO;
@@ -415,6 +416,8 @@ NSString *NSStringFromTransmissionMessageType(TransmissionMessageType value) {
       return @"TransmissionMessageTypeForceText";
     case TransmissionMessageTypeUserList:
       return @"TransmissionMessageTypeUserList";
+    case TransmissionMessageTypeNotifyQueueChange:
+      return @"TransmissionMessageTypeNotifyQueueChange";
     default:
       return nil;
   }

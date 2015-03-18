@@ -56,5 +56,6 @@
 
 - (void)transmitState:(NSDictionary *)stateData;
 
+- (void)requestUpdatedQueue;
 
 @end

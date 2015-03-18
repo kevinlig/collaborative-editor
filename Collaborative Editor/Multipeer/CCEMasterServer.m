@@ -71,24 +71,6 @@
 
 }
 
-- (void)sendUpdate:(NSDictionary *)updateData {
-    NSMutableDictionary *transmissionDictionary = [NSMutableDictionary dictionaryWithDictionary:updateData];
-    [transmissionDictionary setObject:@([[NSDate date]timeIntervalSince1970]) forKey:@"time"];
-    [transmissionDictionary setObject:self.userName forKey:@"user"];
-    [transmissionDictionary setObject:@(0) forKey:@"priority"];
-    [transmissionDictionary setObject:@"update" forKey:@"type"];
-    
-    NSData *transmissionData = [NSKeyedArchiver archivedDataWithRootObject:transmissionDictionary];
-    
-    NSMutableArray *peerArray = [NSMutableArray array];
-    for (MCPeerID *client in self.connectedPeers) {
-        [peerArray addObject:client];
-    }
-    
-    [self.session sendData:transmissionData toPeers:peerArray withMode:MCSessionSendDataReliable error:nil];
-
-}
-
 - (NSMutableArray *)buildUserList:(NSString *)recipientUserName {
     NSMutableArray *userList = [NSMutableArray array];
     
@@ -160,31 +142,54 @@
     // send the data
     [self sendBuffer:[builder build] toUsers:self.allUsers];
     
-    // now locally update the server's own UI with the latest data
-    // update the local state array
+    // now locally update the server's own UI with the latest data, since we don't need to transmit this data to ourselves
+    // create the local state array
     self.currentState = [NSMutableArray array];
+    // iterate through all the states in the document, excluding ourselves
     for (NSString *thisUserName in self.document.userStates.allKeys) {
-        CCEUserModel *userModel;
         
         if ([thisUserName isEqualToString:self.serverUser.userName]) {
             continue;
         }
-
-        userModel = [self.currentUserNames objectForKey:thisUserName];
+        
+        // we need the user model in order to retrieve the numeric identifier (used by the JS)
+        CCEUserModel *userModel = [self.currentUserNames objectForKey:thisUserName];
         
         NSDictionary *stateWrapper = @{@"user":@(userModel.internalId), @"state":[self.document.userStates objectForKey:thisUserName]};
         
+        // push the assembled dictionary into the state array
         [self.currentState addObject:stateWrapper];
     }
-    
+    // we've updated the state array, notify the editor to update the UI
     [[NSNotificationCenter defaultCenter]postNotificationName:@"receivedUpdate" object:nil];
 
+}
+
+- (void)updateDiff:(NSMutableArray *)diffArray {
+    
+    [self.document addDiff:diffArray];
+
+    [self notifyQueueChanged:self.allUsers];
+    
+    [[NSNotificationCenter defaultCenter]postNotificationName:@"updatedDocument" object:nil];
+
+}
+
+- (void)notifyQueueChanged:(NSArray *)recipients {
+    
+    TransmissionBuilder *builder = [Transmission builder];
+    [builder setType:TransmissionMessageTypeNotifyQueueChange];
+    
+    [self sendBuffer:[builder build] toUsers:recipients];
+    
 }
 
 - (void)sendBuffer:(Transmission *)protoBuffer toUsers:(NSArray *)recipients {
     NSData *bufferData = protoBuffer.data;
     
-    [self.session sendData:bufferData toPeers:recipients withMode:MCSessionSendDataReliable error:nil];
+    if ([self.allUsers count] > 0) {
+        [self.session sendData:bufferData toPeers:recipients withMode:MCSessionSendDataReliable error:nil];
+    }
     
 }
 
@@ -263,6 +268,27 @@
         
         [self broadcastState];
     }
+    else if (message.type == TransmissionMessageTypeReqQueue) {
+        // user is requesting the latest queue items
+        
+        NSMutableArray *diffs = [self.document diffToCurrentFrom:message.sequenceId];
+        NSData *diffData = [NSKeyedArchiver archivedDataWithRootObject:diffs];
+        
+        TransmissionQueueItemBuilder *itemBuilder = [TransmissionQueueItem builder];
+        [itemBuilder setSequenceId:self.document.currentSequenceId];
+        [itemBuilder setDiff:diffData];
+        TransmissionQueueItem *item = [itemBuilder build];
+        
+        // send the diffs back
+        TransmissionBuilder *builder = [Transmission builder];
+        [builder setType:TransmissionMessageTypeSequence];
+        [builder setQueueItemsArray:@[item]];
+        
+        [self sendBuffer:[builder build] toUsers:@[peerID]];
+        
+        
+    }
+    
 }
 
 @end

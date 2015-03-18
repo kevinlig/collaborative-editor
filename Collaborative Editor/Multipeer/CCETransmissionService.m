@@ -73,6 +73,14 @@
     }
 }
 
+- (void)transmitDiff:(NSMutableArray *)diffArray {
+    if (self.isServer) {
+        [self.masterServer updateDiff:diffArray];
+    }
+    
+    
+}
+
 #pragma mark - Server delegate methods
 
 

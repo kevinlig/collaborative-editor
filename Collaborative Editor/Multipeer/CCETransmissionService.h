@@ -39,4 +39,6 @@
 
 - (void)transmitState:(NSDictionary *)stateData;
 
+- (void)transmitDiff:(NSMutableArray *)diffArray;
+
 @end
