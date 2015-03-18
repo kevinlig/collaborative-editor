@@ -35,6 +35,6 @@
 @property id<CCELaunchViewDelegate> delegate;
 
 /// @brief The user name that will displayed to other users.
-@property (nonatomic, strong) NSString *userName;
+@property (nonatomic, copy) NSString *userName;
 
 @end

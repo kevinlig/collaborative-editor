@@ -23,6 +23,6 @@
 
 
 /// @brief The access code required to enter the session.
-@property (nonatomic, strong) NSString *sessionCode;
+@property (nonatomic, copy) NSString *sessionCode;
 
 @end

@@ -16,7 +16,7 @@
 @interface CCEEditorViewController : NSViewController <CCEFooterBarDelegate>
 
 /// @brief The file path of the file to load (may be nil if using a blank document).
-@property (nonatomic, strong) NSString *documentPath;
+@property (nonatomic, copy) NSString *documentPath;
 
 /// @brief Indicates whether the JS editor has been fully loaded and can receive commands.
 @property BOOL editorReady;

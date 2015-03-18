@@ -22,7 +22,7 @@
 
 @property (weak) IBOutlet NSTextField *displayNameField;
 
-@property (nonatomic, strong) NSString *filePath;
+@property (nonatomic, copy) NSString *filePath;
 
 
 - (IBAction)clickedCancel:(id)sender;

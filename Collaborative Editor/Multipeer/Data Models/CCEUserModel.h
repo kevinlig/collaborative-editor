@@ -14,11 +14,11 @@
 /// @brief The underlying MCPeerID object.
 @property (nonatomic, strong) MCPeerID *peerId;
 /// @brief The displayable user name of the client.
-@property (nonatomic, strong) NSString *userName;
+@property (nonatomic, copy) NSString *userName;
 /// @brief Indicates if the client is online or not.
 @property BOOL isOnline;
 /// @brief The hex code representing the color that the client is associated with.
-@property (nonatomic, strong) NSString *displayColor;
+@property (nonatomic, copy) NSString *displayColor;
 /// @brief The time that the client was last seen.
 @property (nonatomic, strong) NSDate *lastSeen;
 /// @brief A numeric identifier used by the JS editor client.

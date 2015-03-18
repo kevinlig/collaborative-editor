@@ -24,7 +24,7 @@
 @property id<CCEMasterServerDelegate> delegate;
 
 /// @brief The user's display name, as presented to other clients. Will be used in the peer ID.
-@property (nonatomic, strong) NSString *userName;
+@property (nonatomic, copy) NSString *userName;
 
 /// @brief Identifies the computer to other clients in the multipeer network.
 @property (nonatomic, strong) MCPeerID *peerId;
@@ -34,7 +34,7 @@
 @property (nonatomic, strong) MCAdvertiserAssistant *advertiser;
 
 /// @brief A random 4-character code that clients will provide in order to connect into the multipeer network.
-@property (nonatomic, strong) NSString *sessionCode;
+@property (nonatomic, copy) NSString *sessionCode;
 
 /// @brief Indicates if the server is currently advertising its presence.
 @property BOOL advertising;
