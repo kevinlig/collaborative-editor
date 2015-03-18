@@ -16,6 +16,7 @@ var existingCursors = {};
 var existingSelections = {};
 
 var textUpdateTimer;
+var cursorUpdateTimer;
 
 var preventStateUpdates = false;
 
@@ -103,7 +104,12 @@ connectWebViewJavascriptBridge(function(bridge) {
 function editorNativeCallbacks(bridge) {
     // listen for cursor and selection position changes
     editor.selection.on("changeCursor",function() {
-        if (documentLoadEvent == false && preventStateUpdates == false) {
+
+        if (preventStateUpdates) {
+            return;
+        }
+        
+        if (documentLoadEvent == false) {
             
             var cursor = editor.selection.getCursor();
             var range = editor.selection.getRange();
@@ -112,7 +118,13 @@ function editorNativeCallbacks(bridge) {
             var rangeEnd = {"col":range.end.column, "row": range.end.row}
 
             var nativeData = {"cursor": {"col": cursor.column, "row": cursor.row}, "selection": {"empty": editor.selection.isEmpty(), "start": rangeStart, "end": rangeEnd}};
-            bridge.callHandler("changeCursor",nativeData);
+
+            if (cursorUpdateTimer != undefined) {
+                window.clearTimeout(cursorUpdateTimer);
+            }
+            cursorUpdateTimer = window.setTimeout(function() {
+                bridge.callHandler("changeCursor",nativeData);
+            }, 100);
         }
     });
 
