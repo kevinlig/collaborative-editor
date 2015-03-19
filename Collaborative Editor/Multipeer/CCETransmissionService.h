@@ -41,4 +41,6 @@
 
 - (void)transmitDiff:(NSMutableArray *)diffArray;
 
+- (void)transmitDiff:(NSMutableArray *)diffArray andState:(NSDictionary *)stateData;
+
 @end

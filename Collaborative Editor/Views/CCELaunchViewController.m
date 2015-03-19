@@ -110,11 +110,8 @@
     // start the server
     [[CCETransmissionService sharedManager]setUserName:self.userName];
     [[CCETransmissionService sharedManager]startServer];
-    [CCETransmissionService sharedManager].masterServer.document.originalText = @"";
+    [CCETransmissionService sharedManager].masterServer.document.currentText = @"";
     [CCETransmissionService sharedManager].masterServer.document.documentName = @"";
-    
-    // start the queue DB
-    [[CCETransmissionService sharedManager].masterServer.document beginDiffQueue];
     
     [self displayServerDetailModal];
     
@@ -131,11 +128,8 @@
     
     // open the file
     NSString *documentContents = [NSString stringWithContentsOfFile:documentPath encoding:NSUTF8StringEncoding error:nil];
-    [CCETransmissionService sharedManager].masterServer.document.originalText = documentContents;
+    [CCETransmissionService sharedManager].masterServer.document.currentText = documentContents;
     [CCETransmissionService sharedManager].masterServer.document.documentName = [documentPath lastPathComponent];
-    
-    // start the queue DB
-    [[CCETransmissionService sharedManager].masterServer.document beginDiffQueue];
     
     [self displayServerDetailModal];
     

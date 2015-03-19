@@ -12,8 +12,6 @@
 #import "CCEUserListviewController.h"
 #import "CCEFooterBarViewController.h"
 
-#import <Realm/Realm.h>
-
 @interface AppDelegate ()
 
 @property (weak) IBOutlet NSWindow *window;
@@ -62,12 +60,6 @@
 
 - (void)applicationWillTerminate:(NSNotification *)aNotification {
     // Insert code here to tear down your application
-    
-    // clear any Realms that currently exist
-    RLMRealm *realm = [RLMRealm defaultRealm];
-    [realm beginWriteTransaction];
-    [realm deleteAllObjects];
-    [realm commitWriteTransaction];
     
     [[NSNotificationCenter defaultCenter]postNotificationName:@"appKill" object:nil];
 }

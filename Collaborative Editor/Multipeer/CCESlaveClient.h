@@ -56,6 +56,8 @@
 
 - (void)transmitState:(NSDictionary *)stateData;
 
-- (void)requestUpdatedQueue;
+- (void)transmitDiff:(NSMutableArray *)diffArray andState:(NSDictionary *)updatedState;
+
+- (void)requestLatestData;
 
 @end

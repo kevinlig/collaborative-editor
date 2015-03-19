@@ -28,7 +28,7 @@ static PBExtensionRegistry* extensionRegistry = nil;
 @property (strong) NSMutableArray * userListArray;
 @property (strong) TransmissionDocument* document;
 @property SInt32 ackSender;
-@property (strong) NSMutableArray * queueItemsArray;
+@property (strong) TransmissionTextUpdateItem* textUpdate;
 @property (strong) TransmissionChangeItem* changeItem;
 @property (strong) NSMutableArray * statesArray;
 @end
@@ -79,8 +79,13 @@ static PBExtensionRegistry* extensionRegistry = nil;
   hasAckSender_ = !!_value_;
 }
 @synthesize ackSender;
-@synthesize queueItemsArray;
-@dynamic queueItems;
+- (BOOL) hasTextUpdate {
+  return !!hasTextUpdate_;
+}
+- (void) setHasTextUpdate:(BOOL) _value_ {
+  hasTextUpdate_ = !!_value_;
+}
+@synthesize textUpdate;
 - (BOOL) hasChangeItem {
   return !!hasChangeItem_;
 }
@@ -98,6 +103,7 @@ static PBExtensionRegistry* extensionRegistry = nil;
     self.userName = @"";
     self.document = [TransmissionDocument defaultInstance];
     self.ackSender = 0;
+    self.textUpdate = [TransmissionTextUpdateItem defaultInstance];
     self.changeItem = [TransmissionChangeItem defaultInstance];
   }
   return self;
@@ -120,12 +126,6 @@ static Transmission* defaultTransmissionInstance = nil;
 - (TransmissionUser*)userListAtIndex:(NSUInteger)index {
   return [userListArray objectAtIndex:index];
 }
-- (NSArray *)queueItems {
-  return queueItemsArray;
-}
-- (TransmissionQueueItem*)queueItemsAtIndex:(NSUInteger)index {
-  return [queueItemsArray objectAtIndex:index];
-}
 - (NSArray *)states {
   return statesArray;
 }
@@ -144,14 +144,11 @@ static Transmission* defaultTransmissionInstance = nil;
     }
   }];
   if (!isInituserList) return isInituserList;
-  __block BOOL isInitqueueItems = YES;
-   [self.queueItems enumerateObjectsUsingBlock:^(TransmissionQueueItem *element, NSUInteger idx, BOOL *stop) {
-    if (!element.isInitialized) {
-      isInitqueueItems = NO;
-      *stop = YES;
+  if (self.hasTextUpdate) {
+    if (!self.textUpdate.isInitialized) {
+      return NO;
     }
-  }];
-  if (!isInitqueueItems) return isInitqueueItems;
+  }
   if (self.hasChangeItem) {
     if (!self.changeItem.isInitialized) {
       return NO;
@@ -181,9 +178,9 @@ static Transmission* defaultTransmissionInstance = nil;
   if (self.hasAckSender) {
     [output writeInt32:7 value:self.ackSender];
   }
-  [self.queueItemsArray enumerateObjectsUsingBlock:^(TransmissionQueueItem *element, NSUInteger idx, BOOL *stop) {
-    [output writeMessage:8 value:element];
-  }];
+  if (self.hasTextUpdate) {
+    [output writeMessage:8 value:self.textUpdate];
+  }
   if (self.hasChangeItem) {
     [output writeMessage:9 value:self.changeItem];
   }
@@ -220,9 +217,9 @@ static Transmission* defaultTransmissionInstance = nil;
   if (self.hasAckSender) {
     size_ += computeInt32Size(7, self.ackSender);
   }
-  [self.queueItemsArray enumerateObjectsUsingBlock:^(TransmissionQueueItem *element, NSUInteger idx, BOOL *stop) {
-    size_ += computeMessageSize(8, element);
-  }];
+  if (self.hasTextUpdate) {
+    size_ += computeMessageSize(8, self.textUpdate);
+  }
   if (self.hasChangeItem) {
     size_ += computeMessageSize(9, self.changeItem);
   }
@@ -291,12 +288,12 @@ static Transmission* defaultTransmissionInstance = nil;
   if (self.hasAckSender) {
     [output appendFormat:@"%@%@: %@\n", indent, @"ackSender", [NSNumber numberWithInteger:self.ackSender]];
   }
-  [self.queueItemsArray enumerateObjectsUsingBlock:^(TransmissionQueueItem *element, NSUInteger idx, BOOL *stop) {
-    [output appendFormat:@"%@%@ {\n", indent, @"queueItems"];
-    [element writeDescriptionTo:output
-                     withIndent:[NSString stringWithFormat:@"%@  ", indent]];
+  if (self.hasTextUpdate) {
+    [output appendFormat:@"%@%@ {\n", indent, @"textUpdate"];
+    [self.textUpdate writeDescriptionTo:output
+                         withIndent:[NSString stringWithFormat:@"%@  ", indent]];
     [output appendFormat:@"%@}\n", indent];
-  }];
+  }
   if (self.hasChangeItem) {
     [output appendFormat:@"%@%@ {\n", indent, @"changeItem"];
     [self.changeItem writeDescriptionTo:output
@@ -333,7 +330,8 @@ static Transmission* defaultTransmissionInstance = nil;
       (!self.hasDocument || [self.document isEqual:otherMessage.document]) &&
       self.hasAckSender == otherMessage.hasAckSender &&
       (!self.hasAckSender || self.ackSender == otherMessage.ackSender) &&
-      [self.queueItemsArray isEqualToArray:otherMessage.queueItemsArray] &&
+      self.hasTextUpdate == otherMessage.hasTextUpdate &&
+      (!self.hasTextUpdate || [self.textUpdate isEqual:otherMessage.textUpdate]) &&
       self.hasChangeItem == otherMessage.hasChangeItem &&
       (!self.hasChangeItem || [self.changeItem isEqual:otherMessage.changeItem]) &&
       [self.statesArray isEqualToArray:otherMessage.statesArray] &&
@@ -362,9 +360,9 @@ static Transmission* defaultTransmissionInstance = nil;
   if (self.hasAckSender) {
     hashCode = hashCode * 31 + [[NSNumber numberWithInteger:self.ackSender] hash];
   }
-  [self.queueItemsArray enumerateObjectsUsingBlock:^(TransmissionQueueItem *element, NSUInteger idx, BOOL *stop) {
-    hashCode = hashCode * 31 + [element hash];
-  }];
+  if (self.hasTextUpdate) {
+    hashCode = hashCode * 31 + [self.textUpdate hash];
+  }
   if (self.hasChangeItem) {
     hashCode = hashCode * 31 + [self.changeItem hash];
   }
@@ -380,15 +378,15 @@ BOOL TransmissionMessageTypeIsValidValue(TransmissionMessageType value) {
   switch (value) {
     case TransmissionMessageTypeInitial:
     case TransmissionMessageTypeState:
-    case TransmissionMessageTypeSequence:
+    case TransmissionMessageTypeStateTextCombo:
     case TransmissionMessageTypeAck:
-    case TransmissionMessageTypeReqQueue:
+    case TransmissionMessageTypeReqText:
     case TransmissionMessageTypeReqState:
-    case TransmissionMessageTypeUpdateQueue:
+    case TransmissionMessageTypeUpdateCombo:
     case TransmissionMessageTypeUpdateState:
     case TransmissionMessageTypeForceText:
     case TransmissionMessageTypeUserList:
-    case TransmissionMessageTypeNotifyQueueChange:
+    case TransmissionMessageTypeNotifyTextChange:
       return YES;
     default:
       return NO;
@@ -400,24 +398,24 @@ NSString *NSStringFromTransmissionMessageType(TransmissionMessageType value) {
       return @"TransmissionMessageTypeInitial";
     case TransmissionMessageTypeState:
       return @"TransmissionMessageTypeState";
-    case TransmissionMessageTypeSequence:
-      return @"TransmissionMessageTypeSequence";
+    case TransmissionMessageTypeStateTextCombo:
+      return @"TransmissionMessageTypeStateTextCombo";
     case TransmissionMessageTypeAck:
       return @"TransmissionMessageTypeAck";
-    case TransmissionMessageTypeReqQueue:
-      return @"TransmissionMessageTypeReqQueue";
+    case TransmissionMessageTypeReqText:
+      return @"TransmissionMessageTypeReqText";
     case TransmissionMessageTypeReqState:
       return @"TransmissionMessageTypeReqState";
-    case TransmissionMessageTypeUpdateQueue:
-      return @"TransmissionMessageTypeUpdateQueue";
+    case TransmissionMessageTypeUpdateCombo:
+      return @"TransmissionMessageTypeUpdateCombo";
     case TransmissionMessageTypeUpdateState:
       return @"TransmissionMessageTypeUpdateState";
     case TransmissionMessageTypeForceText:
       return @"TransmissionMessageTypeForceText";
     case TransmissionMessageTypeUserList:
       return @"TransmissionMessageTypeUserList";
-    case TransmissionMessageTypeNotifyQueueChange:
-      return @"TransmissionMessageTypeNotifyQueueChange";
+    case TransmissionMessageTypeNotifyTextChange:
+      return @"TransmissionMessageTypeNotifyTextChange";
     default:
       return nil;
   }
@@ -1069,12 +1067,12 @@ static TransmissionDocument* defaultTransmissionDocumentInstance = nil;
 }
 @end
 
-@interface TransmissionQueueItem ()
+@interface TransmissionTextUpdateItem ()
 @property SInt32 sequenceId;
-@property (strong) NSData* diff;
+@property (strong) NSString* text;
 @end
 
-@implementation TransmissionQueueItem
+@implementation TransmissionTextUpdateItem
 
 - (BOOL) hasSequenceId {
   return !!hasSequenceId_;
@@ -1083,31 +1081,31 @@ static TransmissionDocument* defaultTransmissionDocumentInstance = nil;
   hasSequenceId_ = !!_value_;
 }
 @synthesize sequenceId;
-- (BOOL) hasDiff {
-  return !!hasDiff_;
+- (BOOL) hasText {
+  return !!hasText_;
 }
-- (void) setHasDiff:(BOOL) _value_ {
-  hasDiff_ = !!_value_;
+- (void) setHasText:(BOOL) _value_ {
+  hasText_ = !!_value_;
 }
-@synthesize diff;
+@synthesize text;
 - (instancetype) init {
   if ((self = [super init])) {
     self.sequenceId = 0;
-    self.diff = [NSData data];
+    self.text = @"";
   }
   return self;
 }
-static TransmissionQueueItem* defaultTransmissionQueueItemInstance = nil;
+static TransmissionTextUpdateItem* defaultTransmissionTextUpdateItemInstance = nil;
 + (void) initialize {
-  if (self == [TransmissionQueueItem class]) {
-    defaultTransmissionQueueItemInstance = [[TransmissionQueueItem alloc] init];
+  if (self == [TransmissionTextUpdateItem class]) {
+    defaultTransmissionTextUpdateItemInstance = [[TransmissionTextUpdateItem alloc] init];
   }
 }
 + (instancetype) defaultInstance {
-  return defaultTransmissionQueueItemInstance;
+  return defaultTransmissionTextUpdateItemInstance;
 }
 - (instancetype) defaultInstance {
-  return defaultTransmissionQueueItemInstance;
+  return defaultTransmissionTextUpdateItemInstance;
 }
 - (BOOL) isInitialized {
   if (!self.hasSequenceId) {
@@ -1119,8 +1117,8 @@ static TransmissionQueueItem* defaultTransmissionQueueItemInstance = nil;
   if (self.hasSequenceId) {
     [output writeInt32:1 value:self.sequenceId];
   }
-  if (self.hasDiff) {
-    [output writeData:2 value:self.diff];
+  if (self.hasText) {
+    [output writeString:2 value:self.text];
   }
   [self.unknownFields writeToCodedOutputStream:output];
 }
@@ -1134,49 +1132,49 @@ static TransmissionQueueItem* defaultTransmissionQueueItemInstance = nil;
   if (self.hasSequenceId) {
     size_ += computeInt32Size(1, self.sequenceId);
   }
-  if (self.hasDiff) {
-    size_ += computeDataSize(2, self.diff);
+  if (self.hasText) {
+    size_ += computeStringSize(2, self.text);
   }
   size_ += self.unknownFields.serializedSize;
   memoizedSerializedSize = size_;
   return size_;
 }
-+ (TransmissionQueueItem*) parseFromData:(NSData*) data {
-  return (TransmissionQueueItem*)[[[TransmissionQueueItem builder] mergeFromData:data] build];
++ (TransmissionTextUpdateItem*) parseFromData:(NSData*) data {
+  return (TransmissionTextUpdateItem*)[[[TransmissionTextUpdateItem builder] mergeFromData:data] build];
 }
-+ (TransmissionQueueItem*) parseFromData:(NSData*) data extensionRegistry:(PBExtensionRegistry*) extensionRegistry {
-  return (TransmissionQueueItem*)[[[TransmissionQueueItem builder] mergeFromData:data extensionRegistry:extensionRegistry] build];
++ (TransmissionTextUpdateItem*) parseFromData:(NSData*) data extensionRegistry:(PBExtensionRegistry*) extensionRegistry {
+  return (TransmissionTextUpdateItem*)[[[TransmissionTextUpdateItem builder] mergeFromData:data extensionRegistry:extensionRegistry] build];
 }
-+ (TransmissionQueueItem*) parseFromInputStream:(NSInputStream*) input {
-  return (TransmissionQueueItem*)[[[TransmissionQueueItem builder] mergeFromInputStream:input] build];
++ (TransmissionTextUpdateItem*) parseFromInputStream:(NSInputStream*) input {
+  return (TransmissionTextUpdateItem*)[[[TransmissionTextUpdateItem builder] mergeFromInputStream:input] build];
 }
-+ (TransmissionQueueItem*) parseFromInputStream:(NSInputStream*) input extensionRegistry:(PBExtensionRegistry*) extensionRegistry {
-  return (TransmissionQueueItem*)[[[TransmissionQueueItem builder] mergeFromInputStream:input extensionRegistry:extensionRegistry] build];
++ (TransmissionTextUpdateItem*) parseFromInputStream:(NSInputStream*) input extensionRegistry:(PBExtensionRegistry*) extensionRegistry {
+  return (TransmissionTextUpdateItem*)[[[TransmissionTextUpdateItem builder] mergeFromInputStream:input extensionRegistry:extensionRegistry] build];
 }
-+ (TransmissionQueueItem*) parseFromCodedInputStream:(PBCodedInputStream*) input {
-  return (TransmissionQueueItem*)[[[TransmissionQueueItem builder] mergeFromCodedInputStream:input] build];
++ (TransmissionTextUpdateItem*) parseFromCodedInputStream:(PBCodedInputStream*) input {
+  return (TransmissionTextUpdateItem*)[[[TransmissionTextUpdateItem builder] mergeFromCodedInputStream:input] build];
 }
-+ (TransmissionQueueItem*) parseFromCodedInputStream:(PBCodedInputStream*) input extensionRegistry:(PBExtensionRegistry*) extensionRegistry {
-  return (TransmissionQueueItem*)[[[TransmissionQueueItem builder] mergeFromCodedInputStream:input extensionRegistry:extensionRegistry] build];
++ (TransmissionTextUpdateItem*) parseFromCodedInputStream:(PBCodedInputStream*) input extensionRegistry:(PBExtensionRegistry*) extensionRegistry {
+  return (TransmissionTextUpdateItem*)[[[TransmissionTextUpdateItem builder] mergeFromCodedInputStream:input extensionRegistry:extensionRegistry] build];
 }
-+ (TransmissionQueueItemBuilder*) builder {
-  return [[TransmissionQueueItemBuilder alloc] init];
++ (TransmissionTextUpdateItemBuilder*) builder {
+  return [[TransmissionTextUpdateItemBuilder alloc] init];
 }
-+ (TransmissionQueueItemBuilder*) builderWithPrototype:(TransmissionQueueItem*) prototype {
-  return [[TransmissionQueueItem builder] mergeFrom:prototype];
++ (TransmissionTextUpdateItemBuilder*) builderWithPrototype:(TransmissionTextUpdateItem*) prototype {
+  return [[TransmissionTextUpdateItem builder] mergeFrom:prototype];
 }
-- (TransmissionQueueItemBuilder*) builder {
-  return [TransmissionQueueItem builder];
+- (TransmissionTextUpdateItemBuilder*) builder {
+  return [TransmissionTextUpdateItem builder];
 }
-- (TransmissionQueueItemBuilder*) toBuilder {
-  return [TransmissionQueueItem builderWithPrototype:self];
+- (TransmissionTextUpdateItemBuilder*) toBuilder {
+  return [TransmissionTextUpdateItem builderWithPrototype:self];
 }
 - (void) writeDescriptionTo:(NSMutableString*) output withIndent:(NSString*) indent {
   if (self.hasSequenceId) {
     [output appendFormat:@"%@%@: %@\n", indent, @"sequenceId", [NSNumber numberWithInteger:self.sequenceId]];
   }
-  if (self.hasDiff) {
-    [output appendFormat:@"%@%@: %@\n", indent, @"diff", self.diff];
+  if (self.hasText) {
+    [output appendFormat:@"%@%@: %@\n", indent, @"text", self.text];
   }
   [self.unknownFields writeDescriptionTo:output withIndent:indent];
 }
@@ -1184,15 +1182,15 @@ static TransmissionQueueItem* defaultTransmissionQueueItemInstance = nil;
   if (other == self) {
     return YES;
   }
-  if (![other isKindOfClass:[TransmissionQueueItem class]]) {
+  if (![other isKindOfClass:[TransmissionTextUpdateItem class]]) {
     return NO;
   }
-  TransmissionQueueItem *otherMessage = other;
+  TransmissionTextUpdateItem *otherMessage = other;
   return
       self.hasSequenceId == otherMessage.hasSequenceId &&
       (!self.hasSequenceId || self.sequenceId == otherMessage.sequenceId) &&
-      self.hasDiff == otherMessage.hasDiff &&
-      (!self.hasDiff || [self.diff isEqual:otherMessage.diff]) &&
+      self.hasText == otherMessage.hasText &&
+      (!self.hasText || [self.text isEqual:otherMessage.text]) &&
       (self.unknownFields == otherMessage.unknownFields || (self.unknownFields != nil && [self.unknownFields isEqual:otherMessage.unknownFields]));
 }
 - (NSUInteger) hash {
@@ -1200,65 +1198,65 @@ static TransmissionQueueItem* defaultTransmissionQueueItemInstance = nil;
   if (self.hasSequenceId) {
     hashCode = hashCode * 31 + [[NSNumber numberWithInteger:self.sequenceId] hash];
   }
-  if (self.hasDiff) {
-    hashCode = hashCode * 31 + [self.diff hash];
+  if (self.hasText) {
+    hashCode = hashCode * 31 + [self.text hash];
   }
   hashCode = hashCode * 31 + [self.unknownFields hash];
   return hashCode;
 }
 @end
 
-@interface TransmissionQueueItemBuilder()
-@property (strong) TransmissionQueueItem* resultQueueItem;
+@interface TransmissionTextUpdateItemBuilder()
+@property (strong) TransmissionTextUpdateItem* resultTextUpdateItem;
 @end
 
-@implementation TransmissionQueueItemBuilder
-@synthesize resultQueueItem;
+@implementation TransmissionTextUpdateItemBuilder
+@synthesize resultTextUpdateItem;
 - (instancetype) init {
   if ((self = [super init])) {
-    self.resultQueueItem = [[TransmissionQueueItem alloc] init];
+    self.resultTextUpdateItem = [[TransmissionTextUpdateItem alloc] init];
   }
   return self;
 }
 - (PBGeneratedMessage*) internalGetResult {
-  return resultQueueItem;
+  return resultTextUpdateItem;
 }
-- (TransmissionQueueItemBuilder*) clear {
-  self.resultQueueItem = [[TransmissionQueueItem alloc] init];
+- (TransmissionTextUpdateItemBuilder*) clear {
+  self.resultTextUpdateItem = [[TransmissionTextUpdateItem alloc] init];
   return self;
 }
-- (TransmissionQueueItemBuilder*) clone {
-  return [TransmissionQueueItem builderWithPrototype:resultQueueItem];
+- (TransmissionTextUpdateItemBuilder*) clone {
+  return [TransmissionTextUpdateItem builderWithPrototype:resultTextUpdateItem];
 }
-- (TransmissionQueueItem*) defaultInstance {
-  return [TransmissionQueueItem defaultInstance];
+- (TransmissionTextUpdateItem*) defaultInstance {
+  return [TransmissionTextUpdateItem defaultInstance];
 }
-- (TransmissionQueueItem*) build {
+- (TransmissionTextUpdateItem*) build {
   [self checkInitialized];
   return [self buildPartial];
 }
-- (TransmissionQueueItem*) buildPartial {
-  TransmissionQueueItem* returnMe = resultQueueItem;
-  self.resultQueueItem = nil;
+- (TransmissionTextUpdateItem*) buildPartial {
+  TransmissionTextUpdateItem* returnMe = resultTextUpdateItem;
+  self.resultTextUpdateItem = nil;
   return returnMe;
 }
-- (TransmissionQueueItemBuilder*) mergeFrom:(TransmissionQueueItem*) other {
-  if (other == [TransmissionQueueItem defaultInstance]) {
+- (TransmissionTextUpdateItemBuilder*) mergeFrom:(TransmissionTextUpdateItem*) other {
+  if (other == [TransmissionTextUpdateItem defaultInstance]) {
     return self;
   }
   if (other.hasSequenceId) {
     [self setSequenceId:other.sequenceId];
   }
-  if (other.hasDiff) {
-    [self setDiff:other.diff];
+  if (other.hasText) {
+    [self setText:other.text];
   }
   [self mergeUnknownFields:other.unknownFields];
   return self;
 }
-- (TransmissionQueueItemBuilder*) mergeFromCodedInputStream:(PBCodedInputStream*) input {
+- (TransmissionTextUpdateItemBuilder*) mergeFromCodedInputStream:(PBCodedInputStream*) input {
   return [self mergeFromCodedInputStream:input extensionRegistry:[PBExtensionRegistry emptyRegistry]];
 }
-- (TransmissionQueueItemBuilder*) mergeFromCodedInputStream:(PBCodedInputStream*) input extensionRegistry:(PBExtensionRegistry*) extensionRegistry {
+- (TransmissionTextUpdateItemBuilder*) mergeFromCodedInputStream:(PBCodedInputStream*) input extensionRegistry:(PBExtensionRegistry*) extensionRegistry {
   PBUnknownFieldSetBuilder* unknownFields = [PBUnknownFieldSet builderWithUnknownFields:self.unknownFields];
   while (YES) {
     SInt32 tag = [input readTag];
@@ -1278,42 +1276,42 @@ static TransmissionQueueItem* defaultTransmissionQueueItemInstance = nil;
         break;
       }
       case 18: {
-        [self setDiff:[input readData]];
+        [self setText:[input readString]];
         break;
       }
     }
   }
 }
 - (BOOL) hasSequenceId {
-  return resultQueueItem.hasSequenceId;
+  return resultTextUpdateItem.hasSequenceId;
 }
 - (SInt32) sequenceId {
-  return resultQueueItem.sequenceId;
+  return resultTextUpdateItem.sequenceId;
 }
-- (TransmissionQueueItemBuilder*) setSequenceId:(SInt32) value {
-  resultQueueItem.hasSequenceId = YES;
-  resultQueueItem.sequenceId = value;
+- (TransmissionTextUpdateItemBuilder*) setSequenceId:(SInt32) value {
+  resultTextUpdateItem.hasSequenceId = YES;
+  resultTextUpdateItem.sequenceId = value;
   return self;
 }
-- (TransmissionQueueItemBuilder*) clearSequenceId {
-  resultQueueItem.hasSequenceId = NO;
-  resultQueueItem.sequenceId = 0;
+- (TransmissionTextUpdateItemBuilder*) clearSequenceId {
+  resultTextUpdateItem.hasSequenceId = NO;
+  resultTextUpdateItem.sequenceId = 0;
   return self;
 }
-- (BOOL) hasDiff {
-  return resultQueueItem.hasDiff;
+- (BOOL) hasText {
+  return resultTextUpdateItem.hasText;
 }
-- (NSData*) diff {
-  return resultQueueItem.diff;
+- (NSString*) text {
+  return resultTextUpdateItem.text;
 }
-- (TransmissionQueueItemBuilder*) setDiff:(NSData*) value {
-  resultQueueItem.hasDiff = YES;
-  resultQueueItem.diff = value;
+- (TransmissionTextUpdateItemBuilder*) setText:(NSString*) value {
+  resultTextUpdateItem.hasText = YES;
+  resultTextUpdateItem.text = value;
   return self;
 }
-- (TransmissionQueueItemBuilder*) clearDiff {
-  resultQueueItem.hasDiff = NO;
-  resultQueueItem.diff = [NSData data];
+- (TransmissionTextUpdateItemBuilder*) clearText {
+  resultTextUpdateItem.hasText = NO;
+  resultTextUpdateItem.text = @"";
   return self;
 }
 @end
@@ -1876,12 +1874,8 @@ static TransmissionUserState* defaultTransmissionUserStateInstance = nil;
   if (other.hasAckSender) {
     [self setAckSender:other.ackSender];
   }
-  if (other.queueItemsArray.count > 0) {
-    if (resultTransmission.queueItemsArray == nil) {
-      resultTransmission.queueItemsArray = [[NSMutableArray alloc] initWithArray:other.queueItemsArray];
-    } else {
-      [resultTransmission.queueItemsArray addObjectsFromArray:other.queueItemsArray];
-    }
+  if (other.hasTextUpdate) {
+    [self mergeTextUpdate:other.textUpdate];
   }
   if (other.hasChangeItem) {
     [self mergeChangeItem:other.changeItem];
@@ -1955,9 +1949,12 @@ static TransmissionUserState* defaultTransmissionUserStateInstance = nil;
         break;
       }
       case 66: {
-        TransmissionQueueItemBuilder* subBuilder = [TransmissionQueueItem builder];
+        TransmissionTextUpdateItemBuilder* subBuilder = [TransmissionTextUpdateItem builder];
+        if (self.hasTextUpdate) {
+          [subBuilder mergeFrom:self.textUpdate];
+        }
         [input readMessage:subBuilder extensionRegistry:extensionRegistry];
-        [self addQueueItems:[subBuilder buildPartial]];
+        [self setTextUpdate:[subBuilder buildPartial]];
         break;
       }
       case 74: {
@@ -2109,25 +2106,34 @@ static TransmissionUserState* defaultTransmissionUserStateInstance = nil;
   resultTransmission.ackSender = 0;
   return self;
 }
-- (NSMutableArray *)queueItems {
-  return resultTransmission.queueItemsArray;
+- (BOOL) hasTextUpdate {
+  return resultTransmission.hasTextUpdate;
 }
-- (TransmissionQueueItem*)queueItemsAtIndex:(NSUInteger)index {
-  return [resultTransmission queueItemsAtIndex:index];
+- (TransmissionTextUpdateItem*) textUpdate {
+  return resultTransmission.textUpdate;
 }
-- (TransmissionBuilder *)addQueueItems:(TransmissionQueueItem*)value {
-  if (resultTransmission.queueItemsArray == nil) {
-    resultTransmission.queueItemsArray = [[NSMutableArray alloc]init];
+- (TransmissionBuilder*) setTextUpdate:(TransmissionTextUpdateItem*) value {
+  resultTransmission.hasTextUpdate = YES;
+  resultTransmission.textUpdate = value;
+  return self;
+}
+- (TransmissionBuilder*) setTextUpdateBuilder:(TransmissionTextUpdateItemBuilder*) builderForValue {
+  return [self setTextUpdate:[builderForValue build]];
+}
+- (TransmissionBuilder*) mergeTextUpdate:(TransmissionTextUpdateItem*) value {
+  if (resultTransmission.hasTextUpdate &&
+      resultTransmission.textUpdate != [TransmissionTextUpdateItem defaultInstance]) {
+    resultTransmission.textUpdate =
+      [[[TransmissionTextUpdateItem builderWithPrototype:resultTransmission.textUpdate] mergeFrom:value] buildPartial];
+  } else {
+    resultTransmission.textUpdate = value;
   }
-  [resultTransmission.queueItemsArray addObject:value];
+  resultTransmission.hasTextUpdate = YES;
   return self;
 }
-- (TransmissionBuilder *)setQueueItemsArray:(NSArray *)array {
-  resultTransmission.queueItemsArray = [[NSMutableArray alloc]initWithArray:array];
-  return self;
-}
-- (TransmissionBuilder *)clearQueueItems {
-  resultTransmission.queueItemsArray = nil;
+- (TransmissionBuilder*) clearTextUpdate {
+  resultTransmission.hasTextUpdate = NO;
+  resultTransmission.textUpdate = [TransmissionTextUpdateItem defaultInstance];
   return self;
 }
 - (BOOL) hasChangeItem {

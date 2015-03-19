@@ -73,10 +73,32 @@
     
 }
 
-- (void)requestUpdatedQueue {
+- (void)transmitDiff:(NSMutableArray *)diffArray andState:(NSDictionary *)updatedState {
     
     TransmissionBuilder *builder = [Transmission builder];
-    [builder setType:TransmissionMessageTypeReqQueue];
+    [builder setType:TransmissionMessageTypeUpdateCombo];
+    
+    TransmissionUserStateBuilder *stateBuilder = [TransmissionUserState builder];
+    [stateBuilder setUserName:self.userName];
+    [stateBuilder setState:[NSKeyedArchiver archivedDataWithRootObject:updatedState]];
+    
+    TransmissionUserState *userState = [stateBuilder build];
+    [builder setStatesArray:@[userState]];
+    
+    TransmissionChangeItemBuilder *textBuilder = [TransmissionChangeItem builder];
+    [textBuilder setLastSequence:self.document.currentSequenceId];
+    [textBuilder setDiff:[NSKeyedArchiver archivedDataWithRootObject:diffArray]];
+    
+    [builder setChangeItem:[textBuilder build]];
+    
+    [self sendMessageToServer:[builder build]];
+    
+}
+
+- (void)requestLatestData {
+    
+    TransmissionBuilder *builder = [Transmission builder];
+    [builder setType:TransmissionMessageTypeReqText];
     [builder setSequenceId:self.document.currentSequenceId];
     
     [self sendMessageToServer:[builder build]];
@@ -106,7 +128,7 @@
         self.document = [[CCEDocumentModel alloc]init];
         if (message.document) {
             self.document.documentName = message.document.documentName;
-            self.document.originalText = message.document.documentText;
+            self.document.currentText = message.document.documentText;
             self.document.currentSequenceId = 1;
         }
         
@@ -164,36 +186,20 @@
         [[NSNotificationCenter defaultCenter]postNotificationName:@"receivedUpdate" object:nil];
         
     }
-    else if (message.type == TransmissionMessageTypeSequence) {
-        // received a queue sequence
+    else if (message.type == TransmissionMessageTypeStateTextCombo) {
+        // received a combination text/state broadcast
         
-        TransmissionQueueItem *item = [message.queueItems objectAtIndex:0];
+        TransmissionTextUpdateItem *item = message.textUpdate;
         
         self.document.currentSequenceId = item.sequenceId;
-        NSMutableArray *diffs = [NSKeyedUnarchiver unarchiveObjectWithData:item.diff];
+        NSString *newString = item.text;
         
-        // patch the diffs
-        NSMutableArray *patches = [self.diffEngine patch_makeFromDiffs:diffs];
-        NSString *newString = [[self.diffEngine patch_apply:patches toString:self.document.originalText]objectAtIndex:0];
-        
-        self.document.originalText = newString;
+        self.document.currentText = newString;
         
         [[NSNotificationCenter defaultCenter]postNotificationName:@"updatedDocument" object:nil];
         
     }
-    else if (message.type == TransmissionMessageTypeNotifyQueueChange) {
-        // the diff queue has changed (aka, new things have been added to it)
-        // since we could be behind, we'll need to request all changes since our last received sequence
-        
-        [self requestUpdatedQueue];
-        
-    }
     
-//    else if ([responseType isEqualToString:@"update"]) {
-//        
-//        [self receivedUpdate:response];
-//        
-//    }
 }
 
 

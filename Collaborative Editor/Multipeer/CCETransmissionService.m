@@ -78,7 +78,16 @@
         [self.masterServer updateDiff:diffArray];
     }
     
-    
+
+}
+
+- (void)transmitDiff:(NSMutableArray *)diffArray andState:(NSDictionary *)stateData {
+    if (self.isServer) {
+        [self.masterServer updateDiff:diffArray andState:stateData];
+    }
+    else {
+        [self.slaveClient transmitDiff:diffArray andState:stateData];
+    }
 }
 
 #pragma mark - Server delegate methods

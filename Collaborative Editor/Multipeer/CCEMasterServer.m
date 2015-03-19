@@ -52,7 +52,7 @@
     self.allUsers = [NSMutableArray array];
     self.totalCount = 0;
     self.document = [[CCEDocumentModel alloc]init];
-    self.document.originalText = @"";
+    self.document.currentText = @"";
     self.document.documentName = @"";
     
     // populate the user color array
@@ -118,10 +118,7 @@
     
 }
 
-- (void)broadcastState {
-    // wrap the data into a Protobuf
-    TransmissionBuilder *builder = [Transmission builder];
-    [builder setType:TransmissionMessageTypeState];
+- (NSArray *)packageCurrentStates {
     
     NSMutableArray *stateArray = [NSMutableArray array];
     
@@ -137,7 +134,15 @@
         
     }
 
-    [builder setStatesArray:stateArray];
+    return stateArray;
+}
+
+- (void)broadcastState {
+    // wrap the data into a Protobuf
+    TransmissionBuilder *builder = [Transmission builder];
+    [builder setType:TransmissionMessageTypeState];
+    
+    [builder setStatesArray:[self packageCurrentStates]];
     
     // send the data
     [self sendBuffer:[builder build] toUsers:self.allUsers];
@@ -169,18 +174,37 @@
     
     [self.document addDiff:diffArray];
 
-    [self notifyQueueChanged:self.allUsers];
+    [self broadcastChangedText:self.allUsers];
     
     [[NSNotificationCenter defaultCenter]postNotificationName:@"updatedDocument" object:nil];
 
 }
 
-- (void)notifyQueueChanged:(NSArray *)recipients {
+- (void)updateDiff:(NSMutableArray *)diffArray andState:(NSDictionary *)updatedState {
     
+    [self.document addDiff:diffArray];
+    // add the state to the document model
+    [self.document.userStates setObject:updatedState forKey:self.serverUser.userName];
+    
+    [self broadcastChangedText:self.allUsers];
+    
+}
+
+- (void)broadcastChangedText:(NSArray *)recipients {
+    
+    TransmissionTextUpdateItemBuilder *textItemBuilder = [TransmissionTextUpdateItem builder];
+    [textItemBuilder setSequenceId:self.document.currentSequenceId];
+    [textItemBuilder setText:self.document.currentText];
+    
+    // send the data
     TransmissionBuilder *builder = [Transmission builder];
-    [builder setType:TransmissionMessageTypeNotifyQueueChange];
+    [builder setType:TransmissionMessageTypeStateTextCombo];
+    [builder setTextUpdate:[textItemBuilder build]];
+    [builder setStatesArray:[self packageCurrentStates]];
     
     [self sendBuffer:[builder build] toUsers:recipients];
+
+    [[NSNotificationCenter defaultCenter]postNotificationName:@"updatedDocument" object:nil];
     
 }
 
@@ -238,7 +262,7 @@
         [message setUserListArray:[self buildUserList:newUserName]];
         
         TransmissionDocumentBuilder *documentBuilder = [TransmissionDocument builder];
-        [documentBuilder setDocumentText:self.document.originalText];
+        [documentBuilder setDocumentText:self.document.currentText];
         [documentBuilder setDocumentName:self.document.documentName];
         
         [message setDocument:[documentBuilder build]];
@@ -268,27 +292,16 @@
         
         [self broadcastState];
     }
-    else if (message.type == TransmissionMessageTypeReqQueue) {
-        // user is requesting the latest queue items
+    else if (message.type == TransmissionMessageTypeUpdateCombo) {
+        // user is pushing a combination of state and text
         
-        NSMutableArray *diffs = [self.document diffToCurrentFrom:message.sequenceId];
-        NSData *diffData = [NSKeyedArchiver archivedDataWithRootObject:diffs];
+        TransmissionChangeItem *changeItem = message.changeItem;
         
-        TransmissionQueueItemBuilder *itemBuilder = [TransmissionQueueItem builder];
-        [itemBuilder setSequenceId:self.document.currentSequenceId];
-        [itemBuilder setDiff:diffData];
-        TransmissionQueueItem *item = [itemBuilder build];
-        
-        // send the diffs back
-        TransmissionBuilder *builder = [Transmission builder];
-        [builder setType:TransmissionMessageTypeSequence];
-        [builder setQueueItemsArray:@[item]];
-        
-        [self sendBuffer:[builder build] toUsers:@[peerID]];
-        
+        NSArray *diffs = [NSKeyedUnarchiver unarchiveObjectWithData:changeItem.diff];
+        [self.document addDiff:[diffs mutableCopy]];
+        [self broadcastChangedText:self.allUsers];
         
     }
-    
 }
 
 @end

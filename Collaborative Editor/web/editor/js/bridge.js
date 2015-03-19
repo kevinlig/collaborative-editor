@@ -103,30 +103,25 @@ connectWebViewJavascriptBridge(function(bridge) {
 // set up event callbacks
 function editorNativeCallbacks(bridge) {
     // listen for cursor and selection position changes
-    editor.selection.on("changeCursor",function() {
+    // editor.selection.on("changeCursor",function() {
 
-        if (preventStateUpdates) {
-            return;
-        }
+    //     if (preventStateUpdates) {
+    //         return;
+    //     }
         
-        if (documentLoadEvent == false) {
+    //     if (documentLoadEvent == false) {
             
-            var cursor = editor.selection.getCursor();
-            var range = editor.selection.getRange();
+    //         var nativeData = getCursorData();
 
-            var rangeStart = {"col":range.start.column, "row": range.start.row};
-            var rangeEnd = {"col":range.end.column, "row": range.end.row}
-
-            var nativeData = {"cursor": {"col": cursor.column, "row": cursor.row}, "selection": {"empty": editor.selection.isEmpty(), "start": rangeStart, "end": rangeEnd}};
-
-            if (cursorUpdateTimer != undefined) {
-                window.clearTimeout(cursorUpdateTimer);
-            }
-            cursorUpdateTimer = window.setTimeout(function() {
-                bridge.callHandler("changeCursor",nativeData);
-            }, 100);
-        }
-    });
+    //         if (cursorUpdateTimer != undefined) {
+    //             window.clearTimeout(cursorUpdateTimer);
+    //         }
+    //         cursorUpdateTimer = window.setTimeout(function() {
+    //             bridge.callHandler("changeCursor",nativeData);
+    //         }, 100);
+            
+    //     }
+    // });
 
 
     // listen for non-programmatic text changes
@@ -140,6 +135,15 @@ function editorNativeCallbacks(bridge) {
     editor.on("paste", function() {
         textChangeEvent(bridge);
     });
+
+    window.setInterval(function() {
+        var cursorData = getCursorData();
+        var currentText = editor.getValue();
+
+        var nativeData = {"text": currentText, "cursor": cursorData};
+
+        bridge.callHandler("currentText", nativeData);
+    },250);
 }
 
 function displayUserCursors(cursorData, userId) {
@@ -181,18 +185,34 @@ function displayUserCursors(cursorData, userId) {
 
 }
 
-function textChangeEvent(bridge) {
+function getCursorData() {
+    var cursor = editor.selection.getCursor();
+    var range = editor.selection.getRange();
 
-    preventStateUpdates = true;
+    var rangeStart = {"col":range.start.column, "row": range.start.row};
+    var rangeEnd = {"col":range.end.column, "row": range.end.row}
+
+    var nativeData = {"cursor": {"col": cursor.column, "row": cursor.row}, "selection": {"empty": editor.selection.isEmpty(), "start": rangeStart, "end": rangeEnd}};
+
+    return nativeData;
+}
+
+
+function textChangeEvent(bridge) {
 
     if (textUpdateTimer != undefined) {
         window.clearTimeout(textUpdateTimer);
     }
-    
-    textUpdateTimer = window.setTimeout(function() {
-        bridge.callHandler("textChange", editor.getValue());
 
-        preventStateUpdates = false;
+    textUpdateTimer = window.setTimeout(function() {
+
+        var cursorData = getCursorData();
+        var currentText = editor.getValue();
+
+        var nativeData = {"text": currentText, "cursor": cursorData};
+
+        bridge.callHandler("textChange", nativeData);
+
     }, 300);
 
 }

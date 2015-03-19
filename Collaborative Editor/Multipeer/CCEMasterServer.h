@@ -66,14 +66,17 @@
 - (void)startServer;
 
 - (void)updateState:(NSDictionary *)updatedState;
+- (NSArray *)packageCurrentStates;
 - (void)broadcastState;
 
 - (void)updateDiff:(NSMutableArray *)diffArray;
 
+- (void)updateDiff:(NSMutableArray *)diffArray andState:(NSDictionary *)updatedState;
+
 
 - (void)sendBuffer:(Transmission *)protoBuffer toUsers:(NSArray *)recipients;
 
-- (void)notifyQueueChanged:(NSArray *)recipients;
+- (void)broadcastChangedText:(NSArray *)recipients;
 
 - (NSMutableArray *)buildUserList:(NSString *)recipientUserName;
 

@@ -10,8 +10,8 @@
 @class TransmissionChangeItemBuilder;
 @class TransmissionDocument;
 @class TransmissionDocumentBuilder;
-@class TransmissionQueueItem;
-@class TransmissionQueueItemBuilder;
+@class TransmissionTextUpdateItem;
+@class TransmissionTextUpdateItemBuilder;
 @class TransmissionUser;
 @class TransmissionUserBuilder;
 @class TransmissionUserState;
@@ -21,15 +21,15 @@
 typedef NS_ENUM(SInt32, TransmissionMessageType) {
   TransmissionMessageTypeInitial = 0,
   TransmissionMessageTypeState = 1,
-  TransmissionMessageTypeSequence = 2,
+  TransmissionMessageTypeStateTextCombo = 2,
   TransmissionMessageTypeAck = 3,
-  TransmissionMessageTypeReqQueue = 4,
+  TransmissionMessageTypeReqText = 4,
   TransmissionMessageTypeReqState = 5,
-  TransmissionMessageTypeUpdateQueue = 6,
+  TransmissionMessageTypeUpdateCombo = 6,
   TransmissionMessageTypeUpdateState = 7,
   TransmissionMessageTypeForceText = 8,
   TransmissionMessageTypeUserList = 9,
-  TransmissionMessageTypeNotifyQueueChange = 10,
+  TransmissionMessageTypeNotifyTextChange = 10,
 };
 
 BOOL TransmissionMessageTypeIsValidValue(TransmissionMessageType value);
@@ -49,6 +49,7 @@ NSString *NSStringFromTransmissionMessageType(TransmissionMessageType value);
   BOOL hasServerName_:1;
   BOOL hasUserName_:1;
   BOOL hasDocument_:1;
+  BOOL hasTextUpdate_:1;
   BOOL hasChangeItem_:1;
   BOOL hasType_:1;
   SInt32 sequenceId;
@@ -56,10 +57,10 @@ NSString *NSStringFromTransmissionMessageType(TransmissionMessageType value);
   NSString* serverName;
   NSString* userName;
   TransmissionDocument* document;
+  TransmissionTextUpdateItem* textUpdate;
   TransmissionChangeItem* changeItem;
   TransmissionMessageType type;
   NSMutableArray * userListArray;
-  NSMutableArray * queueItemsArray;
   NSMutableArray * statesArray;
 }
 - (BOOL) hasType;
@@ -68,6 +69,7 @@ NSString *NSStringFromTransmissionMessageType(TransmissionMessageType value);
 - (BOOL) hasUserName;
 - (BOOL) hasDocument;
 - (BOOL) hasAckSender;
+- (BOOL) hasTextUpdate;
 - (BOOL) hasChangeItem;
 @property (readonly) TransmissionMessageType type;
 @property (readonly) SInt32 sequenceId;
@@ -76,11 +78,10 @@ NSString *NSStringFromTransmissionMessageType(TransmissionMessageType value);
 @property (readonly, strong) NSArray * userList;
 @property (readonly, strong) TransmissionDocument* document;
 @property (readonly) SInt32 ackSender;
-@property (readonly, strong) NSArray * queueItems;
+@property (readonly, strong) TransmissionTextUpdateItem* textUpdate;
 @property (readonly, strong) TransmissionChangeItem* changeItem;
 @property (readonly, strong) NSArray * states;
 - (TransmissionUser*)userListAtIndex:(NSUInteger)index;
-- (TransmissionQueueItem*)queueItemsAtIndex:(NSUInteger)index;
 - (TransmissionUserState*)statesAtIndex:(NSUInteger)index;
 
 + (instancetype) defaultInstance;
@@ -244,62 +245,62 @@ NSString *NSStringFromTransmissionMessageType(TransmissionMessageType value);
 - (TransmissionDocumentBuilder*) clearDocumentName;
 @end
 
-@interface TransmissionQueueItem : PBGeneratedMessage<GeneratedMessageProtocol> {
+@interface TransmissionTextUpdateItem : PBGeneratedMessage<GeneratedMessageProtocol> {
 @private
   BOOL hasSequenceId_:1;
-  BOOL hasDiff_:1;
+  BOOL hasText_:1;
   SInt32 sequenceId;
-  NSData* diff;
+  NSString* text;
 }
 - (BOOL) hasSequenceId;
-- (BOOL) hasDiff;
+- (BOOL) hasText;
 @property (readonly) SInt32 sequenceId;
-@property (readonly, strong) NSData* diff;
+@property (readonly, strong) NSString* text;
 
 + (instancetype) defaultInstance;
 - (instancetype) defaultInstance;
 
 - (BOOL) isInitialized;
 - (void) writeToCodedOutputStream:(PBCodedOutputStream*) output;
-- (TransmissionQueueItemBuilder*) builder;
-+ (TransmissionQueueItemBuilder*) builder;
-+ (TransmissionQueueItemBuilder*) builderWithPrototype:(TransmissionQueueItem*) prototype;
-- (TransmissionQueueItemBuilder*) toBuilder;
+- (TransmissionTextUpdateItemBuilder*) builder;
++ (TransmissionTextUpdateItemBuilder*) builder;
++ (TransmissionTextUpdateItemBuilder*) builderWithPrototype:(TransmissionTextUpdateItem*) prototype;
+- (TransmissionTextUpdateItemBuilder*) toBuilder;
 
-+ (TransmissionQueueItem*) parseFromData:(NSData*) data;
-+ (TransmissionQueueItem*) parseFromData:(NSData*) data extensionRegistry:(PBExtensionRegistry*) extensionRegistry;
-+ (TransmissionQueueItem*) parseFromInputStream:(NSInputStream*) input;
-+ (TransmissionQueueItem*) parseFromInputStream:(NSInputStream*) input extensionRegistry:(PBExtensionRegistry*) extensionRegistry;
-+ (TransmissionQueueItem*) parseFromCodedInputStream:(PBCodedInputStream*) input;
-+ (TransmissionQueueItem*) parseFromCodedInputStream:(PBCodedInputStream*) input extensionRegistry:(PBExtensionRegistry*) extensionRegistry;
++ (TransmissionTextUpdateItem*) parseFromData:(NSData*) data;
++ (TransmissionTextUpdateItem*) parseFromData:(NSData*) data extensionRegistry:(PBExtensionRegistry*) extensionRegistry;
++ (TransmissionTextUpdateItem*) parseFromInputStream:(NSInputStream*) input;
++ (TransmissionTextUpdateItem*) parseFromInputStream:(NSInputStream*) input extensionRegistry:(PBExtensionRegistry*) extensionRegistry;
++ (TransmissionTextUpdateItem*) parseFromCodedInputStream:(PBCodedInputStream*) input;
++ (TransmissionTextUpdateItem*) parseFromCodedInputStream:(PBCodedInputStream*) input extensionRegistry:(PBExtensionRegistry*) extensionRegistry;
 @end
 
-@interface TransmissionQueueItemBuilder : PBGeneratedMessageBuilder {
+@interface TransmissionTextUpdateItemBuilder : PBGeneratedMessageBuilder {
 @private
-  TransmissionQueueItem* resultQueueItem;
+  TransmissionTextUpdateItem* resultTextUpdateItem;
 }
 
-- (TransmissionQueueItem*) defaultInstance;
+- (TransmissionTextUpdateItem*) defaultInstance;
 
-- (TransmissionQueueItemBuilder*) clear;
-- (TransmissionQueueItemBuilder*) clone;
+- (TransmissionTextUpdateItemBuilder*) clear;
+- (TransmissionTextUpdateItemBuilder*) clone;
 
-- (TransmissionQueueItem*) build;
-- (TransmissionQueueItem*) buildPartial;
+- (TransmissionTextUpdateItem*) build;
+- (TransmissionTextUpdateItem*) buildPartial;
 
-- (TransmissionQueueItemBuilder*) mergeFrom:(TransmissionQueueItem*) other;
-- (TransmissionQueueItemBuilder*) mergeFromCodedInputStream:(PBCodedInputStream*) input;
-- (TransmissionQueueItemBuilder*) mergeFromCodedInputStream:(PBCodedInputStream*) input extensionRegistry:(PBExtensionRegistry*) extensionRegistry;
+- (TransmissionTextUpdateItemBuilder*) mergeFrom:(TransmissionTextUpdateItem*) other;
+- (TransmissionTextUpdateItemBuilder*) mergeFromCodedInputStream:(PBCodedInputStream*) input;
+- (TransmissionTextUpdateItemBuilder*) mergeFromCodedInputStream:(PBCodedInputStream*) input extensionRegistry:(PBExtensionRegistry*) extensionRegistry;
 
 - (BOOL) hasSequenceId;
 - (SInt32) sequenceId;
-- (TransmissionQueueItemBuilder*) setSequenceId:(SInt32) value;
-- (TransmissionQueueItemBuilder*) clearSequenceId;
+- (TransmissionTextUpdateItemBuilder*) setSequenceId:(SInt32) value;
+- (TransmissionTextUpdateItemBuilder*) clearSequenceId;
 
-- (BOOL) hasDiff;
-- (NSData*) diff;
-- (TransmissionQueueItemBuilder*) setDiff:(NSData*) value;
-- (TransmissionQueueItemBuilder*) clearDiff;
+- (BOOL) hasText;
+- (NSString*) text;
+- (TransmissionTextUpdateItemBuilder*) setText:(NSString*) value;
+- (TransmissionTextUpdateItemBuilder*) clearText;
 @end
 
 @interface TransmissionChangeItem : PBGeneratedMessage<GeneratedMessageProtocol> {
@@ -473,11 +474,12 @@ NSString *NSStringFromTransmissionMessageType(TransmissionMessageType value);
 - (TransmissionBuilder*) setAckSender:(SInt32) value;
 - (TransmissionBuilder*) clearAckSender;
 
-- (NSMutableArray *)queueItems;
-- (TransmissionQueueItem*)queueItemsAtIndex:(NSUInteger)index;
-- (TransmissionBuilder *)addQueueItems:(TransmissionQueueItem*)value;
-- (TransmissionBuilder *)setQueueItemsArray:(NSArray *)array;
-- (TransmissionBuilder *)clearQueueItems;
+- (BOOL) hasTextUpdate;
+- (TransmissionTextUpdateItem*) textUpdate;
+- (TransmissionBuilder*) setTextUpdate:(TransmissionTextUpdateItem*) value;
+- (TransmissionBuilder*) setTextUpdateBuilder:(TransmissionTextUpdateItemBuilder*) builderForValue;
+- (TransmissionBuilder*) mergeTextUpdate:(TransmissionTextUpdateItem*) value;
+- (TransmissionBuilder*) clearTextUpdate;
 
 - (BOOL) hasChangeItem;
 - (TransmissionChangeItem*) changeItem;
