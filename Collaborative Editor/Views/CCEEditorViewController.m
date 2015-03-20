@@ -181,6 +181,7 @@
     }
 
     if (![self.lastSeenContent isEqualToString:self.documentContents]) {
+        NSLog(@"merge");
         // content has changed since the last contact with the server
         // merge the received string from the server with the current text on screen
         NSMutableArray *patches = [self.diffEngine patch_makeFromOldString:self.lastSeenContent andNewString:proposedString];

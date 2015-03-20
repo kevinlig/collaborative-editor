@@ -136,14 +136,14 @@ function editorNativeCallbacks(bridge) {
         textChangeEvent(bridge);
     });
 
-    window.setInterval(function() {
-        var cursorData = getCursorData();
-        var currentText = editor.getValue();
+    // window.setInterval(function() {
+    //     var cursorData = getCursorData();
+    //     var currentText = editor.getValue();
 
-        var nativeData = {"text": currentText, "cursor": cursorData};
+    //     var nativeData = {"text": currentText, "cursor": cursorData};
 
-        bridge.callHandler("currentText", nativeData);
-    },250);
+    //     bridge.callHandler("currentText", nativeData);
+    // },100);
 }
 
 function displayUserCursors(cursorData, userId) {
@@ -214,5 +214,13 @@ function textChangeEvent(bridge) {
         bridge.callHandler("textChange", nativeData);
 
     }, 300);
+
+    // also run it immediately
+    var cursorData = getCursorData();
+    var currentText = editor.getValue();
+
+    var nativeData = {"text": currentText, "cursor": cursorData};
+
+    bridge.callHandler("currentText", nativeData);
 
 }
